@@ -48,7 +48,7 @@ export default function Home() {
   useEffect(() => { if (game) saveGame(game); }, [game]);
 
   useEffect(() => {
-    document.documentElement.className = darkMode ? "" : "light";
+    document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "light");
   }, [darkMode]);
 
   const startGameHandler = useCallback((m: DeckMode, names?: { team1: string; team2: string }) => {

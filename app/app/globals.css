@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
-:root {
+/* Dark mode (default) */
+:root, [data-theme="dark"] {
   --bg: #0a0a0b;
   --bg-card: #141416;
   --bg-elevated: #1c1c1f;
@@ -15,6 +16,22 @@
   --yellow: #fbbf24;
 }
 
+/* Light mode */
+[data-theme="light"] {
+  --bg: #f5f5f7;
+  --bg-card: #ffffff;
+  --bg-elevated: #e5e5ea;
+  --border: #c7c7cc;
+  --text: #1d1d1f;
+  --text-secondary: #6e6e73;
+  --text-muted: #aeaeb2;
+  --accent: #059669;
+  --accent-dim: #d1fae5;
+  --blue: #2563eb;
+  --red: #dc2626;
+  --yellow: #d97706;
+}
+
 body {
   background: var(--bg);
   color: var(--text);
@@ -22,6 +39,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: none;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 * {
@@ -36,17 +54,4 @@ html, body { overscroll-behavior-y: contain; }
     padding-top: env(safe-area-inset-top);
     padding-bottom: env(safe-area-inset-bottom);
   }
-}
-
-/* Light mode */
-.light {
-  --bg: #f5f5f7;
-  --bg-card: #ffffff;
-  --bg-elevated: #f0f0f2;
-  --border: #d1d1d6;
-  --text: #1d1d1f;
-  --text-secondary: #6e6e73;
-  --text-muted: #aeaeb2;
-  --accent: #059669;
-  --accent-dim: #d1fae5;
 }
