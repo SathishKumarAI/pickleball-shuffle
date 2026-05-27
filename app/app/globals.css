@@ -1,14 +1,24 @@
 @import "tailwindcss";
 
 :root {
-  --background: #030712;
-  --foreground: #f9fafb;
+  --bg: #0a0a0b;
+  --bg-card: #141416;
+  --bg-elevated: #1c1c1f;
+  --border: #2a2a2e;
+  --text: #fafafa;
+  --text-secondary: #8e8e93;
+  --text-muted: #48484a;
+  --accent: #34d399;
+  --accent-dim: #065f46;
+  --blue: #60a5fa;
+  --red: #f87171;
+  --yellow: #fbbf24;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: none;
@@ -19,25 +29,24 @@ body {
   -webkit-touch-callout: none;
 }
 
-/* Prevent pull-to-refresh on mobile */
-html, body {
-  overscroll-behavior-y: contain;
-}
+html, body { overscroll-behavior-y: contain; }
 
-/* Safe area for iPhone notch/dynamic island */
-.safe-top { padding-top: env(safe-area-inset-top); }
-.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
-
-/* Prevent text selection on game elements */
-.no-select {
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-/* iOS standalone mode adjustments */
 @media (display-mode: standalone) {
   body {
     padding-top: env(safe-area-inset-top);
     padding-bottom: env(safe-area-inset-bottom);
   }
+}
+
+/* Light mode */
+.light {
+  --bg: #f5f5f7;
+  --bg-card: #ffffff;
+  --bg-elevated: #f0f0f2;
+  --border: #d1d1d6;
+  --text: #1d1d1f;
+  --text-secondary: #6e6e73;
+  --text-muted: #aeaeb2;
+  --accent: #059669;
+  --accent-dim: #d1fae5;
 }
