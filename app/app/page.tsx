@@ -26,6 +26,11 @@ export default function Home() {
     fetch("/cards.json")
       .then((r) => r.json())
       .then(setAllCards);
+
+    // Register service worker for offline/PWA
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js").catch(() => {});
+    }
   }, []);
 
   // Try to resume saved game
