@@ -6,14 +6,45 @@ A free, mobile-first web app with 200 pickleball twist cards across 10 categorie
 
 ## Features
 
+### Cards & Decks
 - **200 Cards** across 10 categories (Shot Restriction, Body & Movement, Wild Card, Penalty, Bonus, Social, Strategy, Wacky, Court, Meta)
 - **5 Deck Modes** — Family, Party, Drill, Tournament, Chaos
-- **Built-in Scorekeeper** — tap to score for each team
-- **Card History** — last 10 drawn cards visible
 - **Card Flip Animation** — satisfying draw experience
+- **Card History** — last 10 drawn cards visible
+- **Favorite Cards** — star cards you love
+- **Skip Cards** — exclude cards from future draws
+
+### Scoring & Game Engine
+- **Smart Scorekeeper** — tap team to score, full game logic
+- **Undo Stack** — reverses last action completely (fixes wrong-team taps)
+- **Score Lock** — lock button prevents accidental or malicious taps
+- **Confirm Mode** — optional "Team 1 scores? Yes/No" before adding points
+- **Score Audit Log** — timestamped history of every score change
+- **Game End Detection** — first to 11 (or 7/15/21), win by 2
+- **Side-Out Scoring** — only serving team can score (real pickleball rules)
+- **Serving Indicator** — yellow ring shows who's serving, tap to switch
+- **Best-of-3 Tracking** — game results history across multiple games
+- **Win Celebration** — confetti animation when a team wins
+
+### Game Types
+- **Singles** — 1v1
+- **Doubles** — 2v2 (default, standard pickleball)
+- **Mixed Doubles** — 2v2 mixed teams
+
+### Player Experience
+- **Custom Team Names** — editable names replace "Team 1 / Team 2"
+- **Sound Effects** — score beep, card flip, win fanfare, undo sound
+- **Haptic Feedback** — phone vibrates on score tap and card draw
+- **Dark / Light Mode** — sun-readable for outdoor courts, dark for indoor
+- **Game Timer** — tracks elapsed time since game start
+- **Persist State** — refresh page = resume game (localStorage)
+- **Game Settings** — adjust points to win, scoring rules, sounds
+
+### Technical
 - **Mobile-First** — designed for phones at the court
 - **No Login** — open the link, play immediately
 - **Offline-Friendly** — works once loaded (static site)
+- **Vercel-Deployable** — push to GitHub, deploy in 1 click
 
 ## Quick Start
 
