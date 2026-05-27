@@ -57,6 +57,17 @@ export default function Home() {
     }));
   };
 
+  const handleUndo = (team: 1 | 2) => {
+    setScore((prev) => {
+      const key = team === 1 ? "team1" : "team2";
+      return { ...prev, [key]: Math.max(0, prev[key] - 1) };
+    });
+  };
+
+  const handleResetScore = () => {
+    setScore({ team1: 0, team2: 0 });
+  };
+
   const handleModeChange = (newMode: DeckMode) => {
     startGame(newMode);
   };
@@ -121,7 +132,7 @@ export default function Home() {
 
       <DeckModeSelector current={mode} onChange={handleModeChange} cardCounts={cardCounts} />
 
-      <ScoreKeeper score={score} onScore={handleScore} />
+      <ScoreKeeper score={score} onScore={handleScore} onUndo={handleUndo} onReset={handleResetScore} />
 
       <CardDisplay card={currentCard} onDraw={drawCard} deckRemaining={deck.length} />
 
