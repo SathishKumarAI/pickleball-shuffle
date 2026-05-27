@@ -1,0 +1,1402 @@
+[
+  {
+    "id": 1,
+    "category": "Shot Restriction",
+    "name": "Dinks Only",
+    "effect": "All shots this point must be dinks. Anything harder = lose the point.",
+    "vibe": "Soft-game showdown"
+  },
+  {
+    "id": 2,
+    "category": "Shot Restriction",
+    "name": "No Volleys",
+    "effect": "You must let every ball bounce before hitting. No volleys allowed.",
+    "vibe": "Patience tester"
+  },
+  {
+    "id": 3,
+    "category": "Shot Restriction",
+    "name": "Backhand Only",
+    "effect": "Every shot this point must be a backhand.",
+    "vibe": "Weakness exposer"
+  },
+  {
+    "id": 4,
+    "category": "Shot Restriction",
+    "name": "Lobs Welcome",
+    "effect": "You may ONLY win the point with a lob winner.",
+    "vibe": "Sky-high chaos"
+  },
+  {
+    "id": 5,
+    "category": "Shot Restriction",
+    "name": "Drop Shot Mandate",
+    "effect": "Your return of serve must be a drop into the kitchen.",
+    "vibe": "Soft hands required"
+  },
+  {
+    "id": 6,
+    "category": "Shot Restriction",
+    "name": "No Smashes",
+    "effect": "Overhead smashes are banned this point. Anything above the head must be redirected soft.",
+    "vibe": "Hold the fire"
+  },
+  {
+    "id": 7,
+    "category": "Shot Restriction",
+    "name": "Slice City",
+    "effect": "Every shot must have visible underspin. Flat shots = fault.",
+    "vibe": "Old-school tennis"
+  },
+  {
+    "id": 8,
+    "category": "Shot Restriction",
+    "name": "Forehand Famine",
+    "effect": "You may not use your forehand this point.",
+    "vibe": "Strong-side ban"
+  },
+  {
+    "id": 9,
+    "category": "Shot Restriction",
+    "name": "One Bounce Rule",
+    "effect": "Every ball must bounce twice on your side before you return it.",
+    "vibe": "Patience to the max"
+  },
+  {
+    "id": 10,
+    "category": "Shot Restriction",
+    "name": "Kitchen Confined",
+    "effect": "You must hit this entire point standing inside the kitchen.",
+    "vibe": "Touch test"
+  },
+  {
+    "id": 11,
+    "category": "Shot Restriction",
+    "name": "Topspin Tax",
+    "effect": "Any shot without topspin loses you the point. Brush up!",
+    "vibe": "Spin or sin"
+  },
+  {
+    "id": 12,
+    "category": "Shot Restriction",
+    "name": "Two-Hand Mandatory",
+    "effect": "All shots must be hit with two hands on the paddle.",
+    "vibe": "Awkward grip mode"
+  },
+  {
+    "id": 13,
+    "category": "Shot Restriction",
+    "name": "No Cross-Court",
+    "effect": "Every shot must go down-the-line. Cross-court = fault.",
+    "vibe": "Straight lines only"
+  },
+  {
+    "id": 14,
+    "category": "Shot Restriction",
+    "name": "Half Court",
+    "effect": "Your opponent must only hit to half the court. You pick which half.",
+    "vibe": "Pre-game advantage"
+  },
+  {
+    "id": 15,
+    "category": "Shot Restriction",
+    "name": "Reset Required",
+    "effect": "Before you can win the point, your team must hit one full reset dink.",
+    "vibe": "Earn the win"
+  },
+  {
+    "id": 16,
+    "category": "Shot Restriction",
+    "name": "No Power",
+    "effect": "Any shot hit harder than a 'firm tap' is a fault. Touch shots only.",
+    "vibe": "Whisper game"
+  },
+  {
+    "id": 17,
+    "category": "Shot Restriction",
+    "name": "Mid-Court Only",
+    "effect": "Every shot must land in the transition zone (between kitchen line and baseline halfway).",
+    "vibe": "Precision target"
+  },
+  {
+    "id": 18,
+    "category": "Shot Restriction",
+    "name": "Serve Soft",
+    "effect": "Server must hit an underhand lob serve. No power serves.",
+    "vibe": "Easy-mode start"
+  },
+  {
+    "id": 19,
+    "category": "Shot Restriction",
+    "name": "Three-Touch Rule",
+    "effect": "Your team must touch the ball at least 3 times before winning (if doubles).",
+    "vibe": "Teamwork forced"
+  },
+  {
+    "id": 20,
+    "category": "Shot Restriction",
+    "name": "Spinless",
+    "effect": "All shots must be hit flat. Any visible spin = lose the point.",
+    "vibe": "Pure ball striking"
+  },
+  {
+    "id": 21,
+    "category": "Body & Movement",
+    "name": "Non-Dominant Hand",
+    "effect": "Switch paddle hands. You're a lefty now (or righty).",
+    "vibe": "Awkward classic"
+  },
+  {
+    "id": 22,
+    "category": "Body & Movement",
+    "name": "One Foot Only",
+    "effect": "You must keep one foot off the ground the entire point.",
+    "vibe": "Flamingo mode"
+  },
+  {
+    "id": 23,
+    "category": "Body & Movement",
+    "name": "Hop to It",
+    "effect": "You can only move by hopping on both feet, no walking or running.",
+    "vibe": "Bunny chaos"
+  },
+  {
+    "id": 24,
+    "category": "Body & Movement",
+    "name": "Side Shuffle",
+    "effect": "You may not face forward \u2014 only side-shuffle this point.",
+    "vibe": "Crab walk"
+  },
+  {
+    "id": 25,
+    "category": "Body & Movement",
+    "name": "Eyes on Partner",
+    "effect": "You must look at your partner, not the ball, between every shot. (Doubles)",
+    "vibe": "Trust fall"
+  },
+  {
+    "id": 26,
+    "category": "Body & Movement",
+    "name": "Squat Stance",
+    "effect": "You must stay in a low squat the entire point.",
+    "vibe": "Quads burning"
+  },
+  {
+    "id": 27,
+    "category": "Body & Movement",
+    "name": "No Wrist",
+    "effect": "You must keep your wrist locked. No wrist snap on any shot.",
+    "vibe": "Stiff arm"
+  },
+  {
+    "id": 28,
+    "category": "Body & Movement",
+    "name": "Behind the Back",
+    "effect": "First shot of the point must be hit behind your back.",
+    "vibe": "Showboat starter"
+  },
+  {
+    "id": 29,
+    "category": "Body & Movement",
+    "name": "Tippy Toes",
+    "effect": "You must stay on your toes \u2014 no heels down \u2014 entire point.",
+    "vibe": "Ballet ball"
+  },
+  {
+    "id": 30,
+    "category": "Body & Movement",
+    "name": "Mirror Partner",
+    "effect": "You must mirror your partner's exact position on the court. (Doubles)",
+    "vibe": "Synchronized chaos"
+  },
+  {
+    "id": 31,
+    "category": "Body & Movement",
+    "name": "Pivot Only",
+    "effect": "You may not take steps. Only pivot on one foot.",
+    "vibe": "Stuck in place"
+  },
+  {
+    "id": 32,
+    "category": "Body & Movement",
+    "name": "Underhand Everything",
+    "effect": "Every shot must be hit below your waist.",
+    "vibe": "Low game"
+  },
+  {
+    "id": 33,
+    "category": "Body & Movement",
+    "name": "Above the Head",
+    "effect": "Every shot must be contacted above your shoulders.",
+    "vibe": "Reach for it"
+  },
+  {
+    "id": 34,
+    "category": "Body & Movement",
+    "name": "Slow Motion",
+    "effect": "All your movement must be in visible slow motion this point.",
+    "vibe": "Matrix mode"
+  },
+  {
+    "id": 35,
+    "category": "Body & Movement",
+    "name": "Backward Serve",
+    "effect": "You must serve facing backward, looking over your shoulder.",
+    "vibe": "Trick shot intro"
+  },
+  {
+    "id": 36,
+    "category": "Body & Movement",
+    "name": "No Talking",
+    "effect": "Doubles teammates may not speak this point. No 'mine,' no calls.",
+    "vibe": "Silent treatment"
+  },
+  {
+    "id": 37,
+    "category": "Body & Movement",
+    "name": "Sing It",
+    "effect": "You must hum or sing continuously the whole point.",
+    "vibe": "Court karaoke"
+  },
+  {
+    "id": 38,
+    "category": "Body & Movement",
+    "name": "High Five Required",
+    "effect": "Doubles partners must high-five between every shot they hit.",
+    "vibe": "Hype overload"
+  },
+  {
+    "id": 39,
+    "category": "Body & Movement",
+    "name": "Dance Move",
+    "effect": "Do a dance move after every shot you hit, before resetting.",
+    "vibe": "Court boogie"
+  },
+  {
+    "id": 40,
+    "category": "Body & Movement",
+    "name": "No Pivot Foot",
+    "effect": "Your serve must be hit while both feet are off the ground.",
+    "vibe": "Jump serve mandate"
+  },
+  {
+    "id": 41,
+    "category": "Wild Card / Swap",
+    "name": "Partner Swap",
+    "effect": "Swap partners with the other team for the rest of the game.",
+    "vibe": "Relationship test"
+  },
+  {
+    "id": 42,
+    "category": "Wild Card / Swap",
+    "name": "Side Switch",
+    "effect": "Switch ends of the court immediately, mid-game.",
+    "vibe": "Disorienting"
+  },
+  {
+    "id": 43,
+    "category": "Wild Card / Swap",
+    "name": "Paddle Swap",
+    "effect": "Trade paddles with an opponent for the next 3 points.",
+    "vibe": "Gear roulette"
+  },
+  {
+    "id": 44,
+    "category": "Wild Card / Swap",
+    "name": "Serve Steal",
+    "effect": "Steal the serve from the opposing team. Your team serves now.",
+    "vibe": "Power grab"
+  },
+  {
+    "id": 45,
+    "category": "Wild Card / Swap",
+    "name": "Score Steal",
+    "effect": "Take 1 point from your opponent's score and add it to yours.",
+    "vibe": "Bandit move"
+  },
+  {
+    "id": 46,
+    "category": "Wild Card / Swap",
+    "name": "Score Reset",
+    "effect": "Both teams reset to the score 2 points ago.",
+    "vibe": "Time machine"
+  },
+  {
+    "id": 47,
+    "category": "Wild Card / Swap",
+    "name": "Reverse Roles",
+    "effect": "Doubles partners swap positions (deuce/ad sides) for 3 points.",
+    "vibe": "Wrong side blues"
+  },
+  {
+    "id": 48,
+    "category": "Wild Card / Swap",
+    "name": "Solo Mode",
+    "effect": "One team plays with only 1 player against the doubles team for this point.",
+    "vibe": "Hero mode"
+  },
+  {
+    "id": 49,
+    "category": "Wild Card / Swap",
+    "name": "Wild Serve",
+    "effect": "Anyone on either team can serve the next point. Pick wisely.",
+    "vibe": "Mystery server"
+  },
+  {
+    "id": 50,
+    "category": "Wild Card / Swap",
+    "name": "Mulligan",
+    "effect": "Hold this card. Use it any time to replay one point.",
+    "vibe": "Keep in pocket"
+  },
+  {
+    "id": 51,
+    "category": "Wild Card / Swap",
+    "name": "Steal a Card",
+    "effect": "Pull a card from an opponent's hand (if you've collected cards).",
+    "vibe": "Robbery in progress"
+  },
+  {
+    "id": 52,
+    "category": "Wild Card / Swap",
+    "name": "Trade Cards",
+    "effect": "Swap one of your saved cards with an opponent's. Blind trade.",
+    "vibe": "Card dealer"
+  },
+  {
+    "id": 53,
+    "category": "Wild Card / Swap",
+    "name": "Free Pass",
+    "effect": "Hold this card. You may skip drawing one card later.",
+    "vibe": "Get out of jail"
+  },
+  {
+    "id": 54,
+    "category": "Wild Card / Swap",
+    "name": "Double Up",
+    "effect": "Next point counts for 2 points instead of 1.",
+    "vibe": "Stakes rising"
+  },
+  {
+    "id": 55,
+    "category": "Wild Card / Swap",
+    "name": "Triple Threat",
+    "effect": "Next point counts for 3. Lose it and lose 3.",
+    "vibe": "All or nothing"
+  },
+  {
+    "id": 56,
+    "category": "Wild Card / Swap",
+    "name": "Swap Drawn Card",
+    "effect": "Don't like your card? Swap it with the top of the deck blind.",
+    "vibe": "Gamble"
+  },
+  {
+    "id": 57,
+    "category": "Wild Card / Swap",
+    "name": "Force Draw",
+    "effect": "Make an opponent draw a card right now.",
+    "vibe": "Forced fate"
+  },
+  {
+    "id": 58,
+    "category": "Wild Card / Swap",
+    "name": "Skip Their Turn",
+    "effect": "Skip the opposing team's next serve. Your team serves twice.",
+    "vibe": "Rude move"
+  },
+  {
+    "id": 59,
+    "category": "Wild Card / Swap",
+    "name": "Reroll",
+    "effect": "Discard this and the next card, then draw fresh.",
+    "vibe": "Try again"
+  },
+  {
+    "id": 60,
+    "category": "Wild Card / Swap",
+    "name": "Court Rotation",
+    "effect": "All four players rotate one position clockwise around the court.",
+    "vibe": "Musical courts"
+  },
+  {
+    "id": 61,
+    "category": "Penalty",
+    "name": "Lose the Serve",
+    "effect": "Your team loses the serve immediately.",
+    "vibe": "Brutal"
+  },
+  {
+    "id": 62,
+    "category": "Penalty",
+    "name": "Give Up a Point",
+    "effect": "Opponent gets a free point.",
+    "vibe": "Charity donation"
+  },
+  {
+    "id": 63,
+    "category": "Penalty",
+    "name": "Sit Out a Point",
+    "effect": "Skip the next point. Your partner plays solo. (Doubles)",
+    "vibe": "Sidelined"
+  },
+  {
+    "id": 64,
+    "category": "Penalty",
+    "name": "Confession Time",
+    "effect": "Tell the table one embarrassing pickleball memory before serving again.",
+    "vibe": "Cringe break"
+  },
+  {
+    "id": 65,
+    "category": "Penalty",
+    "name": "Push-Ups",
+    "effect": "5 push-ups before your next serve.",
+    "vibe": "Court fitness"
+  },
+  {
+    "id": 66,
+    "category": "Penalty",
+    "name": "Sing Your Apology",
+    "effect": "Sing 'I'm sorry' to your partner before the next point.",
+    "vibe": "Public humiliation"
+  },
+  {
+    "id": 67,
+    "category": "Penalty",
+    "name": "Wrong-Handed Serve",
+    "effect": "Your next serve must be hit with your non-dominant hand.",
+    "vibe": "Free point for them"
+  },
+  {
+    "id": 68,
+    "category": "Penalty",
+    "name": "Lose Both Serves",
+    "effect": "Skip your team's entire next service turn.",
+    "vibe": "Big penalty"
+  },
+  {
+    "id": 69,
+    "category": "Penalty",
+    "name": "No Calls",
+    "effect": "You may not call 'mine' or 'yours' for 3 points. (Doubles)",
+    "vibe": "Chaos cooking"
+  },
+  {
+    "id": 70,
+    "category": "Penalty",
+    "name": "Eyes Closed Serve",
+    "effect": "Your next serve must be hit with eyes shut.",
+    "vibe": "Blind faith"
+  },
+  {
+    "id": 71,
+    "category": "Penalty",
+    "name": "Trash Talk Yourself",
+    "effect": "Insult your own play out loud before the next point.",
+    "vibe": "Self-roast"
+  },
+  {
+    "id": 72,
+    "category": "Penalty",
+    "name": "Drink Up",
+    "effect": "Sip your water before every shot this point. (Add a beverage of choice.)",
+    "vibe": "Hydration mandate"
+  },
+  {
+    "id": 73,
+    "category": "Penalty",
+    "name": "Score Tax",
+    "effect": "Lose 1 point off your team's current score.",
+    "vibe": "Audit time"
+  },
+  {
+    "id": 74,
+    "category": "Penalty",
+    "name": "Compliment Opponents",
+    "effect": "Compliment each opposing player before serving.",
+    "vibe": "Sportsmanship penalty"
+  },
+  {
+    "id": 75,
+    "category": "Penalty",
+    "name": "Granny Serve Only",
+    "effect": "Underhand granny serve for the rest of the game.",
+    "vibe": "Old-school punishment"
+  },
+  {
+    "id": 76,
+    "category": "Penalty",
+    "name": "Apologize for Every Mistake",
+    "effect": "Loudly apologize for every shot you miss for 3 points.",
+    "vibe": "Drama mode"
+  },
+  {
+    "id": 77,
+    "category": "Penalty",
+    "name": "Pickle Picker",
+    "effect": "If the score becomes 0-7-2 ('pickled'), the team that drew this card forfeits the game.",
+    "vibe": "Sudden death"
+  },
+  {
+    "id": 78,
+    "category": "Penalty",
+    "name": "Lose Your Partner",
+    "effect": "Your partner sits the next point. You play solo. (Doubles)",
+    "vibe": "Alone time"
+  },
+  {
+    "id": 79,
+    "category": "Penalty",
+    "name": "Foot Fault Yourself",
+    "effect": "First serve of the next game must be a deliberate foot fault.",
+    "vibe": "Sabotage"
+  },
+  {
+    "id": 80,
+    "category": "Penalty",
+    "name": "Wear It",
+    "effect": "Wear something silly (sunglasses, hat, towel-cape) until you win 2 points.",
+    "vibe": "Cosplay penalty"
+  },
+  {
+    "id": 81,
+    "category": "Bonus / Reward",
+    "name": "Free Point",
+    "effect": "Your team gets a free point. Don't even play.",
+    "vibe": "Score gift"
+  },
+  {
+    "id": 82,
+    "category": "Bonus / Reward",
+    "name": "Double Serve",
+    "effect": "Your next serve, if missed, gets a second try.",
+    "vibe": "Tennis treat"
+  },
+  {
+    "id": 83,
+    "category": "Bonus / Reward",
+    "name": "Two Bounce Bonus",
+    "effect": "Your team can let the ball bounce twice on your side this point.",
+    "vibe": "Breathing room"
+  },
+  {
+    "id": 84,
+    "category": "Bonus / Reward",
+    "name": "Reset Your Score",
+    "effect": "Bring your team's score back up to match opponents (or to 0 if you were ahead \u2014 your choice).",
+    "vibe": "Reset button"
+  },
+  {
+    "id": 85,
+    "category": "Bonus / Reward",
+    "name": "Pick the Court Side",
+    "effect": "Choose which side you want to play from for the next 3 points.",
+    "vibe": "Home advantage"
+  },
+  {
+    "id": 86,
+    "category": "Bonus / Reward",
+    "name": "Big Kitchen",
+    "effect": "Your team's kitchen line is moved 1 foot back for the point. More volley space.",
+    "vibe": "Custom court"
+  },
+  {
+    "id": 87,
+    "category": "Bonus / Reward",
+    "name": "Small Kitchen for Them",
+    "effect": "Opponents' kitchen line is moved 1 foot forward. Tighter for them.",
+    "vibe": "Squeeze them"
+  },
+  {
+    "id": 88,
+    "category": "Bonus / Reward",
+    "name": "Skip Their Serve",
+    "effect": "Opposing team loses their next serve.",
+    "vibe": "Server denied"
+  },
+  {
+    "id": 89,
+    "category": "Bonus / Reward",
+    "name": "Hold for Later",
+    "effect": "Hold this card. Play any time to claim 1 point.",
+    "vibe": "Pocket ace"
+  },
+  {
+    "id": 90,
+    "category": "Bonus / Reward",
+    "name": "Choose Their Restriction",
+    "effect": "Pick any Shot Restriction card from the discard pile and force opponents to play under it.",
+    "vibe": "Custom torture"
+  },
+  {
+    "id": 91,
+    "category": "Bonus / Reward",
+    "name": "Game Win Insurance",
+    "effect": "If you lose this game, you may demand a rematch immediately.",
+    "vibe": "Safety net"
+  },
+  {
+    "id": 92,
+    "category": "Bonus / Reward",
+    "name": "First Serve Choice",
+    "effect": "You choose who serves first in the next game.",
+    "vibe": "Starter pick"
+  },
+  {
+    "id": 93,
+    "category": "Bonus / Reward",
+    "name": "Free Coaching",
+    "effect": "Get one 30-second sideline tip from a non-playing friend.",
+    "vibe": "Outside help"
+  },
+  {
+    "id": 94,
+    "category": "Bonus / Reward",
+    "name": "Power Smash",
+    "effect": "You get one mandatory smash this point \u2014 opponents must let it through.",
+    "vibe": "Hero shot"
+  },
+  {
+    "id": 95,
+    "category": "Bonus / Reward",
+    "name": "Double Down",
+    "effect": "If you win the next point, it counts as 2.",
+    "vibe": "Risk reward"
+  },
+  {
+    "id": 96,
+    "category": "Bonus / Reward",
+    "name": "Free Card Draw",
+    "effect": "Draw another card right now.",
+    "vibe": "Card greed"
+  },
+  {
+    "id": 97,
+    "category": "Bonus / Reward",
+    "name": "Save the Score",
+    "effect": "If you lose the next 3 points, your score doesn't drop.",
+    "vibe": "Immunity"
+  },
+  {
+    "id": 98,
+    "category": "Bonus / Reward",
+    "name": "Steal a Drink",
+    "effect": "Take a sip of any opponent's drink. (Hydration heist.)",
+    "vibe": "Petty crime"
+  },
+  {
+    "id": 99,
+    "category": "Bonus / Reward",
+    "name": "Pick Your Side",
+    "effect": "Choose who returns serve next point. (Doubles)",
+    "vibe": "Strategic deploy"
+  },
+  {
+    "id": 100,
+    "category": "Bonus / Reward",
+    "name": "Hot Streak",
+    "effect": "Win the next 2 points in a row and the game ends instantly in your favor.",
+    "vibe": "Sudden glory"
+  },
+  {
+    "id": 101,
+    "category": "Social & Party",
+    "name": "Group Selfie",
+    "effect": "Stop play. All four players take a selfie at the net. Post it.",
+    "vibe": "Instagram moment"
+  },
+  {
+    "id": 102,
+    "category": "Social & Party",
+    "name": "Compliment Chain",
+    "effect": "Each player must compliment the player to their left before the next serve.",
+    "vibe": "Wholesome"
+  },
+  {
+    "id": 103,
+    "category": "Social & Party",
+    "name": "Trash Talk Turn",
+    "effect": "Each player must deliver one G-rated piece of trash talk to opponents.",
+    "vibe": "Banter mandated"
+  },
+  {
+    "id": 104,
+    "category": "Social & Party",
+    "name": "Victory Pose",
+    "effect": "Whoever wins this point must hold a victory pose for 10 seconds.",
+    "vibe": "Bragging rights"
+  },
+  {
+    "id": 105,
+    "category": "Social & Party",
+    "name": "Loser's Dance",
+    "effect": "Whoever loses this point must do a 5-second dance.",
+    "vibe": "Court boogie"
+  },
+  {
+    "id": 106,
+    "category": "Social & Party",
+    "name": "Name Your Shot",
+    "effect": "Before every shot this point, shout the name of the shot you're hitting.",
+    "vibe": "Live narrator"
+  },
+  {
+    "id": 107,
+    "category": "Social & Party",
+    "name": "Cheer Squad",
+    "effect": "Whoever is sitting out (waiting next game) must cheer LOUDLY for one team.",
+    "vibe": "Crowd energy"
+  },
+  {
+    "id": 108,
+    "category": "Social & Party",
+    "name": "Celebrity Impression",
+    "effect": "Play the next point in the voice of a celebrity of your choice.",
+    "vibe": "Court actor"
+  },
+  {
+    "id": 109,
+    "category": "Social & Party",
+    "name": "Pun Required",
+    "effect": "Make a pickleball pun before the next serve. Bad ones count.",
+    "vibe": "Groan factor"
+  },
+  {
+    "id": 110,
+    "category": "Social & Party",
+    "name": "Confession",
+    "effect": "Share one true pickleball pet peeve out loud.",
+    "vibe": "Therapy session"
+  },
+  {
+    "id": 111,
+    "category": "Social & Party",
+    "name": "Story Time",
+    "effect": "Tell a 30-second story about your worst sports moment.",
+    "vibe": "Vulnerability"
+  },
+  {
+    "id": 112,
+    "category": "Social & Party",
+    "name": "Cheers Card",
+    "effect": "Everyone clinks water bottles before the next point.",
+    "vibe": "Toast time"
+  },
+  {
+    "id": 113,
+    "category": "Social & Party",
+    "name": "Nickname Time",
+    "effect": "Each player gets a random nickname (assigned by opponents) for the rest of the game.",
+    "vibe": "Identity crisis"
+  },
+  {
+    "id": 114,
+    "category": "Social & Party",
+    "name": "Hot Take",
+    "effect": "Each player must share a pickleball hot take before continuing.",
+    "vibe": "Debate club"
+  },
+  {
+    "id": 115,
+    "category": "Social & Party",
+    "name": "MVP Vote",
+    "effect": "All players vote on the current MVP of the match. Winner gets to choose next serve side.",
+    "vibe": "Popularity contest"
+  },
+  {
+    "id": 116,
+    "category": "Social & Party",
+    "name": "Snack Break",
+    "effect": "30-second snack/drink pause. Everyone shares something.",
+    "vibe": "Picnic interrupt"
+  },
+  {
+    "id": 117,
+    "category": "Social & Party",
+    "name": "Group Hug",
+    "effect": "All four players group-hug at the net. Then play continues.",
+    "vibe": "Wholesome chaos"
+  },
+  {
+    "id": 118,
+    "category": "Social & Party",
+    "name": "Trash Talk Ban",
+    "effect": "No trash talk allowed for the next 5 points. Penalty: lose point.",
+    "vibe": "Be nice"
+  },
+  {
+    "id": 119,
+    "category": "Social & Party",
+    "name": "Compliment Loser",
+    "effect": "After this point, the winners must say something nice about the losers' game.",
+    "vibe": "Forced sportsmanship"
+  },
+  {
+    "id": 120,
+    "category": "Social & Party",
+    "name": "Hashtag It",
+    "effect": "Create a hashtag for today's match. Use it for the rest of the day.",
+    "vibe": "Social media bait"
+  },
+  {
+    "id": 121,
+    "category": "Strategy / Skill",
+    "name": "Coach's Choice",
+    "effect": "Pick a shot type. Anytime you successfully execute it this game, you score a bonus point.",
+    "vibe": "Reward growth"
+  },
+  {
+    "id": 122,
+    "category": "Strategy / Skill",
+    "name": "ATP Time",
+    "effect": "Around-the-post winners count for 3 points this game.",
+    "vibe": "Highlight reel"
+  },
+  {
+    "id": 123,
+    "category": "Strategy / Skill",
+    "name": "Erne Bounty",
+    "effect": "First player to hit a successful Erne wins the next 2 points automatically.",
+    "vibe": "Specialty shot"
+  },
+  {
+    "id": 124,
+    "category": "Strategy / Skill",
+    "name": "Soft Game",
+    "effect": "Next 3 points must all be third-shot drops. No driving allowed.",
+    "vibe": "Touch tournament"
+  },
+  {
+    "id": 125,
+    "category": "Strategy / Skill",
+    "name": "Drill Down",
+    "effect": "Play the next point as a dinking-only rally. First to drive loses the point.",
+    "vibe": "Patience battle"
+  },
+  {
+    "id": 126,
+    "category": "Strategy / Skill",
+    "name": "Communicate",
+    "effect": "Doubles teams must call 'mine'/'yours' on every shot for 3 points or lose the point.",
+    "vibe": "Habit builder"
+  },
+  {
+    "id": 127,
+    "category": "Strategy / Skill",
+    "name": "Stack Up",
+    "effect": "Switch to a stacked formation this game. Mix it up.",
+    "vibe": "Strategy shift"
+  },
+  {
+    "id": 128,
+    "category": "Strategy / Skill",
+    "name": "Lefty Side",
+    "effect": "Pretend the left side player is a lefty (paddle on the left for the team). Rotate accordingly.",
+    "vibe": "Position drill"
+  },
+  {
+    "id": 129,
+    "category": "Strategy / Skill",
+    "name": "Reset Hero",
+    "effect": "Each successful reset (returning a hard ball softly into the kitchen) earns a bonus point.",
+    "vibe": "Hands tested"
+  },
+  {
+    "id": 130,
+    "category": "Strategy / Skill",
+    "name": "Body Bag Bounty",
+    "effect": "If anyone wins a point with a body shot (hits opponent), it's worth 2.",
+    "vibe": "Aggressive incentive"
+  },
+  {
+    "id": 131,
+    "category": "Strategy / Skill",
+    "name": "Lob Defender",
+    "effect": "Every successful lob defense (smash or reset on a lob) earns 1 extra point.",
+    "vibe": "Overhead practice"
+  },
+  {
+    "id": 132,
+    "category": "Strategy / Skill",
+    "name": "Third Shot Drop Only",
+    "effect": "All serves the next 3 points must be followed by a third-shot drop. No drives.",
+    "vibe": "Old-school technique"
+  },
+  {
+    "id": 133,
+    "category": "Strategy / Skill",
+    "name": "Speed Up Bonus",
+    "effect": "Win a point with a speed-up off a dink and earn 2 points instead of 1.",
+    "vibe": "Hand battle reward"
+  },
+  {
+    "id": 134,
+    "category": "Strategy / Skill",
+    "name": "Defensive Drill",
+    "effect": "Block-and-reset wins only \u2014 no offensive winners this point.",
+    "vibe": "Anti-aggression"
+  },
+  {
+    "id": 135,
+    "category": "Strategy / Skill",
+    "name": "Server's Choice",
+    "effect": "Server picks the rule for this point. (Anything reasonable.)",
+    "vibe": "Power move"
+  },
+  {
+    "id": 136,
+    "category": "Strategy / Skill",
+    "name": "Coach's Eye",
+    "effect": "Best technique winner. Players vote at end of point \u2014 winner takes 1 point.",
+    "vibe": "Style judging"
+  },
+  {
+    "id": 137,
+    "category": "Strategy / Skill",
+    "name": "No Bangers",
+    "effect": "If anyone hits a 'banger' (full-power drive without setup), they lose the point.",
+    "vibe": "Cure for banging"
+  },
+  {
+    "id": 138,
+    "category": "Strategy / Skill",
+    "name": "Patience Pays",
+    "effect": "Rallies under 6 shots count for half a point. 6+ shots count for 2.",
+    "vibe": "Long rally incentive"
+  },
+  {
+    "id": 139,
+    "category": "Strategy / Skill",
+    "name": "Court Geometry",
+    "effect": "Each shot must land in a different quadrant than the previous one.",
+    "vibe": "Placement test"
+  },
+  {
+    "id": 140,
+    "category": "Strategy / Skill",
+    "name": "Tournament Mode",
+    "effect": "Play the next point as if it's match point. Sudden death intensity.",
+    "vibe": "Pressure cooker"
+  },
+  {
+    "id": 141,
+    "category": "Wacky / Chaos",
+    "name": "Talk Like a Pirate",
+    "effect": "All speech this point must be in pirate voice. Arrr.",
+    "vibe": "Yarrrr"
+  },
+  {
+    "id": 142,
+    "category": "Wacky / Chaos",
+    "name": "British Accent",
+    "effect": "Play and speak with a British accent the entire point.",
+    "vibe": "Pip pip"
+  },
+  {
+    "id": 143,
+    "category": "Wacky / Chaos",
+    "name": "Animal Sounds",
+    "effect": "Replace all words with animal noises for 1 full point.",
+    "vibe": "Court zoo"
+  },
+  {
+    "id": 144,
+    "category": "Wacky / Chaos",
+    "name": "Nickname Roulette",
+    "effect": "Each player picks a new nickname. Address each other only by nicknames for the rest of the game.",
+    "vibe": "Identity swap"
+  },
+  {
+    "id": 145,
+    "category": "Wacky / Chaos",
+    "name": "Slow-Mo Mode",
+    "effect": "Play the next point in obvious slow motion \u2014 both teams.",
+    "vibe": "Bullet time"
+  },
+  {
+    "id": 146,
+    "category": "Wacky / Chaos",
+    "name": "Sportscaster",
+    "effect": "One non-playing person must commentate live the entire next point.",
+    "vibe": "ESPN energy"
+  },
+  {
+    "id": 147,
+    "category": "Wacky / Chaos",
+    "name": "Theme Music",
+    "effect": "Hum your own theme song before every shot you hit.",
+    "vibe": "Soundtrack on"
+  },
+  {
+    "id": 148,
+    "category": "Wacky / Chaos",
+    "name": "Court Hopscotch",
+    "effect": "You must hop on one foot between every shot you hit.",
+    "vibe": "Playground rules"
+  },
+  {
+    "id": 149,
+    "category": "Wacky / Chaos",
+    "name": "Whisper Match",
+    "effect": "All communication must be in a whisper for 3 points.",
+    "vibe": "Library mode"
+  },
+  {
+    "id": 150,
+    "category": "Wacky / Chaos",
+    "name": "Shout Mode",
+    "effect": "All communication must be SHOUTED for 3 points.",
+    "vibe": "Volume up"
+  },
+  {
+    "id": 151,
+    "category": "Wacky / Chaos",
+    "name": "Robot Mode",
+    "effect": "Move and speak like a robot the entire next point.",
+    "vibe": "Beep boop"
+  },
+  {
+    "id": 152,
+    "category": "Wacky / Chaos",
+    "name": "Backwards Day",
+    "effect": "Score this point in reverse \u2014 winner of the point LOSES the point. Sneakily try to lose.",
+    "vibe": "Brain melt"
+  },
+  {
+    "id": 153,
+    "category": "Wacky / Chaos",
+    "name": "Compliment Every Shot",
+    "effect": "Compliment your opponent's every shot, even bad ones, all point.",
+    "vibe": "Aggressive niceness"
+  },
+  {
+    "id": 154,
+    "category": "Wacky / Chaos",
+    "name": "Trick Shot Mandate",
+    "effect": "Win the point with a between-the-legs, behind-the-back, or no-look shot or it doesn't count.",
+    "vibe": "Showtime"
+  },
+  {
+    "id": 155,
+    "category": "Wacky / Chaos",
+    "name": "Yell the Score",
+    "effect": "Yell the score, very loudly, before every serve for 3 points.",
+    "vibe": "Town crier"
+  },
+  {
+    "id": 156,
+    "category": "Wacky / Chaos",
+    "name": "Court Limbo",
+    "effect": "Whoever wins the point must limbo under their own paddle held by opponents.",
+    "vibe": "Party game"
+  },
+  {
+    "id": 157,
+    "category": "Wacky / Chaos",
+    "name": "Funny Walk",
+    "effect": "All movement must be a Monty Python silly walk this point.",
+    "vibe": "Comedy gold"
+  },
+  {
+    "id": 158,
+    "category": "Wacky / Chaos",
+    "name": "Pickle Roll Call",
+    "effect": "Yell 'PICKLE!' after every successful shot you hit, all point.",
+    "vibe": "Spam mode"
+  },
+  {
+    "id": 159,
+    "category": "Wacky / Chaos",
+    "name": "Bad Coach Mode",
+    "effect": "Each player must shout terrible advice to opponents during the point.",
+    "vibe": "Reverse psychology"
+  },
+  {
+    "id": 160,
+    "category": "Wacky / Chaos",
+    "name": "Mime Mode",
+    "effect": "No speech allowed \u2014 only gestures and mime \u2014 for the next 3 points.",
+    "vibe": "Silent film"
+  },
+  {
+    "id": 161,
+    "category": "Court / Environment",
+    "name": "Shrunken Court",
+    "effect": "The kitchen extends to the baseline this point \u2014 entire opponent half is no-volley zone.",
+    "vibe": "Crazy geometry"
+  },
+  {
+    "id": 162,
+    "category": "Court / Environment",
+    "name": "Giant Kitchen",
+    "effect": "Both kitchens double in size. Volleying is rare.",
+    "vibe": "Slow game"
+  },
+  {
+    "id": 163,
+    "category": "Court / Environment",
+    "name": "Sideline Tax",
+    "effect": "Any ball landing within 6 inches of a sideline wins automatically.",
+    "vibe": "Edge bonus"
+  },
+  {
+    "id": 164,
+    "category": "Court / Environment",
+    "name": "Centerline Hot Zone",
+    "effect": "Any ball landing on the centerline counts as 2 points.",
+    "vibe": "Center bullseye"
+  },
+  {
+    "id": 165,
+    "category": "Court / Environment",
+    "name": "Treasure Spot",
+    "effect": "Place a paddle cover or towel on a court spot. First to land 3 shots on it wins next point.",
+    "vibe": "Target practice"
+  },
+  {
+    "id": 166,
+    "category": "Court / Environment",
+    "name": "Wind Pretend",
+    "effect": "Pretend there's a strong wind blowing from one direction. Adjust every shot accordingly.",
+    "vibe": "Imagination required"
+  },
+  {
+    "id": 167,
+    "category": "Court / Environment",
+    "name": "Phantom Player",
+    "effect": "Play this point as if there's an invisible 5th player at the net. Don't hit 'them.'",
+    "vibe": "Ghost in the kitchen"
+  },
+  {
+    "id": 168,
+    "category": "Court / Environment",
+    "name": "Bouncing Bonus",
+    "effect": "Any ball that bounces in the kitchen counts double if you win the point.",
+    "vibe": "Soft-zone reward"
+  },
+  {
+    "id": 169,
+    "category": "Court / Environment",
+    "name": "Net Cord Wins",
+    "effect": "Any net-cord shot that goes over and lands in = automatic point.",
+    "vibe": "Lucky bounces"
+  },
+  {
+    "id": 170,
+    "category": "Court / Environment",
+    "name": "Wall Bounce",
+    "effect": "If your shot hits the back fence/wall and stays in play, it's a free point. (Outdoor only.)",
+    "vibe": "Pickleball + handball"
+  },
+  {
+    "id": 171,
+    "category": "Court / Environment",
+    "name": "Boundary Bonus",
+    "effect": "If you hit the line, you get an extra point.",
+    "vibe": "Line painter"
+  },
+  {
+    "id": 172,
+    "category": "Court / Environment",
+    "name": "No Right Side",
+    "effect": "Half the court is out of bounds. Pick a half \u2014 the right side is dead.",
+    "vibe": "Survive on one side"
+  },
+  {
+    "id": 173,
+    "category": "Court / Environment",
+    "name": "Corner Quest",
+    "effect": "First team to land shots in all four corners (any order) wins the next point.",
+    "vibe": "Bingo court"
+  },
+  {
+    "id": 174,
+    "category": "Court / Environment",
+    "name": "Mirror Court",
+    "effect": "Cross-court shots are illegal. Down-the-line only.",
+    "vibe": "Straight lines"
+  },
+  {
+    "id": 175,
+    "category": "Court / Environment",
+    "name": "Diagonal Only",
+    "effect": "Down-the-line shots are illegal. Cross-court only.",
+    "vibe": "X marks the spot"
+  },
+  {
+    "id": 176,
+    "category": "Court / Environment",
+    "name": "Shadow Drill",
+    "effect": "Whichever side has the sun in their eyes (or imaginary sun) gets +1 to their score for the next point.",
+    "vibe": "Sun handicap"
+  },
+  {
+    "id": 177,
+    "category": "Court / Environment",
+    "name": "Wet Court",
+    "effect": "Pretend the court is wet. Move cautiously \u2014 no quick lateral cuts.",
+    "vibe": "Skating chaos"
+  },
+  {
+    "id": 178,
+    "category": "Court / Environment",
+    "name": "Echo Court",
+    "effect": "Every spoken word must be repeated by the speaker twice. (For 3 points.)",
+    "vibe": "Annoyance achieved"
+  },
+  {
+    "id": 179,
+    "category": "Court / Environment",
+    "name": "Spotlight On",
+    "effect": "All eyes on one player. Picked player must hit every shot for their team this point. (Doubles)",
+    "vibe": "Pressure on"
+  },
+  {
+    "id": 180,
+    "category": "Court / Environment",
+    "name": "Cone Challenge",
+    "effect": "Place water bottles or cones on the court. Hitting them = bonus point. Players try to dodge.",
+    "vibe": "Obstacle course"
+  },
+  {
+    "id": 181,
+    "category": "Meta & Game-Flow",
+    "name": "Draw Two",
+    "effect": "Draw two more cards and play both effects this point.",
+    "vibe": "Card combo"
+  },
+  {
+    "id": 182,
+    "category": "Meta & Game-Flow",
+    "name": "Discard Pile Draw",
+    "effect": "Take any card from the discard pile and play it.",
+    "vibe": "Resurrected effect"
+  },
+  {
+    "id": 183,
+    "category": "Meta & Game-Flow",
+    "name": "Skip Next Draw",
+    "effect": "Skip the next scheduled card draw. No effects next point.",
+    "vibe": "Breather"
+  },
+  {
+    "id": 184,
+    "category": "Meta & Game-Flow",
+    "name": "Sudden Shuffle",
+    "effect": "Shuffle the discard pile back into the deck immediately.",
+    "vibe": "Reset deck"
+  },
+  {
+    "id": 185,
+    "category": "Meta & Game-Flow",
+    "name": "Pick a Card",
+    "effect": "Choose which card opponents must play (pull blind from the deck, then trade).",
+    "vibe": "Hand them fate"
+  },
+  {
+    "id": 186,
+    "category": "Meta & Game-Flow",
+    "name": "Auction",
+    "effect": "The next card drawn goes to whichever team wins the next point. Stakes raised.",
+    "vibe": "Card prize"
+  },
+  {
+    "id": 187,
+    "category": "Meta & Game-Flow",
+    "name": "Card Hand",
+    "effect": "Hold any drawn card from now on. Play them strategically.",
+    "vibe": "Hand mode unlocked"
+  },
+  {
+    "id": 188,
+    "category": "Meta & Game-Flow",
+    "name": "Trade Now",
+    "effect": "Trade your card with the player to your left. No looking.",
+    "vibe": "Blind swap"
+  },
+  {
+    "id": 189,
+    "category": "Meta & Game-Flow",
+    "name": "Reveal All",
+    "effect": "Everyone shows the cards they're holding. Adjust strategy.",
+    "vibe": "Hand revealed"
+  },
+  {
+    "id": 190,
+    "category": "Meta & Game-Flow",
+    "name": "Wild Card",
+    "effect": "Choose any past card effect from the discard pile and replay it.",
+    "vibe": "Time travel"
+  },
+  {
+    "id": 191,
+    "category": "Meta & Game-Flow",
+    "name": "Stack Effect",
+    "effect": "All cards drawn this game must be played at once next point. Hope you saved a good one.",
+    "vibe": "Combo overload"
+  },
+  {
+    "id": 192,
+    "category": "Meta & Game-Flow",
+    "name": "Card Chain",
+    "effect": "Whoever wins this point also gets to play the next card drawn.",
+    "vibe": "Winner's reward"
+  },
+  {
+    "id": 193,
+    "category": "Meta & Game-Flow",
+    "name": "Time Bomb",
+    "effect": "In 3 points, draw another card no matter what.",
+    "vibe": "Ticking clock"
+  },
+  {
+    "id": 194,
+    "category": "Meta & Game-Flow",
+    "name": "Force Play",
+    "effect": "Force an opponent to play their next held card right now.",
+    "vibe": "Tip their hand"
+  },
+  {
+    "id": 195,
+    "category": "Meta & Game-Flow",
+    "name": "No-Card Round",
+    "effect": "No cards may be drawn for the next 5 points.",
+    "vibe": "Pure pickleball"
+  },
+  {
+    "id": 196,
+    "category": "Meta & Game-Flow",
+    "name": "Quick Draw",
+    "effect": "Both teams draw a card. Highest-stakes card wins this point.",
+    "vibe": "Card duel"
+  },
+  {
+    "id": 197,
+    "category": "Meta & Game-Flow",
+    "name": "Reverse Deck",
+    "effect": "Reverse the next card's effect \u2014 penalties become bonuses, restrictions hit the other team.",
+    "vibe": "Polarity flip"
+  },
+  {
+    "id": 198,
+    "category": "Meta & Game-Flow",
+    "name": "Permanent",
+    "effect": "The next card drawn stays in effect for the rest of the game.",
+    "vibe": "Permanent damage"
+  },
+  {
+    "id": 199,
+    "category": "Meta & Game-Flow",
+    "name": "House Rule",
+    "effect": "Players vote on a new rule that applies the rest of the game. Majority wins.",
+    "vibe": "Democracy in action"
+  },
+  {
+    "id": 200,
+    "category": "Meta & Game-Flow",
+    "name": "End Card",
+    "effect": "Skip directly to game point. Whoever wins this point wins the game.",
+    "vibe": "Sudden death"
+  }
+]
