@@ -1,5 +1,21 @@
 # Worklog
 
+## 2026-06-09 18:35 — CI gate, project consolidation, legacy cleanup
+
+**Summary:** Consolidated to a single Vercel project, added a CI workflow, and removed the legacy prototypes that caused the deploy mis-detection.
+
+**Vercel:** relinked the CLI to the `pickleball-shuffle` project and **deleted the redundant `app` project** — one project, one URL (https://pickleball-shuffle.vercel.app), one deploy log.
+
+**CI:** added `.github/workflows/ci.yml` — lint + `tsc --noEmit` + build on push/PR to `main` (Node 24, npm cache). First run: **success**.
+- Fixed `react-hooks/static-components` properly via a stable `CategoryIcon` component (was deriving an icon component during render in `CardDisplay`).
+- Downgraded `react-hooks/set-state-in-effect` to a warning — loading localStorage into state inside mount/open effects is the SSR-safe pattern (reading during render → hydration mismatch).
+
+**Cleanup:** `git rm`'d `backend/` (FastAPI) and `frontend/` (Vite stub) — unused, and the reason Vercel auto-detected the framework as `fastapi`.
+
+**Verification:** CI success · Vercel deploy READY · live HTTP 200 · GitHub commit status green.
+
+**Note:** CI currently *reports* but does not *block* — Vercel auto-deploys `main` on push. To make it a true gate, enable branch protection on `main` (require the CI check) and work via PRs.
+
 ## 2026-06-09 18:16 — Fix failing GitHub→Vercel deploys + meaningful URL
 
 **Summary:** GitHub-triggered Vercel deploys were failing on every push. Root-caused and fixed via project settings; also switched the canonical URL to a meaningful one.
