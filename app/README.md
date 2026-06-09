@@ -4,7 +4,7 @@
 
 A free, **mobile-first, local-first** web app with 200 pickleball twist cards across 10 categories. Tap to draw, read the rule, play the next point under that twist — then keep score with a real pickleball scoring engine.
 
-### ▶︎ Live app: **https://app-delta-ten-94.vercel.app**
+### ▶︎ Live app: **https://pickleball-shuffle.vercel.app**
 
 No login. No install. Open the link at the court and play.
 
@@ -218,7 +218,7 @@ vercel --prod        # from the app/ directory
 ./deploy-vercel.sh   # from the repo root
 ```
 
-Current production alias: **https://app-delta-ten-94.vercel.app**
+Current production alias: **https://pickleball-shuffle.vercel.app**
 
 ## Data & privacy
 

@@ -4,7 +4,7 @@
 
 A free, **mobile-first, local-first** web app: 200 pickleball twist cards across 10 categories, fused with a real pickleball scorekeeper. Tap to draw a card, play the next point under that twist, and keep score — all on your phone, no login, no signal required after first load.
 
-### ▶︎ Live app: **https://app-delta-ten-94.vercel.app**
+### ▶︎ Live app: **https://pickleball-shuffle.vercel.app**
 
 ---
 
@@ -68,7 +68,7 @@ npm start
 cd app && vercel --prod      # or: ./deploy-vercel.sh from the repo root
 ```
 
-Current production alias: **https://app-delta-ten-94.vercel.app**
+Current production alias: **https://pickleball-shuffle.vercel.app**
 
 ## Documentation
 

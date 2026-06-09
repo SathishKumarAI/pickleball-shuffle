@@ -3,7 +3,7 @@
 Next.js card game + pickleball scorekeeper. 200 twist cards across 10 categories, 5 deck modes.
 **Local-first: no backend, no login, no database.** All state lives in `localStorage`.
 
-Live: https://app-delta-ten-94.vercel.app
+Live: https://pickleball-shuffle.vercel.app
 
 ## Stack
 - Next.js 16 (App Router, Turbopack) + React 19 + TypeScript + Tailwind v4
