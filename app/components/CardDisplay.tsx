@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CATEGORY_COLORS } from "@/lib/cards";
-import { categoryIcon } from "./icons";
+import { CategoryIcon } from "./icons";
 import { Shuffle, Star, SkipForward } from "lucide-react";
 import { useState } from "react";
 
@@ -49,7 +49,6 @@ export default function CardDisplay({
   };
 
   const gradient = card ? CATEGORY_COLORS[card.category] || "from-gray-500 to-gray-700" : "";
-  const CatIcon = card ? categoryIcon(card.category) : Shuffle;
 
   return (
     <div className="flex flex-col items-center gap-5 flex-1 justify-center">
@@ -81,7 +80,7 @@ export default function CardDisplay({
           {/* Face of card */}
           <div className={`card-face card-face--back shine ${shine ? "shine-run" : ""} w-full h-full rounded-3xl bg-gradient-to-br ${gradient} flex flex-col p-6 select-none shadow-2xl`} style={{ border: "1px solid rgba(255,255,255,0.2)" }}>
             <div className="flex justify-between items-start">
-              <span className="text-white drop-shadow"><CatIcon size={30} strokeWidth={2} /></span>
+              <span className="text-white drop-shadow">{card && <CategoryIcon category={card.category} size={30} strokeWidth={2} />}</span>
               {onFavorite && (
                 <button onClick={(e) => { e.stopPropagation(); onFavorite(); }} className="text-white transition-transform hover:scale-125 active:scale-90">
                   <Star size={22} fill={isFavorite ? "currentColor" : "none"} />

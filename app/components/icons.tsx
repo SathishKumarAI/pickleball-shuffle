@@ -3,6 +3,7 @@ import {
   Ban, Activity, Repeat, AlertTriangle, Gift, Brain, Sparkles, LandPlot, Dice5,
   type LucideIcon,
 } from "lucide-react";
+import type { ComponentProps } from "react";
 import { DeckMode } from "@/lib/cards";
 
 export const MODE_ICONS: Record<DeckMode, LucideIcon> = {
@@ -28,4 +29,10 @@ export const CATEGORY_ICONS: Record<string, LucideIcon> = {
 
 export function categoryIcon(category: string): LucideIcon {
   return CATEGORY_ICONS[category] || Shuffle;
+}
+
+// Stable component wrapper so callers don't derive a component during render.
+export function CategoryIcon({ category, ...props }: { category: string } & ComponentProps<LucideIcon>) {
+  const Icon = CATEGORY_ICONS[category] || Shuffle;
+  return <Icon {...props} />;
 }
