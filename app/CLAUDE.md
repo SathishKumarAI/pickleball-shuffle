@@ -1,23 +1,45 @@
 # Pickleball Shuffle
 
-Next.js card game web app. 200 pickleball twist cards across 10 categories, 5 deck modes.
+Next.js card game + pickleball scorekeeper. 200 twist cards across 10 categories, 5 deck modes.
+**Local-first: no backend, no login, no database.** All state lives in `localStorage`.
+
+Live: https://app-delta-ten-94.vercel.app
 
 ## Stack
-- Next.js 16 + TypeScript + Tailwind CSS
-- Static site (no backend needed) — cards loaded from public/cards.json
-- Deployable to Vercel or self-hosted
+- Next.js 16 (App Router, Turbopack) + React 19 + TypeScript + Tailwind v4
+- lucide-react for all icons (no emoji)
+- Cards loaded from `public/cards.json`; everything else is client state + localStorage
+- Deployed on Vercel (`vercel --prod` from this dir, or `../deploy-vercel.sh`)
 
 ## Commands
 ```bash
-npm run dev      # http://localhost:3000
+npm run dev      # http://localhost:3000 (binds 0.0.0.0 for phone testing)
 npm run build    # production build
 npm start        # serve production build
+vercel --prod    # deploy
 ```
 
 ## Structure
 ```
-app/page.tsx          — main game (mode select + card draw + score)
-components/           — CardDisplay, ScoreKeeper, DeckModeSelector, CardHistory
+app/page.tsx          — the whole game: state, draw, score, resume, panels
+components/           — CardDisplay (3D flip), ScoreKeeper, TopBar, CardHistory,
+                        WinCelebration, PlayerNames, SettingsSheet, AppMenu,
+                        HistoryPanel, DecksPanel, FeedbackPanel, icons.tsx
 lib/cards.ts          — card types, deck modes, filtering, shuffle
-public/cards.json     — 200 cards data
+lib/game.ts           — PURE game engine (addScore/sideOut/undo/checkWin) + active-game localStorage
+lib/client-api.ts     — local store: custom decks, match history, export/import
+lib/sounds.ts         — Web Audio SFX + haptics
+public/cards.json     — 200 cards
+public/sw.js          — network-first service worker (prod only; dev unregisters it)
 ```
+
+## Conventions
+- Game logic = pure functions in `lib/game.ts`; UI calls them and stores the returned `GameSession`.
+- All persistence goes through `lib/client-api.ts` (swap point if a real DB is ever added).
+- Theme via CSS vars + `data-theme` on `<html>`; animation utilities live in `globals.css`.
+- Mobile-first: `100dvh`, 16px inputs, `touch-action: manipulation`, safe-area insets, responsive `clamp()` card.
+
+## Dead code (inert stubs from an abandoned auth experiment — safe to delete)
+`app/api/`, `app/login`, `app/signup`, `lib/db.ts`, `lib/auth.ts`, `lib/supabase/`,
+`components/AuthForm.tsx`, `components/UserMenu.tsx`. Also pre-existing orphans
+`components/GameSettings.tsx`, `components/DeckModeSelector.tsx`.
