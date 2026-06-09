@@ -8,6 +8,7 @@ import { Card } from "./cards";
 
 const DECKS_KEY = "pb-custom-decks";
 const MATCHES_KEY = "pb-match-history";
+const FAVORITES_KEY = "pb-favorites";
 
 export interface CustomDeck {
   id: string;
@@ -87,10 +88,21 @@ export function clearMatches() {
   write(MATCHES_KEY, []);
 }
 
+/* ─── Favorite cards (persist across games) ─── */
+export function listFavoriteIds(): number[] {
+  return read<number[]>(FAVORITES_KEY, []);
+}
+export function toggleFavorite(id: number): number[] {
+  const cur = read<number[]>(FAVORITES_KEY, []);
+  const next = cur.includes(id) ? cur.filter((x) => x !== id) : [id, ...cur];
+  write(FAVORITES_KEY, next);
+  return next;
+}
+
 /* ─── Export / import (backup) ─── */
 export function exportData(): string {
   return JSON.stringify(
-    { version: 1, decks: listDecks(), matches: listMatches() },
+    { version: 1, decks: listDecks(), matches: listMatches(), favorites: listFavoriteIds() },
     null,
     2
   );
@@ -99,6 +111,7 @@ export function importData(json: string): { decks: number; matches: number } {
   const data = JSON.parse(json);
   if (Array.isArray(data.decks)) write(DECKS_KEY, data.decks);
   if (Array.isArray(data.matches)) write(MATCHES_KEY, data.matches);
+  if (Array.isArray(data.favorites)) write(FAVORITES_KEY, data.favorites);
   return { decks: data.decks?.length ?? 0, matches: data.matches?.length ?? 0 };
 }
 

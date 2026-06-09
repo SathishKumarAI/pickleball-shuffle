@@ -123,20 +123,14 @@ export function undoLast(game: GameSession): GameSession {
 }
 
 export function resetScore(game: GameSession): GameSession {
-  const event: ScoreEvent = {
-    team: 1,
-    type: "reset",
-    scoreBefore: { ...game.score },
-    scoreAfter: { team1: 0, team2: 0 },
-    timestamp: Date.now(),
-  };
-
+  // Clean slate for the current game: zero the score and clear the undo stack.
+  // (Saved Match history in localStorage is separate and is NOT touched here.)
   return {
     ...game,
     score: { team1: 0, team2: 0 },
     servingTeam: 1,
     serverNumber: 1,
-    history: [...game.history, event],
+    history: [],
     winner: null,
   };
 }

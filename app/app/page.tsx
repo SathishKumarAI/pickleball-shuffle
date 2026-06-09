@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { Card, DeckMode, DECK_MODES, getFilteredCards, shuffleArray } from "@/lib/cards";
 import { GameSession, GameConfig, createGame, addScore, sideOut, undoLast, resetScore, startNewGame, saveGame, loadGame, clearSavedGame, formatTime } from "@/lib/game";
 import { playScoreSound, playUndoSound, playCardFlipSound, playWinSound, playResetSound, triggerHaptic } from "@/lib/sounds";
-import { addMatch, deckToCards, CustomDeck } from "@/lib/client-api";
+import { addMatch, deckToCards, CustomDeck, listFavoriteIds, toggleFavorite } from "@/lib/client-api";
 import { Sun, Moon, Play, X } from "lucide-react";
 import TopBar from "@/components/TopBar";
 import CardDisplay from "@/components/CardDisplay";
@@ -16,6 +16,7 @@ import SettingsSheet from "@/components/SettingsSheet";
 import AppMenu from "@/components/AppMenu";
 import HistoryPanel from "@/components/HistoryPanel";
 import DecksPanel from "@/components/DecksPanel";
+import FavoritesPanel from "@/components/FavoritesPanel";
 import FeedbackPanel from "@/components/FeedbackPanel";
 import { MODE_ICONS } from "@/components/icons";
 
@@ -43,12 +44,16 @@ export default function Home() {
   const [showNameEditor, setShowNameEditor] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [showDecks, setShowDecks] = useState(false);
+  const [showFavorites, setShowFavorites] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
   const [confirmTeam, setConfirmTeam] = useState<1 | 2 | null>(null);
+  const [confirmReset, setConfirmReset] = useState(false);
   const savedMatchRef = useRef<string | null>(null);
 
   useEffect(() => {
     fetch("/cards.json", { cache: "no-store" }).then((r) => r.json()).then(setAllCards);
+    setFavoriteIds(listFavoriteIds());
     if ("serviceWorker" in navigator) {
       if (process.env.NODE_ENV === "production") {
         navigator.serviceWorker.register("/sw.js").catch(() => {});
@@ -194,9 +199,23 @@ export default function Home() {
     setGame({ ...game, config: { ...game.config, [key]: value } as GameConfig });
   };
 
+  // Reset = clean slate for THIS game (score, undo stack, on-screen card/draws).
+  // Saved Match history is intentionally left untouched.
+  const doReset = () => {
+    if (!game) return;
+    setGame(resetScore(game));
+    setCurrentCard(null);
+    setCardHistory([]);
+    if (game.config.soundEnabled) playResetSound();
+  };
+
   const cardCounts = Object.fromEntries(
     (Object.keys(DECK_MODES) as DeckMode[]).map((m) => [m, getFilteredCards(allCards, m).length])
   ) as Record<DeckMode, number>;
+
+  const favoriteCards = favoriteIds
+    .map((id) => allCards.find((c) => c.id === id) ?? customCards?.find((c) => c.id === id))
+    .filter(Boolean) as Card[];
 
   /* ─── Landing Page ─── */
   if (!game) {
@@ -205,10 +224,10 @@ export default function Home() {
         <div className="mesh-bg flex flex-col" style={{ background: "var(--bg)", minHeight: "100dvh" }}>
           {/* Header (no overlap with content) */}
           <header className="safe-top safe-x flex items-center justify-end gap-2 pb-2">
-            <AppMenu onOpenHistory={() => setShowHistory(true)} onOpenDecks={() => setShowDecks(true)} onOpenFeedback={() => setShowFeedback(true)} />
             <button onClick={() => setDarkMode(!darkMode)} className="pressable p-2 rounded-full" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-secondary)" }} aria-label="Toggle theme">
               {darkMode ? <Sun size={18} /> : <Moon size={18} />}
             </button>
+            <AppMenu onOpenHistory={() => setShowHistory(true)} onOpenDecks={() => setShowDecks(true)} onOpenFavorites={() => setShowFavorites(true)} onOpenFeedback={() => setShowFeedback(true)} />
           </header>
 
           <main className="flex-1 flex flex-col items-center justify-center gap-8 px-6 py-8 safe-bottom">
@@ -272,6 +291,7 @@ export default function Home() {
 
         <HistoryPanel open={showHistory} onClose={() => setShowHistory(false)} />
         <DecksPanel open={showDecks} onClose={() => setShowDecks(false)} onPlay={startCustomDeck} />
+        <FavoritesPanel open={showFavorites} onClose={() => setShowFavorites(false)} cards={favoriteCards} onRemove={(id) => setFavoriteIds(toggleFavorite(id))} />
         <FeedbackPanel open={showFeedback} onClose={() => setShowFeedback(false)} />
       </>
     );
@@ -292,9 +312,9 @@ export default function Home() {
         onEditNames={() => setShowNameEditor(!showNameEditor)}
         onToggleLock={() => setGame({ ...game, config: { ...game.config, scoreLocked: !game.config.scoreLocked } })}
         onUndo={() => { setGame(undoLast(game)); if (game.config.soundEnabled) playUndoSound(); }}
-        onReset={() => setShowSettings(true)}
+        onReset={() => setConfirmReset(true)}
         onOpenSettings={() => setShowSettings(true)}
-        menuSlot={<AppMenu onOpenHistory={() => setShowHistory(true)} onOpenDecks={() => setShowDecks(true)} onOpenFeedback={() => setShowFeedback(true)} />}
+        menuSlot={<AppMenu onOpenHistory={() => setShowHistory(true)} onOpenDecks={() => setShowDecks(true)} onOpenFavorites={() => setShowFavorites(true)} onOpenFeedback={() => setShowFeedback(true)} />}
       />
 
       <div className="flex-1 flex flex-col items-center gap-4 p-4 max-w-lg mx-auto w-full">
@@ -317,19 +337,30 @@ export default function Home() {
           </div>
         )}
 
+        {/* Confirm reset */}
+        {confirmReset && (
+          <div className="anim-pop glass flex items-center gap-3 p-3 rounded-xl" style={{ border: "1px solid var(--border)" }}>
+            <span className="text-sm" style={{ color: "var(--text-secondary)" }}>Reset score to 0 – 0?</span>
+            <button
+              onClick={() => { doReset(); setConfirmReset(false); }}
+              className="pressable px-4 py-1.5 rounded-full text-xs font-medium text-white"
+              style={{ background: "var(--red)" }}
+            >
+              Reset
+            </button>
+            <button onClick={() => setConfirmReset(false)} className="pressable px-4 py-1.5 rounded-full text-xs font-medium" style={{ background: "var(--bg-card)", color: "var(--text-secondary)" }}>Cancel</button>
+          </div>
+        )}
+
         <CardDisplay
           card={currentCard}
           onDraw={drawCard}
           deckRemaining={deck.length}
-          isFavorite={currentCard ? game.favoriteCardIds.includes(currentCard.id) : false}
-          onFavorite={currentCard ? () => {
-            const favs = game.favoriteCardIds.includes(currentCard.id)
-              ? game.favoriteCardIds.filter((id) => id !== currentCard.id)
-              : [...game.favoriteCardIds, currentCard.id];
-            setGame({ ...game, favoriteCardIds: favs });
-          } : undefined}
+          isFavorite={currentCard ? favoriteIds.includes(currentCard.id) : false}
+          onFavorite={currentCard ? () => setFavoriteIds(toggleFavorite(currentCard.id)) : undefined}
           onSkip={currentCard ? () => {
             setGame({ ...game, skippedCardIds: [...game.skippedCardIds, currentCard.id] });
+            drawCard();
           } : undefined}
         />
 
@@ -341,7 +372,7 @@ export default function Home() {
         open={showSettings}
         onClose={() => setShowSettings(false)}
         onUpdate={handleConfigUpdate}
-        onReset={() => { setGame(resetScore(game)); if (game.config.soundEnabled) playResetSound(); setShowSettings(false); }}
+        onReset={() => { doReset(); setShowSettings(false); }}
       />
 
       {game.winner && (
@@ -355,6 +386,7 @@ export default function Home() {
 
       <HistoryPanel open={showHistory} onClose={() => setShowHistory(false)} />
       <DecksPanel open={showDecks} onClose={() => setShowDecks(false)} onPlay={startCustomDeck} />
+      <FavoritesPanel open={showFavorites} onClose={() => setShowFavorites(false)} cards={favoriteCards} onRemove={(id) => setFavoriteIds(toggleFavorite(id))} />
       <FeedbackPanel open={showFeedback} onClose={() => setShowFeedback(false)} />
     </div>
   );

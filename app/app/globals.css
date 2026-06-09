@@ -73,6 +73,10 @@ input, textarea, select {
   font-size: 16px;
 }
 
+/* Icons must never be compressed by a tight flex row — the #1 cause of icon
+   overlap. lucide-react renders <svg class="lucide …">, so guard them globally. */
+svg.lucide { flex-shrink: 0; }
+
 /* Safe-area helpers for notches / home indicators */
 .safe-top { padding-top: max(1rem, env(safe-area-inset-top)); }
 .safe-x {

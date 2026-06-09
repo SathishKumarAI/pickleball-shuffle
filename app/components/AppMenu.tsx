@@ -1,16 +1,18 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Menu, History, Layers, Download, Upload, MessageSquare } from "lucide-react";
+import { Menu, History, Layers, Star, Download, Upload, MessageSquare } from "lucide-react";
 import { exportData, importData } from "@/lib/client-api";
 
 export default function AppMenu({
   onOpenHistory,
   onOpenDecks,
+  onOpenFavorites,
   onOpenFeedback,
 }: {
   onOpenHistory: () => void;
   onOpenDecks: () => void;
+  onOpenFavorites: () => void;
   onOpenFeedback: () => void;
 }) {
   const [open, setOpen] = useState(false);
@@ -65,8 +67,9 @@ export default function AppMenu({
       </button>
 
       {open && (
-        <div className="anim-pop absolute right-0 mt-2 w-52 rounded-2xl overflow-hidden glass z-50 shadow-2xl" style={{ border: "1px solid var(--border)" }}>
+        <div className="anim-pop absolute right-0 mt-2 w-52 rounded-2xl overflow-hidden z-50 shadow-2xl" style={{ background: "var(--bg-card)", border: "1px solid var(--border)" }}>
           <Item icon={<History size={16} />} label="Match history" onClick={() => { setOpen(false); onOpenHistory(); }} />
+          <Item icon={<Star size={16} />} label="Favorite cards" onClick={() => { setOpen(false); onOpenFavorites(); }} />
           <Item icon={<Layers size={16} />} label="Custom decks" onClick={() => { setOpen(false); onOpenDecks(); }} />
           <div style={{ borderTop: "1px solid var(--border)" }}>
             <Item icon={<Download size={16} />} label="Export backup" onClick={doExport} />
@@ -87,10 +90,10 @@ function Item({ icon, label, onClick }: { icon: React.ReactNode; label: string; 
   return (
     <button
       onClick={onClick}
-      className="w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors hover:bg-[var(--bg-elevated)]"
-      style={{ color: "var(--text-secondary)" }}
+      className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors hover:bg-[var(--bg-elevated)]"
+      style={{ color: "var(--text)" }}
     >
-      {icon}
+      <span style={{ color: "var(--accent)" }}>{icon}</span>
       {label}
     </button>
   );

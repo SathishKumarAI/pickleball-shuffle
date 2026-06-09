@@ -1,5 +1,27 @@
 # Worklog
 
+## 2026-06-09 17:52 — Icon-overlap fix, readable menu, reset button, skip/favorites, docs
+
+**Summary:** Fixed an icon-overlap bug and several smaller issues surfaced during testing, added a discoverable score Reset and a Favorites view, made skip auto-advance, and documented all findings.
+
+**Fixes (full list in `docs/BUG-LOG.md`):**
+- **Icon overlap** — global `svg.lucide { flex-shrink: 0 }`; TopBar `shrink-0`/`min-w-0`/`flex-wrap` guards; card category pill `truncate`. Root cause + prevention rules in `docs/UI-LAYOUT-NOTES.md`.
+- **Menu (☰)** — moved to the far right; dropdown switched from translucent `glass` to a solid `var(--bg-card)` surface with `var(--text)` labels (was unreadable in both themes).
+- **Card too big** — responsive height `50dvh`→`38dvh`, capped 22rem; back glyph 72→56px.
+- **Score reset** — added a TopBar **Reset** quick-action with inline confirm (was buried in Settings).
+
+**Features:**
+- **Skip** now auto-advances to the next card (still filters future draws).
+- **Favorites** are now persistent (`pb-favorites`) with a **Favorite cards** panel in the menu; included in export/import.
+
+**Files:** `app/globals.css`, `components/TopBar.tsx`, `components/AppMenu.tsx`, `components/CardDisplay.tsx`, `components/FavoritesPanel.tsx` (new), `lib/client-api.ts`, `app/page.tsx`.
+
+**Docs added:** `docs/UI-LAYOUT-NOTES.md` (icon/layout rules), `docs/BUG-LOG.md` (all findings + fixes).
+
+**Clarification (not a bug):** scoring is independent of the card flip — tap a team tile to score; with side-out scoring on, only the serving team scores on tap.
+
+**Verification:** `npm run build` clean.
+
 ## 2026-06-09 17:15 — Fix: resumed game lost the current card
 
 **Summary:** Fixed a bug where going Back then resuming (or refreshing mid-game) dropped the visible card and recent-draws list. Also fixed custom-deck resume.

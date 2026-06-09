@@ -53,10 +53,10 @@ export default function CardDisplay({
 
   return (
     <div className="flex flex-col items-center gap-5 flex-1 justify-center">
-      {/* Card — scales with the device viewport so it fits any phone */}
+      {/* Card — scales with the device viewport but stays compact */}
       <div
         className="card-3d cursor-pointer"
-        style={{ width: "min(82vw, 20rem)", height: "clamp(17rem, 50dvh, 26rem)" }}
+        style={{ width: "min(78vw, 18rem)", height: "clamp(15rem, 38dvh, 22rem)" }}
         onClick={handleDraw}
       >
         <div className={`card-3d-inner ${flipped ? "is-flipped" : ""}`}>
@@ -69,7 +69,7 @@ export default function CardDisplay({
             }}
           >
             <div className="anim-float text-white" style={{ filter: "drop-shadow(0 6px 14px rgba(0,0,0,0.3))" }}>
-              <Shuffle size={72} strokeWidth={1.5} />
+              <Shuffle size={56} strokeWidth={1.5} />
             </div>
             <div className="text-2xl font-black text-white tracking-[0.2em]">SHUFFLE</div>
             <div className="text-sm text-white/70 mt-1">Tap to draw</div>
@@ -94,10 +94,10 @@ export default function CardDisplay({
               <p className="text-sm sm:text-base text-white/90 leading-relaxed">{card?.effect}</p>
             </div>
 
-            <div className="flex justify-between items-end">
-              <span className="text-xs text-white/70 bg-white/15 px-3 py-1 rounded-full backdrop-blur-sm">{card?.category}</span>
+            <div className="flex justify-between items-end gap-2">
+              <span className="text-xs text-white/70 bg-white/15 px-3 py-1 rounded-full backdrop-blur-sm truncate min-w-0">{card?.category}</span>
               {onSkip && (
-                <button onClick={(e) => { e.stopPropagation(); onSkip(); }} className="flex items-center gap-1 text-xs text-white/50 hover:text-white transition-colors">
+                <button onClick={(e) => { e.stopPropagation(); onSkip(); }} className="shrink-0 flex items-center gap-1 text-xs text-white/60 hover:text-white transition-colors">
                   Skip <SkipForward size={13} />
                 </button>
               )}

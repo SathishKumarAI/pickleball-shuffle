@@ -73,6 +73,8 @@ Current production alias: **https://app-delta-ten-94.vercel.app**
 ## Documentation
 
 - **[`app/README.md`](app/README.md)** — full feature list + architecture deep-dive (data flow, scoring engine, localStorage schema, animation, service-worker strategy, mobile hardening).
+- **[`docs/BUG-LOG.md`](docs/BUG-LOG.md)** — issues found and how each was fixed.
+- **[`docs/UI-LAYOUT-NOTES.md`](docs/UI-LAYOUT-NOTES.md)** — icon-overlap root cause + rules to avoid layout bugs.
 - **[`docs/WORKLOG.md`](docs/WORKLOG.md)** — dated change log.
 
 ## License
