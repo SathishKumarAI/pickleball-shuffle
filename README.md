@@ -1,4 +1,4 @@
-# 🏓 Pickleball Shuffle
+#  Pickleball Shuffle
 
 **Draw twist cards mid-match. Shake up the game.**
 
