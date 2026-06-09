@@ -1,9 +1,11 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Card, DeckMode, DECK_MODES, getFilteredCards, shuffleArray } from "@/lib/cards";
 import { GameSession, GameConfig, createGame, addScore, sideOut, undoLast, resetScore, startNewGame, saveGame, loadGame, clearSavedGame, formatTime } from "@/lib/game";
 import { playScoreSound, playUndoSound, playCardFlipSound, playWinSound, playResetSound, triggerHaptic } from "@/lib/sounds";
+import { addMatch, deckToCards, CustomDeck } from "@/lib/client-api";
+import { Sun, Moon, Play, X } from "lucide-react";
 import TopBar from "@/components/TopBar";
 import CardDisplay from "@/components/CardDisplay";
 import ScoreKeeper from "@/components/ScoreKeeper";
@@ -11,6 +13,19 @@ import CardHistory from "@/components/CardHistory";
 import WinCelebration from "@/components/WinCelebration";
 import PlayerNames from "@/components/PlayerNames";
 import SettingsSheet from "@/components/SettingsSheet";
+import AppMenu from "@/components/AppMenu";
+import HistoryPanel from "@/components/HistoryPanel";
+import DecksPanel from "@/components/DecksPanel";
+import FeedbackPanel from "@/components/FeedbackPanel";
+import { MODE_ICONS } from "@/components/icons";
+
+const LANDING_MODES: { key: DeckMode; label: string; desc: string }[] = [
+  { key: "family", label: "Family", desc: "Fun for all ages" },
+  { key: "party", label: "Party", desc: "Laughs & dares" },
+  { key: "drill", label: "Drill", desc: "Sharpen skills" },
+  { key: "tournament", label: "Tournament", desc: "Competitive" },
+  { key: "chaos", label: "Chaos", desc: "All 200 cards" },
+];
 
 export default function Home() {
   const [allCards, setAllCards] = useState<Card[]>([]);
@@ -18,26 +33,62 @@ export default function Home() {
   const [currentCard, setCurrentCard] = useState<Card | null>(null);
   const [cardHistory, setCardHistory] = useState<Card[]>([]);
   const [game, setGame] = useState<GameSession | null>(null);
+  const [savedGame, setSavedGame] = useState<GameSession | null>(null);
   const [elapsed, setElapsed] = useState("0:00");
   const [mode, setMode] = useState<DeckMode>("chaos");
+  const [customCards, setCustomCards] = useState<Card[] | null>(null);
+  const [customName, setCustomName] = useState<string | null>(null);
   const [darkMode, setDarkMode] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const [showNameEditor, setShowNameEditor] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
+  const [showDecks, setShowDecks] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
   const [confirmTeam, setConfirmTeam] = useState<1 | 2 | null>(null);
+  const savedMatchRef = useRef<string | null>(null);
 
   useEffect(() => {
-    fetch("/cards.json").then((r) => r.json()).then(setAllCards);
-    if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(() => {});
+    fetch("/cards.json", { cache: "no-store" }).then((r) => r.json()).then(setAllCards);
+    if ("serviceWorker" in navigator) {
+      if (process.env.NODE_ENV === "production") {
+        navigator.serviceWorker.register("/sw.js").catch(() => {});
+      } else {
+        navigator.serviceWorker.getRegistrations().then((rs) => rs.forEach((r) => r.unregister()));
+        if ("caches" in window) caches.keys().then((ks) => ks.forEach((k) => caches.delete(k)));
+      }
+    }
   }, []);
 
+  // Offer to resume an unfinished game (don't auto-enter — let the user choose).
   useEffect(() => {
     const saved = loadGame();
-    if (saved && allCards.length > 0) {
-      setGame(saved);
-      setMode(saved.mode as DeckMode);
-      setDeck(shuffleArray(getFilteredCards(allCards, saved.mode as DeckMode)));
-    }
+    if (saved && !saved.winner) setSavedGame(saved);
   }, [allCards]);
+
+  const resumeGame = useCallback(() => {
+    if (!savedGame) return;
+    const m = savedGame.mode as DeckMode;
+    const custom = savedGame.customCards ?? null;
+    setMode(m);
+    setCustomCards(custom);
+    setCustomName(savedGame.customName ?? null);
+    const pool = custom ?? getFilteredCards(allCards, m);
+    setDeck(shuffleArray(pool));
+    // Restore the last drawn card + recent history from the saved game's own pool.
+    const byId = new Map(pool.map((c) => [c.id, c] as const));
+    const drawn = savedGame.drawnCardIds;
+    setCurrentCard(drawn.length ? byId.get(drawn[drawn.length - 1]) ?? null : null);
+    setCardHistory(
+      drawn.slice(-3).reverse().map((id) => byId.get(id)).filter(Boolean) as Card[]
+    );
+    setGame(savedGame);
+    setSavedGame(null);
+  }, [savedGame, allCards]);
+
+  const discardSaved = useCallback(() => {
+    clearSavedGame();
+    setSavedGame(null);
+  }, []);
 
   useEffect(() => {
     if (!game) return;
@@ -47,28 +98,67 @@ export default function Home() {
 
   useEffect(() => { if (game) saveGame(game); }, [game]);
 
+  // Persist a finished match to local history exactly once.
+  useEffect(() => {
+    if (game?.winner && savedMatchRef.current !== game.id + ":" + game.gameNumber) {
+      savedMatchRef.current = game.id + ":" + game.gameNumber;
+      addMatch(game);
+    }
+  }, [game?.winner, game?.gameNumber, game?.id]);
+
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "light");
+    let meta = document.querySelector('meta[name="theme-color"]');
+    if (!meta) {
+      meta = document.createElement("meta");
+      meta.setAttribute("name", "theme-color");
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute("content", darkMode ? "#0e0e11" : "#f4f4f6");
   }, [darkMode]);
 
-  const startGameHandler = useCallback((m: DeckMode, names?: { team1: string; team2: string }) => {
-    const filtered = getFilteredCards(allCards, m);
-    setDeck(shuffleArray(filtered));
+  const basePool = useCallback(
+    () => customCards ?? getFilteredCards(allCards, mode),
+    [customCards, allCards, mode]
+  );
+
+  const startGameHandler = useCallback((m: DeckMode) => {
+    setSavedGame(null);
+    setCustomCards(null);
+    setCustomName(null);
+    setDeck(shuffleArray(getFilteredCards(allCards, m)));
     setCurrentCard(null);
     setCardHistory([]);
     setMode(m);
-    setGame(createGame(m, names));
+    setGame(createGame(m));
   }, [allCards]);
+
+  const startCustomDeck = useCallback((d: CustomDeck) => {
+    setSavedGame(null);
+    const cards = deckToCards(d);
+    setCustomCards(cards);
+    setCustomName(d.name);
+    setMode("chaos");
+    setDeck(shuffleArray(cards));
+    setCurrentCard(null);
+    setCardHistory([]);
+    setShowDecks(false);
+    const g = createGame("chaos");
+    g.customName = d.name;
+    g.customCards = cards;
+    setGame(g);
+    triggerHaptic("light");
+  }, []);
 
   const drawCard = () => {
     if (!game) return;
-    let pool = deck.length > 0 ? deck : shuffleArray(getFilteredCards(allCards, mode));
+    const pool = deck.length > 0 ? deck : shuffleArray(basePool());
     const available = pool.filter((c) => !game.skippedCardIds.includes(c.id));
     const drawFrom = available.length > 0 ? available : pool;
     const [next, ...rest] = drawFrom;
     setDeck(rest.length > 0 ? rest : pool.slice(1));
     setCurrentCard(next);
-    setCardHistory((prev) => [next, ...prev].slice(0, 10));
+    setCardHistory((prev) => [next, ...prev].slice(0, 3));
     if (game.config.soundEnabled) { playCardFlipSound(); triggerHaptic("light"); }
     setGame((g) => g ? { ...g, drawnCardIds: [...g.drawnCardIds, next.id] } : g);
   };
@@ -91,6 +181,8 @@ export default function Home() {
   };
 
   const handleModeChange = (m: DeckMode) => {
+    setCustomCards(null);
+    setCustomName(null);
     setMode(m);
     setDeck(shuffleArray(getFilteredCards(allCards, m)));
     setCurrentCard(null);
@@ -109,54 +201,92 @@ export default function Home() {
   /* ─── Landing Page ─── */
   if (!game) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-10 p-6" style={{ background: "var(--bg)" }}>
-        <div className="text-center">
-          <div className="text-6xl mb-4">🏓</div>
-          <h1 className="text-4xl font-black tracking-tight" style={{ color: "var(--text)" }}>Pickleball Shuffle</h1>
-          <p className="mt-2 text-base" style={{ color: "var(--text-secondary)" }}>Draw twist cards. Shake up the game.</p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-sm">
-          {(Object.entries({
-            family: { emoji: "👨‍👩‍👧‍👦", label: "Family", desc: "Fun for all ages" },
-            party: { emoji: "🎉", label: "Party", desc: "Laughs & dares" },
-            drill: { emoji: "🎯", label: "Drill", desc: "Sharpen skills" },
-            tournament: { emoji: "🏆", label: "Tournament", desc: "Competitive" },
-            chaos: { emoji: "🌀", label: "Chaos", desc: "All 200 cards" },
-          }) as [string, { emoji: string; label: string; desc: string }][]).map(([key, m]) => (
-            <button
-              key={key}
-              onClick={() => startGameHandler(key as DeckMode)}
-              className="flex items-center gap-4 p-4 rounded-2xl text-left transition-all hover:scale-[1.02] active:scale-[0.98]"
-              style={{ background: "var(--bg-card)", border: "1px solid var(--border)" }}
-            >
-              <span className="text-3xl">{m.emoji}</span>
-              <div>
-                <div className="text-base font-semibold" style={{ color: "var(--text)" }}>{m.label}</div>
-                <div className="text-xs" style={{ color: "var(--text-muted)" }}>
-                  {m.desc} · {cardCounts[key as DeckMode]} cards
-                </div>
-              </div>
+      <>
+        <div className="mesh-bg flex flex-col" style={{ background: "var(--bg)", minHeight: "100dvh" }}>
+          {/* Header (no overlap with content) */}
+          <header className="safe-top safe-x flex items-center justify-end gap-2 pb-2">
+            <AppMenu onOpenHistory={() => setShowHistory(true)} onOpenDecks={() => setShowDecks(true)} onOpenFeedback={() => setShowFeedback(true)} />
+            <button onClick={() => setDarkMode(!darkMode)} className="pressable p-2 rounded-full" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-secondary)" }} aria-label="Toggle theme">
+              {darkMode ? <Sun size={18} /> : <Moon size={18} />}
             </button>
-          ))}
+          </header>
+
+          <main className="flex-1 flex flex-col items-center justify-center gap-8 px-6 py-8 safe-bottom">
+          <div className="text-center anim-fade-up">
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl mb-4 anim-float"
+                 style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-dim))", boxShadow: "0 12px 34px -8px var(--accent-glow)" }}>
+              <span className="text-3xl font-black text-white tracking-tight">PB</span>
+            </div>
+            <h1 className="text-4xl sm:text-5xl font-black tracking-tight" style={{ color: "var(--text)" }}>
+              Pickleball <span style={{ color: "var(--accent)" }}>Shuffle</span>
+            </h1>
+            <p className="mt-2 text-base" style={{ color: "var(--text-secondary)" }}>Draw twist cards. Shake up the game.</p>
+          </div>
+
+          {/* Resume last game */}
+          {savedGame && (
+            <div className="anim-pop w-full max-w-sm flex items-center gap-3 p-3 rounded-2xl glass" style={{ border: "1px solid var(--accent)" }}>
+              <button onClick={resumeGame} className="flex items-center gap-3 flex-1 min-w-0 text-left">
+                <span className="flex items-center justify-center w-11 h-11 rounded-xl shrink-0 text-white" style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-dim))" }}>
+                  <Play size={20} fill="currentColor" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-sm font-semibold" style={{ color: "var(--text)" }}>Resume last game</span>
+                  <span className="block text-xs truncate" style={{ color: "var(--text-muted)" }}>
+                    {savedGame.playerNames.team1} {savedGame.score.team1}–{savedGame.score.team2} {savedGame.playerNames.team2} · {savedGame.customName ?? DECK_MODES[savedGame.mode as DeckMode]?.label ?? savedGame.mode}
+                  </span>
+                </span>
+              </button>
+              <button onClick={discardSaved} className="pressable p-1.5 rounded-full shrink-0" style={{ background: "var(--bg-elevated)", color: "var(--text-muted)" }} aria-label="Discard saved game">
+                <X size={16} />
+              </button>
+            </div>
+          )}
+
+          <div className="stagger grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-sm">
+            {LANDING_MODES.map(({ key, label, desc }) => {
+              const Icon = MODE_ICONS[key];
+              return (
+                <button
+                  key={key}
+                  onClick={() => { triggerHaptic("light"); startGameHandler(key); }}
+                  className="group pressable glass flex items-center gap-4 p-4 rounded-2xl text-left"
+                  style={{ border: "1px solid var(--border)" }}
+                >
+                  <span className="flex items-center justify-center w-11 h-11 rounded-xl shrink-0 transition-transform duration-300 group-hover:scale-110"
+                        style={{ background: "var(--bg-elevated)", color: "var(--accent)" }}>
+                    <Icon size={22} />
+                  </span>
+                  <div className="min-w-0">
+                    <div className="text-base font-semibold transition-colors group-hover:text-[var(--accent)]" style={{ color: "var(--text)" }}>{label}</div>
+                    <div className="text-xs" style={{ color: "var(--text-muted)" }}>
+                      {desc} · {cardCounts[key]} cards
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+          </main>
         </div>
 
-        <button onClick={() => setDarkMode(!darkMode)} className="text-xs px-4 py-2 rounded-full" style={{ background: "var(--bg-elevated)", color: "var(--text-secondary)" }}>
-          {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
-        </button>
-      </div>
+        <HistoryPanel open={showHistory} onClose={() => setShowHistory(false)} />
+        <DecksPanel open={showDecks} onClose={() => setShowDecks(false)} onPlay={startCustomDeck} />
+        <FeedbackPanel open={showFeedback} onClose={() => setShowFeedback(false)} />
+      </>
     );
   }
 
   /* ─── Game Screen ─── */
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "var(--bg)" }}>
+    <div className="mesh-bg flex flex-col" style={{ background: "var(--bg)", minHeight: "100dvh" }}>
       <TopBar
         game={game}
         mode={mode}
+        modeLabelOverride={customName}
         elapsed={elapsed}
         darkMode={darkMode}
-        onBack={() => { clearSavedGame(); setGame(null); }}
+        onBack={() => { setSavedGame(game); setGame(null); }}
         onToggleDark={() => setDarkMode(!darkMode)}
         onModeChange={handleModeChange}
         onEditNames={() => setShowNameEditor(!showNameEditor)}
@@ -164,10 +294,10 @@ export default function Home() {
         onUndo={() => { setGame(undoLast(game)); if (game.config.soundEnabled) playUndoSound(); }}
         onReset={() => setShowSettings(true)}
         onOpenSettings={() => setShowSettings(true)}
+        menuSlot={<AppMenu onOpenHistory={() => setShowHistory(true)} onOpenDecks={() => setShowDecks(true)} onOpenFeedback={() => setShowFeedback(true)} />}
       />
 
       <div className="flex-1 flex flex-col items-center gap-4 p-4 max-w-lg mx-auto w-full">
-        {/* Name editor */}
         {showNameEditor && (
           <PlayerNames
             names={game.playerNames}
@@ -175,21 +305,18 @@ export default function Home() {
           />
         )}
 
-        {/* Score */}
         <ScoreKeeper game={game} onScore={handleScore} onSideOut={() => setGame(sideOut(game))} />
 
-        {/* Confirm dialog */}
         {confirmTeam && (
-          <div className="flex items-center gap-3 p-3 rounded-xl" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}>
+          <div className="anim-pop glass flex items-center gap-3 p-3 rounded-xl" style={{ border: "1px solid var(--border)" }}>
             <span className="text-sm" style={{ color: "var(--text-secondary)" }}>
               +1 {confirmTeam === 1 ? game.playerNames.team1 : game.playerNames.team2}?
             </span>
-            <button onClick={() => applyScore(confirmTeam)} className="px-4 py-1.5 rounded-full text-xs font-medium text-white" style={{ background: "var(--accent)" }}>Yes</button>
-            <button onClick={() => setConfirmTeam(null)} className="px-4 py-1.5 rounded-full text-xs font-medium" style={{ background: "var(--bg-card)", color: "var(--text-secondary)" }}>No</button>
+            <button onClick={() => applyScore(confirmTeam)} className="pressable px-4 py-1.5 rounded-full text-xs font-medium text-white" style={{ background: "var(--accent)" }}>Yes</button>
+            <button onClick={() => setConfirmTeam(null)} className="pressable px-4 py-1.5 rounded-full text-xs font-medium" style={{ background: "var(--bg-card)", color: "var(--text-secondary)" }}>No</button>
           </div>
         )}
 
-        {/* Card */}
         <CardDisplay
           card={currentCard}
           onDraw={drawCard}
@@ -206,11 +333,9 @@ export default function Home() {
           } : undefined}
         />
 
-        {/* History */}
         <CardHistory history={cardHistory} />
       </div>
 
-      {/* Settings sheet */}
       <SettingsSheet
         config={game.config}
         open={showSettings}
@@ -219,15 +344,18 @@ export default function Home() {
         onReset={() => { setGame(resetScore(game)); if (game.config.soundEnabled) playResetSound(); setShowSettings(false); }}
       />
 
-      {/* Win */}
       {game.winner && (
         <WinCelebration
           winnerName={game.winner === 1 ? game.playerNames.team1 : game.playerNames.team2}
           score={game.score}
-          onNewGame={() => { setGame(startNewGame(game)); setCurrentCard(null); setCardHistory([]); setDeck(shuffleArray(getFilteredCards(allCards, mode))); }}
-          onEndMatch={() => { clearSavedGame(); setGame(null); }}
+          onNewGame={() => { setGame(startNewGame(game)); setCurrentCard(null); setCardHistory([]); setDeck(shuffleArray(basePool())); }}
+          onEndMatch={() => { clearSavedGame(); setSavedGame(null); setGame(null); }}
         />
       )}
+
+      <HistoryPanel open={showHistory} onClose={() => setShowHistory(false)} />
+      <DecksPanel open={showDecks} onClose={() => setShowDecks(false)} onPlay={startCustomDeck} />
+      <FeedbackPanel open={showFeedback} onClose={() => setShowFeedback(false)} />
     </div>
   );
 }

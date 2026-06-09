@@ -1,35 +1,50 @@
 @import "tailwindcss";
 
-/* Dark mode (default) */
+/* Dark mode (default) — softened to reduce eye strain (no pure black / pure white) */
 :root, [data-theme="dark"] {
-  --bg: #0a0a0b;
-  --bg-card: #141416;
-  --bg-elevated: #1c1c1f;
-  --border: #2a2a2e;
-  --text: #fafafa;
-  --text-secondary: #8e8e93;
-  --text-muted: #48484a;
+  --bg: #0e0e11;
+  --bg-card: #18181b;
+  --bg-elevated: #202024;
+  --border: #2c2c31;
+  --text: #ededee;
+  --text-secondary: #9a9aa1;
+  --text-muted: #5c5c63;
   --accent: #34d399;
-  --accent-dim: #065f46;
+  --accent-dim: #0b6b4f;
+  --accent-glow: rgba(52, 211, 153, 0.22);
   --blue: #60a5fa;
   --red: #f87171;
   --yellow: #fbbf24;
+  --mesh-1: rgba(52, 211, 153, 0.08);
+  --mesh-2: rgba(96, 165, 250, 0.07);
+  --mesh-3: rgba(203, 166, 247, 0.06);
+  --glass: rgba(24, 24, 27, 0.72);
 }
 
-/* Light mode */
+/* Light mode — soft off-white, not glaring */
 [data-theme="light"] {
-  --bg: #f5f5f7;
+  --bg: #f4f4f6;
   --bg-card: #ffffff;
-  --bg-elevated: #e5e5ea;
-  --border: #c7c7cc;
-  --text: #1d1d1f;
-  --text-secondary: #6e6e73;
-  --text-muted: #aeaeb2;
+  --bg-elevated: #e9e9ee;
+  --border: #d3d3da;
+  --text: #1f1f24;
+  --text-secondary: #6a6a73;
+  --text-muted: #a6a6ae;
   --accent: #059669;
-  --accent-dim: #d1fae5;
+  --accent-dim: #047857;
+  --accent-glow: rgba(5, 150, 105, 0.18);
   --blue: #2563eb;
   --red: #dc2626;
   --yellow: #d97706;
+  --mesh-1: rgba(5, 150, 105, 0.07);
+  --mesh-2: rgba(37, 99, 235, 0.06);
+  --mesh-3: rgba(168, 85, 247, 0.05);
+  --glass: rgba(255, 255, 255, 0.72);
+}
+
+html, body {
+  overscroll-behavior-y: contain;
+  overflow-x: hidden;
 }
 
 body {
@@ -39,6 +54,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: none;
+  min-height: 100dvh;
   transition: background 0.3s ease, color 0.3s ease;
 }
 
@@ -47,11 +63,158 @@ body {
   -webkit-touch-callout: none;
 }
 
-html, body { overscroll-behavior-y: contain; }
+/* Kill the 300ms tap delay + double-tap zoom on interactive elements */
+button, a, [role="button"], select, label, summary {
+  touch-action: manipulation;
+}
 
-@media (display-mode: standalone) {
-  body {
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
+/* iOS zooms on focus when inputs are < 16px — force 16px on all form controls */
+input, textarea, select {
+  font-size: 16px;
+}
+
+/* Safe-area helpers for notches / home indicators */
+.safe-top { padding-top: max(1rem, env(safe-area-inset-top)); }
+.safe-x {
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+}
+.safe-bottom { padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
+
+/* ─────────────────────────────────────────────
+   Animated mesh-gradient backdrop (subtle)
+   ───────────────────────────────────────────── */
+.mesh-bg { position: relative; isolation: isolate; }
+.mesh-bg::before {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  z-index: -1;
+  background:
+    radial-gradient(40% 40% at 20% 20%, var(--mesh-1) 0%, transparent 60%),
+    radial-gradient(45% 45% at 80% 25%, var(--mesh-2) 0%, transparent 60%),
+    radial-gradient(50% 50% at 50% 85%, var(--mesh-3) 0%, transparent 60%);
+  background-size: 200% 200%;
+  animation: meshDrift 26s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes meshDrift {
+  0%   { background-position: 0% 0%, 100% 0%, 50% 100%; }
+  100% { background-position: 40% 30%, 60% 40%, 50% 60%; }
+}
+
+/* ─────────────────────────────────────────────
+   Keyframe library
+   ───────────────────────────────────────────── */
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes popIn {
+  0%   { opacity: 0; transform: scale(0.9); }
+  60%  { opacity: 1; transform: scale(1.03); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes scoreBump {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+@keyframes softGlow {
+  0%, 100% { box-shadow: 0 8px 24px -10px var(--accent-glow); }
+  50%      { box-shadow: 0 8px 30px -8px var(--accent-glow); }
+}
+@keyframes shimmer {
+  0%   { transform: translateX(-120%) skewX(-20deg); }
+  100% { transform: translateX(220%) skewX(-20deg); }
+}
+@keyframes confettiFall {
+  0%   { transform: translateY(-10vh) rotateZ(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotateZ(720deg); opacity: 0.9; }
+}
+@keyframes ringPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.5); }
+  70%  { box-shadow: 0 0 0 6px rgba(251, 191, 36, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
+}
+
+/* Utility animation classes */
+.anim-fade-up { animation: fadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-pop     { animation: popIn 0.35s cubic-bezier(0.34, 1.4, 0.64, 1) both; }
+.anim-float   { animation: floatY 5s ease-in-out infinite; }
+.anim-bump    { animation: scoreBump 0.4s cubic-bezier(0.34, 1.5, 0.64, 1); }
+.anim-glow    { animation: softGlow 4s ease-in-out infinite; }
+.anim-ring    { animation: ringPulse 1.8s ease-out infinite; }
+
+/* Staggered entrance helper */
+.stagger > * { animation: fadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.stagger > *:nth-child(1) { animation-delay: 0.04s; }
+.stagger > *:nth-child(2) { animation-delay: 0.09s; }
+.stagger > *:nth-child(3) { animation-delay: 0.14s; }
+.stagger > *:nth-child(4) { animation-delay: 0.19s; }
+.stagger > *:nth-child(5) { animation-delay: 0.24s; }
+
+/* ─────────────────────────────────────────────
+   3D card flip
+   ───────────────────────────────────────────── */
+.card-3d { perspective: 1400px; }
+.card-3d-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.34, 1.2, 0.5, 1);
+}
+.card-3d-inner.is-flipped { transform: rotateY(180deg); }
+.card-face {
+  position: absolute;
+  inset: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.card-face--back { transform: rotateY(180deg); }
+
+/* Shine sweep overlay */
+.shine { position: relative; overflow: hidden; }
+.shine::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 60%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,0.22), transparent);
+  transform: translateX(-120%) skewX(-20deg);
+  pointer-events: none;
+}
+.shine.shine-run::after { animation: shimmer 0.9s ease-out; }
+
+/* Glass surface */
+.glass {
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  backdrop-filter: blur(14px) saturate(150%);
+}
+
+/* Pressable affordance */
+.pressable { transition: transform 0.18s cubic-bezier(0.34, 1.5, 0.64, 1), box-shadow 0.2s ease; }
+@media (hover: hover) {
+  .pressable:hover { transform: translateY(-2px); }
+}
+.pressable:active { transform: scale(0.96); }
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

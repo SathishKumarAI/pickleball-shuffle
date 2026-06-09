@@ -18,9 +18,14 @@ export interface GameConfig {
   gameType: GameType;
 }
 
+import { Card } from "./cards";
+
 export interface GameSession {
   id: string;
   mode: string;
+  /* Custom-deck context (only set when playing a user deck), so resume restores it. */
+  customName?: string | null;
+  customCards?: Card[] | null;
   score: { team1: number; team2: number };
   servingTeam: 1 | 2;
   serverNumber: 1 | 2;
