@@ -1,5 +1,15 @@
 # Worklog
 
+## 2026-06-10 — Rename Vercel project + URL to match the brand
+
+**Summary:** Renamed the Vercel project `pickleball-shuffle` → `pickleball-card-games` so the live URL matches the new name.
+
+- Renamed the project (Vercel API), added `pickleball-card-games.vercel.app`, and removed the old `pickleball-shuffle.vercel.app` domain.
+- New canonical URL: **https://pickleball-card-games.vercel.app** (HTTP 200); old URL now 404s.
+- Updated the live link in `README.md`, `app/README.md`, `app/CLAUDE.md`, and synced `app/.vercel/project.json` (projectId unchanged, so CLI/Git deploys are unaffected).
+
+**Unchanged:** the GitHub repo path (`SathishKumarAI/pickleball-shuffle`) and all localStorage keys — renaming those would break links/data for no benefit.
+
 ## 2026-06-09 18:35 — CI gate, project consolidation, legacy cleanup
 
 **Summary:** Consolidated to a single Vercel project, added a CI workflow, and removed the legacy prototypes that caused the deploy mis-detection.
