@@ -32,7 +32,7 @@ export default function AppMenu({
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "pickleball-shuffle-backup.json";
+    a.download = "pickleball-card-games-backup.json";
     a.click();
     URL.revokeObjectURL(url);
     setOpen(false);

@@ -1,4 +1,4 @@
-# Pickleball Shuffle
+# Pickleball Card Games
 
 Next.js card game + pickleball scorekeeper. 200 twist cards across 10 categories, 5 deck modes.
 **Local-first: no backend, no login, no database.** All state lives in `localStorage`.

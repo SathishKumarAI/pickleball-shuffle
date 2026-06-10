@@ -1,6 +1,6 @@
 {
-  "name": "Pickleball Shuffle",
-  "short_name": "PB Shuffle",
+  "name": "Pickleball Card Games",
+  "short_name": "PB Card Games",
   "description": "Draw twist cards mid-match. 200 cards, 5 deck modes.",
   "start_url": "/",
   "display": "standalone",

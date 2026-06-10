@@ -237,7 +237,7 @@ export default function Home() {
               <span className="text-3xl font-black text-white tracking-tight">PB</span>
             </div>
             <h1 className="text-4xl sm:text-5xl font-black tracking-tight" style={{ color: "var(--text)" }}>
-              Pickleball <span style={{ color: "var(--accent)" }}>Shuffle</span>
+              Pickleball <span style={{ color: "var(--accent)" }}>Card Games</span>
             </h1>
             <p className="mt-2 text-base" style={{ color: "var(--text-secondary)" }}>Draw twist cards. Shake up the game.</p>
           </div>

@@ -1,4 +1,4 @@
-#  Pickleball Shuffle
+#  Pickleball Card Games
 
 **Draw twist cards mid-match. Shake up the game.**
 
@@ -80,3 +80,24 @@ Current production alias: **https://pickleball-shuffle.vercel.app**
 ## License
 
 MIT
+
+## References & credits
+
+The standards, rules, and tools this project is built on:
+
+**Game rules**
+- [USA Pickleball — Official Rulebook](https://usapickleball.org/what-is-pickleball/official-rules/) — the scoring model (side-out serving, games to 11, win-by-2) follows the official rules.
+- [USA Pickleball — How to Play](https://usapickleball.org/what-is-pickleball/how-to-play/) — terminology and gameplay basics.
+
+**Framework & libraries**
+- [Next.js](https://nextjs.org/docs) — App Router framework.
+- [React](https://react.dev) — UI library.
+- [Tailwind CSS](https://tailwindcss.com/docs) — styling.
+- [Lucide](https://lucide.dev) — icon set.
+
+**Platform**
+- [Vercel](https://vercel.com/docs) — hosting & CI/CD.
+- [MDN Web Docs](https://developer.mozilla.org) — `localStorage`, Service Worker, and PWA references used for the offline + mobile work.
+
+> The 200 twist cards are original content curated for this app; the rules above
+> only informed the scorekeeper, not the card ideas.

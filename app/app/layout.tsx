@@ -11,13 +11,13 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Pickleball Shuffle",
+  title: "Pickleball Card Games",
   description: "Draw twist cards mid-match. 200 cards, 5 deck modes.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "PB Shuffle",
+    title: "PB Card Games",
   },
   icons: {
     icon: [{ url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }],
