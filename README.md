@@ -87,6 +87,7 @@ The standards, rules, and tools this project is built on:
 
 **Inspiration & game rules**
 - [Pickleball Shuffle](https://www.pickleballshuffle.com/) — inspiration for the twist-card gameplay concept.
+- [Deal and Dink](https://www.dealanddink.com/) — pickleball card game; inspiration for card-driven play.
 - [USA Pickleball — Official Rulebook](https://usapickleball.org/what-is-pickleball/official-rules/) — the scoring model (side-out serving, games to 11, win-by-2) follows the official rules.
 - [USA Pickleball — How to Play](https://usapickleball.org/what-is-pickleball/how-to-play/) — terminology and gameplay basics.
 
