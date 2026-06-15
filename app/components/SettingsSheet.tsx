@@ -43,6 +43,17 @@ export default function SettingsSheet({
           </div>
         </SettingRow>
 
+        {/* Match length */}
+        <SettingRow label="Match length">
+          <div className="flex gap-1.5">
+            {([[1, "Single"], [3, "Best of 3"], [5, "Best of 5"]] as [number, string][]).map(([n, label]) => (
+              <Chip key={n} active={(config.bestOf ?? 3) === n} onClick={() => onUpdate("bestOf", n)}>
+                {label}
+              </Chip>
+            ))}
+          </div>
+        </SettingRow>
+
         <Toggle label="Win by 2" value={config.winByTwo} onChange={(v) => onUpdate("winByTwo", v)} />
         <Toggle label="Side-out scoring" value={config.sideOutScoring} onChange={(v) => onUpdate("sideOutScoring", v)} />
         <Toggle label="Confirm before scoring" value={config.confirmScore} onChange={(v) => onUpdate("confirmScore", v)} />

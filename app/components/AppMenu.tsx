@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Menu, History, Layers, Star, Download, Upload, MessageSquare, BookOpen } from "lucide-react";
+import { Menu, History, Layers, Star, Download, Upload, MessageSquare, BookOpen, Check, AlertTriangle } from "lucide-react";
 import { exportData, importData } from "@/lib/client-api";
 
 export default function AppMenu({
@@ -18,8 +18,14 @@ export default function AppMenu({
   onOpenRules: () => void;
 }) {
   const [open, setOpen] = useState(false);
+  const [notice, setNotice] = useState<{ msg: string; ok: boolean } | null>(null);
   const ref = useRef<HTMLDivElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+
+  const showNotice = (msg: string, ok: boolean) => {
+    setNotice({ msg, ok });
+    setTimeout(() => setNotice(null), 3500);
+  };
 
   useEffect(() => {
     const close = (e: MouseEvent) => {
@@ -52,9 +58,9 @@ export default function AppMenu({
     reader.onload = () => {
       try {
         const { decks, matches } = importData(String(reader.result));
-        alert(`Imported ${decks} deck(s) and ${matches} match(es).`);
+        showNotice(`Imported ${decks} deck(s) and ${matches} match(es).`, true);
       } catch {
-        alert("Could not read that backup file.");
+        showNotice("Could not read that backup file.", false);
       }
     };
     reader.readAsText(file);
@@ -63,6 +69,7 @@ export default function AppMenu({
   };
 
   return (
+    <>
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen(!open)}
@@ -93,6 +100,24 @@ export default function AppMenu({
 
       <input ref={fileRef} type="file" accept="application/json" className="hidden" onChange={doImport} />
     </div>
+
+    {notice && (
+      <div
+        role="status"
+        aria-live="polite"
+        className="fixed left-1/2 -translate-x-1/2 z-[60] anim-pop flex items-center gap-2 px-4 py-2.5 rounded-full text-sm shadow-2xl"
+        style={{
+          bottom: "max(1.5rem, env(safe-area-inset-bottom))",
+          background: "var(--bg-card)",
+          border: `1px solid ${notice.ok ? "var(--accent)" : "var(--red)"}`,
+          color: "var(--text)",
+        }}
+      >
+        {notice.ok ? <Check size={15} style={{ color: "var(--accent)" }} /> : <AlertTriangle size={15} style={{ color: "var(--red)" }} />}
+        {notice.msg}
+      </div>
+    )}
+    </>
   );
 }
 

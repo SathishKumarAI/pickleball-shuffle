@@ -1,5 +1,16 @@
 # Worklog
 
+## 2026-06-15 15:45 — Close audit tickets T8/T9/T10
+
+**Summary:** Completed the three follow-up tickets opened by the frontend audit.
+
+**Changes:**
+- T8 — tap targets ≥44px: TopBar Undo/Reset/lock/edit, and enlarged card favorite/skip hit areas.
+- T9 — match length is now configurable: `GameConfig.bestOf` (1/3/5) + "Match length" chips in `SettingsSheet`; `matchWinner` derives the target via new `gamesToWinMatch(config)` (back-compat `?? 3`).
+- T10 — `AppMenu` import success/error now show a glass in-app toast (`role="status"`, auto-dismiss) instead of native `alert()`.
+
+**Verification:** tsc clean, build green (14 routes).
+
 ## 2026-06-15 15:38 — Frontend gap audit fixes + best-of-3 match screen
 
 **Summary:** Ran a 3-agent frontend audit, then applied four fix batches (accessibility, reduced-motion correctness, design-system consistency, custom typography) plus a new best-of-3 match-complete screen. tsc clean, build green, fonts load.

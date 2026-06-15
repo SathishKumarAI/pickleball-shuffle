@@ -16,6 +16,8 @@ export interface GameConfig {
   scoreLocked: boolean;
   soundEnabled: boolean;
   gameType: GameType;
+  /* Match length: 1 = single game, 3 = best of 3, 5 = best of 5. */
+  bestOf: number;
 }
 
 import { Card } from "./cards";
@@ -51,6 +53,7 @@ export const DEFAULT_CONFIG: GameConfig = {
   scoreLocked: false,
   soundEnabled: true,
   gameType: "doubles",
+  bestOf: 3,
 };
 
 export function createGame(mode: string, names?: { team1: string; team2: string }): GameSession {
@@ -155,8 +158,10 @@ export function startNewGame(game: GameSession): GameSession {
   };
 }
 
-// Best-of-3 series: first team to win 2 games takes the match.
-export const GAMES_TO_WIN_MATCH = 2;
+// Games a team must win to take the match (best-of-N → ceil(N/2)).
+export function gamesToWinMatch(config: GameConfig): number {
+  return Math.ceil((config.bestOf ?? 3) / 2);
+}
 
 // Games won INCLUDING the just-finished game (gamesWon only updates on the next
 // game, so the live match tally during the win screen must add the current win).
@@ -171,8 +176,9 @@ export function seriesTally(game: GameSession): { team1: number; team2: number }
 export function matchWinner(game: GameSession): 1 | 2 | null {
   if (!game.winner) return null;
   const won = seriesTally(game);
-  if (won.team1 >= GAMES_TO_WIN_MATCH) return 1;
-  if (won.team2 >= GAMES_TO_WIN_MATCH) return 2;
+  const need = gamesToWinMatch(game.config);
+  if (won.team1 >= need) return 1;
+  if (won.team2 >= need) return 2;
   return null;
 }
 

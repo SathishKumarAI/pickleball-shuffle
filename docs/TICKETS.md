@@ -20,9 +20,9 @@ Status: 🔴 not started · 🟡 in progress / blocked on input · ✅ done (kep
 - ✅ **New pickleball + card logo** — landing hero, favicon, `icon.svg`, PWA icons. Live: https://pickleball-card-games.vercel.app
 - ✅ **Security audit** — all untracked auth files are inert stubs; secret file gitignored; **no vulnerabilities** (see T4 for cleanup).
 
-## Newly opened (from the frontend audit)
+## From the frontend audit
 | # | Status | Ticket | Notes |
 |---|--------|--------|-------|
-| T8 | 🔴 | Tap targets <44px | A few TopBar quick-actions + card favorite/skip still below the 44px minimum; enlarge hit areas. |
-| T9 | 🔴 | Make best-of-N a Settings option | Series length is fixed best-of-3; expose 1/3/5 in SettingsSheet if wanted. |
-| T10 | 🔴 | Replace `alert()` in AppMenu import | Native alerts clash with the glass UI; route through an in-app banner. |
+| T8 | ✅ | Tap targets <44px | TopBar Undo/Reset/lock/edit now ≥44px; card favorite/skip hit areas enlarged (`p-2.5 -m-2.5`). |
+| T9 | ✅ | Best-of-N a Settings option | `config.bestOf` (1/3/5) + "Match length" chips in Settings; `matchWinner` derives target via `gamesToWinMatch`. |
+| T10 | ✅ | Replace `alert()` in AppMenu import | Import success/error now show a glass in-app toast (`role="status"`, auto-dismiss). |

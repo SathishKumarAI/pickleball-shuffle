@@ -88,7 +88,7 @@ export default function CardDisplay({
             <div className="flex justify-between items-start">
               <span className="text-white drop-shadow">{card && <CategoryIcon category={card.category} size={30} strokeWidth={2} />}</span>
               {onFavorite && (
-                <button onClick={(e) => { e.stopPropagation(); onFavorite(); }} aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"} aria-pressed={isFavorite} className="text-white transition-transform hover:scale-125 active:scale-90 p-1 -m-1">
+                <button onClick={(e) => { e.stopPropagation(); onFavorite(); }} aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"} aria-pressed={isFavorite} className="flex items-center justify-center text-white transition-transform hover:scale-125 active:scale-90 p-2.5 -m-2.5">
                   <Star size={22} fill={isFavorite ? "currentColor" : "none"} />
                 </button>
               )}
@@ -102,7 +102,7 @@ export default function CardDisplay({
             <div className="flex justify-between items-end gap-2">
               <span className="text-xs text-white/70 bg-white/15 px-3 py-1 rounded-full backdrop-blur-sm truncate min-w-0">{card?.category}</span>
               {onSkip && (
-                <button onClick={(e) => { e.stopPropagation(); onSkip(); }} aria-label="Skip this card" className="shrink-0 flex items-center gap-1 text-xs text-white/60 hover:text-white transition-colors p-1 -m-1">
+                <button onClick={(e) => { e.stopPropagation(); onSkip(); }} aria-label="Skip this card" className="shrink-0 flex items-center gap-1 text-xs text-white/60 hover:text-white transition-colors p-2.5 -m-2.5">
                   Skip <SkipForward size={13} />
                 </button>
               )}

@@ -73,16 +73,16 @@ export default function TopBar({
           G{game.gameNumber} · {elapsed}
         </span>
         <span style={{ color: "var(--border)" }}>·</span>
-        <button onClick={onUndo} disabled={game.history.length === 0} className="pressable flex items-center gap-1 text-xs disabled:opacity-30" style={{ color: "var(--text-secondary)" }}>
+        <button onClick={onUndo} disabled={game.history.length === 0} className="pressable flex items-center justify-center gap-1 text-xs min-h-[44px] px-2 disabled:opacity-30" style={{ color: "var(--text-secondary)" }}>
           <Undo2 size={14} /> Undo
         </button>
-        <button onClick={onReset} disabled={game.score.team1 === 0 && game.score.team2 === 0} className="pressable flex items-center gap-1 text-xs disabled:opacity-30" style={{ color: "var(--text-secondary)" }}>
+        <button onClick={onReset} disabled={game.score.team1 === 0 && game.score.team2 === 0} className="pressable flex items-center justify-center gap-1 text-xs min-h-[44px] px-2 disabled:opacity-30" style={{ color: "var(--text-secondary)" }}>
           <RotateCcw size={14} /> Reset
         </button>
-        <button onClick={onToggleLock} aria-label={game.config.scoreLocked ? "Unlock score" : "Lock score"} aria-pressed={game.config.scoreLocked} className="pressable flex items-center gap-1 text-xs min-h-[32px] px-1" style={{ color: game.config.scoreLocked ? "var(--red)" : "var(--text-secondary)" }}>
+        <button onClick={onToggleLock} aria-label={game.config.scoreLocked ? "Unlock score" : "Lock score"} aria-pressed={game.config.scoreLocked} className="pressable flex items-center justify-center text-xs min-h-[44px] min-w-[44px]" style={{ color: game.config.scoreLocked ? "var(--red)" : "var(--text-secondary)" }}>
           {game.config.scoreLocked ? <Lock size={14} /> : <LockOpen size={14} />}
         </button>
-        <button onClick={onEditNames} aria-label="Edit team names" className="pressable flex items-center gap-1 text-xs min-h-[32px] px-1" style={{ color: "var(--text-secondary)" }}>
+        <button onClick={onEditNames} aria-label="Edit team names" className="pressable flex items-center justify-center text-xs min-h-[44px] min-w-[44px]" style={{ color: "var(--text-secondary)" }}>
           <Pencil size={14} />
         </button>
       </div>
