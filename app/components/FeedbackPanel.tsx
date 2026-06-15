@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { MessageSquare, Star, Send, Check, Bug } from "lucide-react";
+import { MessageSquare, Star, Send, Check, Bug, ExternalLink } from "lucide-react";
 import { Sheet } from "./HistoryPanel";
 
 const FEEDBACK_EMAIL = process.env.NEXT_PUBLIC_FEEDBACK_EMAIL || "sathishkumar786.ml@gmail.com";
 const GITHUB_URL = process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/SathishKumarAI/pickleball-shuffle";
+// Set NEXT_PUBLIC_FEEDBACK_FORM_URL to a Google Form link to make it the primary feedback channel.
+const FORM_URL = process.env.NEXT_PUBLIC_FEEDBACK_FORM_URL || "";
 const FEEDBACK_KEY = "pb-feedback";
 
 export default function FeedbackPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -54,6 +56,19 @@ export default function FeedbackPanel({ open, onClose }: { open: boolean; onClos
         </div>
       ) : (
         <div className="flex flex-col gap-4">
+          {/* Google Form — primary channel when configured */}
+          {FORM_URL && (
+            <a
+              href={FORM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="pressable flex items-center justify-center gap-2 px-6 py-3 rounded-full text-white font-semibold"
+              style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-dim))" }}
+            >
+              <ExternalLink size={18} /> Open feedback form
+            </a>
+          )}
+
           {/* Rating */}
           <div className="flex flex-col items-center gap-2">
             <span className="text-sm" style={{ color: "var(--text-secondary)" }}>How&apos;s your experience?</span>
