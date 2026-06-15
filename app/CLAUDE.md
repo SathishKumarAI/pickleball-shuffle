@@ -9,14 +9,14 @@ Live: https://pickleball-card-games.vercel.app
 - Next.js 16 (App Router, Turbopack) + React 19 + TypeScript + Tailwind v4
 - lucide-react for all icons (no emoji)
 - Cards loaded from `public/cards.json`; everything else is client state + localStorage
-- Deployed on Vercel (`vercel --prod` from this dir, or `../deploy-vercel.sh`)
+- Deployed on Vercel — run `vercel --prod` from the **repo root** (not this dir; project rootDirectory is already `app`), or use `../deploy-vercel.sh`
 
 ## Commands
 ```bash
 npm run dev      # http://localhost:3000 (binds 0.0.0.0 for phone testing)
 npm run build    # production build
 npm start        # serve production build
-vercel --prod    # deploy
+vercel --prod    # deploy — run from REPO ROOT, not app/
 ```
 
 ## Structure
