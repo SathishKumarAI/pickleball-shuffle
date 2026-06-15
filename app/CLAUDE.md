@@ -1,6 +1,6 @@
 # Pickleball Card Games
 
-Next.js card game + pickleball scorekeeper. 200 twist cards across 10 categories, 5 deck modes.
+Next.js card game + pickleball scorekeeper. 1,729 twist cards across 10 categories, 5 deck modes.
 **Local-first: no backend, no login, no database.** All state lives in `localStorage`.
 
 Live: https://pickleball-card-games.vercel.app
@@ -29,7 +29,7 @@ lib/cards.ts          - card types, deck modes, filtering, shuffle
 lib/game.ts           - PURE game engine (addScore/sideOut/undo/checkWin) + active-game localStorage
 lib/client-api.ts     - local store: custom decks, match history, export/import
 lib/sounds.ts         - Web Audio SFX + haptics
-public/cards.json     - 200 cards
+public/cards.json     - 1,729 cards
 public/sw.js          - network-first service worker (prod only; dev unregisters it)
 ```
 

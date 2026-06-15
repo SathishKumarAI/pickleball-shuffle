@@ -14,7 +14,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: "Pickleball Card Games",
-  description: "Draw twist cards mid-match. 200 cards, 5 deck modes.",
+  description: "Draw twist cards mid-match. 1,729 cards, 5 deck modes.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,

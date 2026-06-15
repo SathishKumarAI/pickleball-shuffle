@@ -5,7 +5,7 @@ import { Card, DeckMode, DECK_MODES, getFilteredCards, shuffleArray } from "@/li
 import { GameSession, GameConfig, createGame, addScore, sideOut, undoLast, resetScore, startNewGame, newMatch, matchWinner, seriesTally, isPaused, pauseGame, resumePlay, elapsedMs, saveGame, loadGame, clearSavedGame, formatTime } from "@/lib/game";
 import { playScoreSound, playUndoSound, playCardFlipSound, playWinSound, playResetSound, triggerHaptic } from "@/lib/sounds";
 import { addMatch, deckToCards, CustomDeck, listFavoriteIds, toggleFavorite } from "@/lib/client-api";
-import { Sun, Moon, Play, Pause, X, Bug, HelpCircle } from "lucide-react";
+import { Sun, Moon, Play, Pause, X, Bug, HelpCircle, Sparkles } from "lucide-react";
 import TopBar from "@/components/TopBar";
 import CardDisplay from "@/components/CardDisplay";
 import ScoreKeeper from "@/components/ScoreKeeper";
@@ -28,7 +28,7 @@ const LANDING_MODES: { key: DeckMode; label: string; desc: string }[] = [
   { key: "party", label: "Party", desc: "Laughs & dares" },
   { key: "drill", label: "Drill", desc: "Sharpen skills" },
   { key: "tournament", label: "Tournament", desc: "Competitive" },
-  { key: "chaos", label: "Chaos", desc: "All 200 cards" },
+  { key: "chaos", label: "Chaos", desc: "All 1,729 cards" },
 ];
 
 export default function Home() {
@@ -325,6 +325,9 @@ export default function Home() {
                 <Bug size={12} /> request a feature or raise an issue
               </a>{" "}
               on GitHub.
+            </p>
+            <p className="mx-auto mt-3 max-w-md text-[11px] leading-relaxed" style={{ color: "var(--text-muted)" }} title="1729 = 1³+12³ = 9³+10³, the Hardy–Ramanujan taxicab number">
+              <Sparkles size={11} className="inline align-text-bottom" /> Exactly <strong>1,729</strong> cards - the Ramanujan &ldquo;taxicab&rdquo; number: the smallest number that is a sum of two cubes in two ways (1³ + 12³ = 9³ + 10³).
             </p>
           </footer>
         </div>

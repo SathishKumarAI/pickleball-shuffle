@@ -17,7 +17,7 @@ const HOW_TO_PLAY: Section[] = [
   },
   {
     q: "Deck modes",
-    a: "Family = clean fun for all ages. Party = laughs, dares & drinks. Drill = skill-sharpening restrictions. Tournament = competitive twists. Chaos = all 200 cards, anything goes. Pick a mode on the home screen.",
+    a: "Family = clean fun for all ages. Party = laughs, dares & drinks. Drill = skill-sharpening restrictions. Tournament = competitive twists. Chaos = all 1,729 cards, anything goes. Pick a mode on the home screen.",
   },
   {
     q: "Winning",
@@ -129,7 +129,7 @@ export default function RulesPanel({ open, onClose }: { open: boolean; onClose: 
       </div>
 
       <p className="mt-4 flex items-center justify-center gap-1.5 text-xs" style={{ color: "var(--text-muted)" }}>
-        <Layers size={12} /> 200 twist cards · 10 categories · 5 modes
+        <Layers size={12} /> 1,729 twist cards · 10 categories · 5 modes
       </p>
     </Sheet>
   );

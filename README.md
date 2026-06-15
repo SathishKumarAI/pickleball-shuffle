@@ -2,7 +2,7 @@
 
 **Draw twist cards mid-match. Shake up the game.**
 
-A free, **mobile-first, local-first** web app: 200 pickleball twist cards across 10 categories, fused with a real pickleball scorekeeper. Tap to draw a card, play the next point under that twist, and keep score - all on your phone, no login, no signal required after first load.
+A free, **mobile-first, local-first** web app: 1,729 pickleball twist cards across 10 categories, fused with a real pickleball scorekeeper. Tap to draw a card, play the next point under that twist, and keep score - all on your phone, no login, no signal required after first load.
 
 ### ▶︎ Live app: **https://pickleball-card-games.vercel.app**
 
@@ -23,7 +23,7 @@ Tradeoff: no cross-device sync. Custom decks and history live in `localStorage`,
 
 ## Highlights
 
-- **200 cards**, 10 categories, **5 deck modes** (Family → Chaos), plus **custom decks** you build yourself.
+- **1,729 cards**, 10 categories, **5 deck modes** (Family → Chaos), plus **custom decks** you build yourself.
 - **Real scorekeeper** - side-out scoring, win-by-2, serving indicator, undo, best-of-3.
 - **Resume last game** - leave and a one-tap banner brings the match back, card and score intact.
 - **Match history** + **export/import backup**, all local.
@@ -101,5 +101,5 @@ The standards, rules, and tools this project is built on:
 - [Vercel](https://vercel.com/docs) - hosting & CI/CD.
 - [MDN Web Docs](https://developer.mozilla.org) - `localStorage`, Service Worker, and PWA references used for the offline + mobile work.
 
-> The 200 twist cards are original content curated for this app; the rules above
+> The 1,729 twist cards are original content curated for this app; the rules above
 > only informed the scorekeeper, not the card ideas.

@@ -2,7 +2,7 @@
 
 **Draw twist cards mid-match. Shake up the game.**
 
-A free, **mobile-first, local-first** web app with 200 pickleball twist cards across 10 categories. Tap to draw, read the rule, play the next point under that twist - then keep score with a real pickleball scoring engine.
+A free, **mobile-first, local-first** web app with 1,729 pickleball twist cards across 10 categories. Tap to draw, read the rule, play the next point under that twist - then keep score with a real pickleball scoring engine.
 
 ### ▶︎ Live app: **https://pickleball-card-games.vercel.app**
 
@@ -35,7 +35,7 @@ No login. No install. Open the link at the court and play.
 
 You're mid-game on a pickleball court. Between points, someone taps the big card. It flips over: **"Dinks Only - every shot this point must be a dink."** You play the point under that constraint, tap the score, and draw again. The app is two things fused together:
 
-1. **A twist-card deck** - 200 cards in 10 categories, filtered into 5 themed modes (Family → Chaos).
+1. **A twist-card deck** - 1,729 cards in 10 categories, filtered into 5 themed modes (Family → Chaos).
 2. **A pickleball scorekeeper** - side-out scoring, win-by-2, serving indicator, undo, best-of-3 tracking.
 
 Everything runs on the device. There is no account and no server round-trip during play.
@@ -57,7 +57,7 @@ The tradeoff we accept: **no cross-device sync.** Custom decks and match history
 ## Feature overview
 
 ### Cards & decks
-- **200 cards** across 10 categories, each with a name + effect.
+- **1,729 cards** across 10 categories, each with a name + effect.
 - **5 deck modes** - Family, Party, Drill, Tournament, Chaos - each a category filter.
 - **Custom decks** - build your own twist cards (name + effect + category), save them locally, and play them.
 - **True 3D card flip** - perspective flip with a shine sweep on reveal.
@@ -112,7 +112,7 @@ ScoreKeeper taps ──▶ lib/game.ts (pure reducers) ──▶ GameSession (st
                               localStorage(active game)    lib/client-api addMatch()
 ```
 
-The 200 cards are static JSON served from `public/`. All game logic is a set of **pure functions** in `lib/game.ts` (`addScore`, `sideOut`, `undoLast`, `checkWin`, …) that take a `GameSession` and return a new one - easy to reason about and trivially testable. React state in `app/page.tsx` is the single source of truth for the live game; everything else is derived.
+The 1,729 cards are static JSON served from `public/`. All game logic is a set of **pure functions** in `lib/game.ts` (`addScore`, `sideOut`, `undoLast`, `checkWin`, …) that take a `GameSession` and return a new one - easy to reason about and trivially testable. React state in `app/page.tsx` is the single source of truth for the live game; everything else is derived.
 
 ### The scoring engine
 
@@ -136,7 +136,7 @@ All persistence is `localStorage`, isolated behind **`lib/client-api.ts`** so th
 | `pb-match-history` | finished matches `{ teams, score, winner, mode, duration }` | 200 |
 | `pb-feedback` | local backup of submitted feedback | 50 |
 
-`exportData()` serializes decks + history to a JSON blob (downloaded via an object URL); `importData()` restores them. Custom-deck cards are mapped to playable `Card`s with **negative ids** (`deckToCards`) so they never collide with the built-in 1-200 id space.
+`exportData()` serializes decks + history to a JSON blob (downloaded via an object URL); `importData()` restores them. Custom-deck cards are mapped to playable `Card`s with **negative ids** (`deckToCards`) so they never collide with the built-in 1-1729 id space.
 
 ### Rendering & animation
 
@@ -187,7 +187,7 @@ app/
 │   ├── client-api.ts         # Local store: decks, history, export/import
 │   └── sounds.ts             # Web Audio sound effects + haptics
 └── public/
-    ├── cards.json            # All 200 cards
+    ├── cards.json            # All 1,729 cards
     ├── manifest.json         # PWA manifest
     └── sw.js                 # Network-first service worker
 ```
@@ -249,7 +249,7 @@ Everything you create - games, custom decks, match history, settings - is stored
 | Party | Laughs, dares & drinks | 100 |
 | Drill | Sharpen your game | 60 |
 | Tournament | Competitive twists | 60 |
-| Chaos | All 200 cards, anything goes | 200 |
+| Chaos | All 1,729 cards, anything goes | 1,729 |
 
 ## Roadmap
 

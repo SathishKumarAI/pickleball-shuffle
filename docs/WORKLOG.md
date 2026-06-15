@@ -1,5 +1,20 @@
 # Worklog
 
+## 2026-06-15 16:30 - Grow deck to 1729 cards with commentator voice + metadata
+
+**Summary:** Expanded the deck from 200 to exactly **1,729** unique cards (the Ramanujan taxicab number), each in playful sports-commentator voice with rich metadata, and surfaced that metadata in the app.
+
+**Changes:**
+- `scripts/generate_cards.py` - deterministic generator: keeps the original 200 (now `rarity: signature`), appends 1,529 combinatorial twist cards in commentator voice, round-robin across 10 categories. Uniqueness enforced like a primary key on `name` (asserts unique ids + names, exactly 1729).
+- Card schema enriched: `callout`, `intensity` (1-5), `rarity` (signature/common/uncommon/rare/legendary), `tags`. `lib/cards.ts` adds the `Rarity` type + `RARITY_STYLE`.
+- `CardDisplay` shows a **rarity badge** + the **commentator callout** on the card face (replay/collect appeal).
+- `docs/data/cards.json` (new): full documented dataset - `{ meta: { why_1729, philosophy, schema, categories, rarities, intensity_distribution }, cards: [...] }`.
+- Easter-egg mark on the landing footer explaining why 1729 (taxicab number, 1³+12³ = 9³+10³). Copy updated 200 -> 1,729 in `manifest`, `layout`, `page.tsx`, `RulesPanel`, READMEs, `CLAUDE.md`.
+
+**Decisions:** Commentator voice (rotating hooks/stingers) makes reading a card half the fun; rarity gives a collect-them-all pull; intensity/tags set up future themed/tunable modes. Original 200 kept verbatim. `cards.json` grew 39K -> 687K (fine for a one-time fetch).
+
+**Verification:** generator asserts pass (1729 unique ids+names); tsc clean; build green; `/cards.json` serves 1729; landing shows the mark.
+
 ## 2026-06-15 16:05 - In-game pause (T3) + new-tab doc links + dash normalize
 
 **Summary:** Shipped the in-game pause feature, normalized long dashes to hyphens repo-wide, and made the GitHub Pages landing links open in a new tab.

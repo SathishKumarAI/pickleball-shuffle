@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CATEGORY_COLORS } from "@/lib/cards";
+import { Card, CATEGORY_COLORS, RARITY_STYLE } from "@/lib/cards";
 import { CategoryIcon } from "./icons";
 import { Shuffle, Star, SkipForward } from "lucide-react";
 import { useState } from "react";
@@ -86,7 +86,17 @@ export default function CardDisplay({
           {/* Face of card */}
           <div className={`card-face card-face--back shine ${shine ? "shine-run" : ""} w-full h-full rounded-3xl bg-gradient-to-br ${gradient} flex flex-col p-6 select-none shadow-2xl`} style={{ border: "1px solid rgba(255,255,255,0.2)" }}>
             <div className="flex justify-between items-start">
-              <span className="text-white drop-shadow">{card && <CategoryIcon category={card.category} size={30} strokeWidth={2} />}</span>
+              <span className="flex items-center gap-2 min-w-0">
+                <span className="text-white drop-shadow shrink-0">{card && <CategoryIcon category={card.category} size={30} strokeWidth={2} />}</span>
+                {card?.rarity && (
+                  <span
+                    className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full shrink-0"
+                    style={{ background: "rgba(0,0,0,0.28)", color: RARITY_STYLE[card.rarity].color, border: `1px solid ${RARITY_STYLE[card.rarity].color}` }}
+                  >
+                    {RARITY_STYLE[card.rarity].label}
+                  </span>
+                )}
+              </span>
               {onFavorite && (
                 <button onClick={(e) => { e.stopPropagation(); onFavorite(); }} aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"} aria-pressed={isFavorite} className="flex items-center justify-center text-white transition-transform hover:scale-125 active:scale-90 p-2.5 -m-2.5">
                   <Star size={22} fill={isFavorite ? "currentColor" : "none"} />
@@ -97,6 +107,9 @@ export default function CardDisplay({
             <div className="flex-1 flex flex-col items-center justify-center gap-3 text-center px-2">
               <h2 className="font-display text-2xl sm:text-3xl font-black text-white leading-tight drop-shadow-sm">{card?.name}</h2>
               <p className="text-sm sm:text-base text-white/90 leading-relaxed">{card?.effect}</p>
+              {card?.callout && (
+                <p className="text-xs font-bold italic text-white/70 mt-1">&ldquo;{card.callout}&rdquo;</p>
+              )}
             </div>
 
             <div className="flex justify-between items-end gap-2">

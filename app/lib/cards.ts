@@ -1,10 +1,26 @@
+export type Rarity = "signature" | "common" | "uncommon" | "rare" | "legendary";
+
 export interface Card {
   id: number;
   category: string;
   name: string;
   effect: string;
   vibe: string;
+  /* Optional metadata (present on the 1729-card deck) — drives flavour + replay value. */
+  callout?: string;
+  intensity?: number; // 1 (chill) .. 5 (chaos)
+  rarity?: Rarity;
+  tags?: string[];
 }
+
+/* Badge styling per rarity — used on the card face. */
+export const RARITY_STYLE: Record<Rarity, { label: string; color: string }> = {
+  signature: { label: "Signature", color: "#34d399" },
+  common: { label: "Common", color: "#9ca3af" },
+  uncommon: { label: "Uncommon", color: "#60a5fa" },
+  rare: { label: "Rare", color: "#a78bfa" },
+  legendary: { label: "Legendary", color: "#fbbf24" },
+};
 
 export const CATEGORIES = [
   "Shot Restriction",
