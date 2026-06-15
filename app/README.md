@@ -8,6 +8,8 @@ A free, **mobile-first, local-first** web app with 1,729 pickleball twist cards 
 
 No login. No install. Open the link at the court and play.
 
+> **What's new:** a **1,729-card deck** (the Ramanujan taxicab number) with per-card **rarity / intensity / tags**; a **Commentator voice** toggle (concise vs hyped card text); **in-game pause**; configurable **match length** + match-complete screen; a **Back** button beside Draw and a bigger responsive card; plus a full accessibility pass and custom fonts. Full card dataset with the design rationale: [`../docs/data/cards.json`](../docs/data/cards.json).
+
 ---
 
 ## Table of contents

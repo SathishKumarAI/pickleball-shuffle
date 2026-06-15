@@ -23,12 +23,13 @@ Tradeoff: no cross-device sync. Custom decks and history live in `localStorage`,
 
 ## Highlights
 
-- **1,729 cards**, 10 categories, **5 deck modes** (Family → Chaos), plus **custom decks** you build yourself.
-- **Real scorekeeper** - side-out scoring, win-by-2, serving indicator, undo, best-of-3.
-- **Resume last game** - leave and a one-tap banner brings the match back, card and score intact.
-- **Match history** + **export/import backup**, all local.
-- **In-app feedback**, **dark/light**, sound + haptics, and a clean **lucide** icon set (no emoji).
-- **Mobile-tuned** - `100dvh`, safe-area insets, no iOS input zoom, responsive card sizing, installable PWA.
+- **1,729 unique cards** (the Ramanujan taxicab number), 10 categories, **5 deck modes** (Family → Chaos), plus **custom decks** you build yourself.
+- **Card metadata** - every card has a **rarity** badge (common → legendary), an intensity rating, and tags. Most draws are common; a legendary is a moment.
+- **Two text styles** - concise rules by default, or flip on **Commentator voice** in Settings for hyped courtside-caller flavour (both stored per card).
+- **Real scorekeeper** - side-out scoring, win-by-2, serving indicator, undo, plus **in-game pause** (freezes the clock, survives reload).
+- **Match length** - single game, best of 3, or best of 5, with a **match-complete celebration** when a team takes the series.
+- **Resume last game**, **Match history**, **export/import backup** - all local, no account.
+- **Mobile-tuned** - `100dvh`, safe-area insets, no iOS input zoom, a big **responsive card** with a Back button beside Draw, dark/light, sound + haptics, installable PWA.
 
 ## Repository layout
 

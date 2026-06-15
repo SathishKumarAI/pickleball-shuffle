@@ -11,6 +11,14 @@
 
 A free pickleball party game fused with a scorekeeper. Tap to draw a card, play the next point under that twist, keep score - phone-first, works offline after first load. **Local-first is a design decision, not a gap:** zero network in the hot path, no signup wall, data never leaves the device. Tradeoff: no cross-device sync (manual Export/Import backup instead).
 
+## What's new (look out for these)
+
+- **1,729-card deck** with per-card metadata - `rarity` (badge on the card), `intensity`, `tags`, plus both a concise `effect` and a `commentary` string. Full dataset + the "why 1729": [`docs/data/cards.json`](data/cards.json).
+- **Commentator voice toggle** (Settings) - switch every card between concise rules and hyped commentator text.
+- **In-game pause** - freezes the match clock + blocks play, persists across reload.
+- **Match length** setting (single / best of 3 / best of 5) + a **match-complete** screen.
+- **Back button** beside Draw, bigger **responsive card**, full **accessibility pass** (focus rings, dialog semantics, reduced-motion), and **custom fonts** (Bricolage Grotesque + Hanken Grotesk).
+
 ---
 
 ## Quick Start (~3 min)

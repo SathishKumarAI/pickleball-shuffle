@@ -21,7 +21,7 @@ const HOW_TO_PLAY: Section[] = [
   },
   {
     q: "Winning",
-    a: "First team to reach the points target (default 11) by 2 clear points wins. A win celebration pops up - start a new game to keep the match going, or end the match to save it to history.",
+    a: "First team to reach the points target (default 11) by 2 clear points wins the game. Set Match length in Settings (single game, best of 3, or best of 5) - when a team takes the series, a match-complete screen celebrates the winner. Otherwise start the next game to keep going.",
   },
 ];
 
@@ -37,6 +37,18 @@ const USING_APP: Section[] = [
   {
     q: "Match history & backup",
     a: "Finished matches are saved automatically under Match history. Everything lives on your device - use Export backup to save a file, and Import backup to restore it on another device.",
+  },
+  {
+    q: "Pause a game",
+    a: "Hit Pause in the top bar to freeze the match clock and put scoring on hold - a Paused screen covers the board until you tap Resume. The pause even survives closing the app.",
+  },
+  {
+    q: "Card text styles",
+    a: "Cards show concise rules by default. Prefer flavour? Turn on 'Commentator voice' in Settings to read every card in hyped-up courtside-caller style. Switch any time - your choice sticks.",
+  },
+  {
+    q: "Card rarity & the 1,729 deck",
+    a: "The deck holds exactly 1,729 unique cards (the Ramanujan 'taxicab' number). Each card shows a rarity badge - most draws are Common, but a Legendary (Golden Zone, Overtime, big multipliers) is a moment. Collect the wild ones!",
   },
   {
     q: "Install on your phone",
