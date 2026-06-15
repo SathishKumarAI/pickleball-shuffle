@@ -1,5 +1,17 @@
 # Worklog
 
+## 2026-06-15 16:55 - Docs overhaul: full README, CONTRIBUTING, in-app discovery
+
+**Summary:** Documented every feature for end users and contributors, added a contribution guide + a tasteful star/issues ask, and surfaced the new features in-app.
+
+**Changes:**
+- `README.md` - new grouped **Features** section (Cards & decks, Playing & scoring, Your data, Feel & accessibility), a **Contributing** section, expanded **Documentation** links, and an "Enjoying it?" footer (value-first, low-pressure star + issues ask). Repo-layout tree updated (`scripts/`, `docs/data/`).
+- `CONTRIBUTING.md` (new) - dev setup, CI gates, PR guidelines, how to add cards via the generator, local-first ground rules.
+- `app/README.md` + `docs/ONBOARDING.md` - "What's new" callouts.
+- `RulesPanel` - new FAQ entries (Pause a game, Card text styles, Card rarity & the 1,729 deck) so new players discover the toggle/pause/rarity in-app.
+
+**Decisions:** Star ask placed only at the README bottom, framed as optional with a discoverability reason (per the project owner's guidance) - no nagging, value first. Docs split by audience: README = players, ONBOARDING/CONTRIBUTING = contributors, app/README = architecture, docs/data = raw dataset.
+
 ## 2026-06-15 16:30 - Grow deck to 1729 cards with commentator voice + metadata
 
 **Summary:** Expanded the deck from 200 to exactly **1,729** unique cards (the Ramanujan taxicab number), each in playful sports-commentator voice with rich metadata, and surfaced that metadata in the app.
