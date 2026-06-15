@@ -153,3 +153,20 @@
 **Follow-ups:**
 - [ ] Visually QA on a real phone (haptics, 3D flip, confetti perf).
 - [ ] Consider applying the same glass/pressable styling to `SettingsSheet`, `GameSettings`, and `PlayerNames` for full consistency.
+
+## 2026-06-15 15:10 — New logo, security audit, prod deploy
+
+**Summary:** Replaced the "PB" text tile with a real brand mark (tilted playing card overlapping a holed pickleball on the emerald gradient), ran a security audit on the untracked auth experiment (clean), and shipped the logo to production. Opened a tickets list for the remaining requests.
+
+**Changes:**
+- `app/icon.svg` (new) — full-tile master mark; Next App Router serves it as the SVG favicon.
+- `public/icons/app-icon.svg` (new) — same mark for the landing `<img>`.
+- `app/page.tsx` — landing hero swaps the gradient `PB` span for `<img src="/icons/app-icon.svg">` (keeps rounded-3xl + float + glow).
+- `favicon.ico`, `public/icons/{icon-192,icon-512,apple-touch-icon}.png` — regenerated from the SVG via `rsvg-convert`; `favicon.ico` rebuilt as a 64×64 PNG-in-ICO with stdlib `struct` (no Pillow/ImageMagick available).
+- `docs/TICKETS.md` (new) — pending task list; linked from `docs/index.md`.
+
+**Security audit (untracked auth experiment):** Every file is an inert stub — auth/api routes return HTTP 410, `lib/*` are `export {}`, `AuthForm`/`UserMenu` render `null`, login/signup `redirect("/")`. `.vercel/.env.production.local` is gitignored and uncommitted. **No vulnerabilities; no patch needed** — only the dead-code deletion (T4).
+
+**Verification:** `npm run build` clean (14 routes, `/icon.svg` emitted); local `:3000` serves the new logo + favicon at HTTP 200; production verified — `app-icon.svg`/`icon.svg` return 200 and the landing references the new mark. Deployed `03fa40c` → prod READY (https://pickleball-card-games.vercel.app).
+
+**Follow-ups:** see [`TICKETS.md`](TICKETS.md) — feedback→Form (T1), how-to-use button (T2), in-game pause (T3), dead-stub deletion (T4).

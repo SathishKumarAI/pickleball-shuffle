@@ -12,5 +12,6 @@ Made just for fun and personal use only — not for making sales.
 
 ## Docs
 - [Worklog](WORKLOG.md)
+- [Tickets / pending tasks](TICKETS.md)
 - [Bug log](BUG-LOG.md)
 - [UI layout notes](UI-LAYOUT-NOTES.md)
