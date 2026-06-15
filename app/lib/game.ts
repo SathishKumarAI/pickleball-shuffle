@@ -37,6 +37,10 @@ export interface GameSession {
   gameResults: { team1: number; team2: number }[];
   winner: 1 | 2 | null;
   startTime: number;
+  /* Pause: timestamp the current pause began (null = running), and total ms
+     accumulated across past pauses. Together they freeze the elapsed clock. */
+  pausedAt?: number | null;
+  pausedMs?: number;
   playerNames: { team1: string; team2: string };
   config: GameConfig;
   cardIds: number[];
@@ -69,6 +73,8 @@ export function createGame(mode: string, names?: { team1: string; team2: string 
     gameResults: [],
     winner: null,
     startTime: Date.now(),
+    pausedAt: null,
+    pausedMs: 0,
     playerNames: names || { team1: "Team 1", team2: "Team 2" },
     config: { ...DEFAULT_CONFIG },
     cardIds: [],
@@ -155,6 +161,8 @@ export function startNewGame(game: GameSession): GameSession {
     gameResults: results,
     winner: null,
     startTime: Date.now(),
+    pausedAt: null,
+    pausedMs: 0,
   };
 }
 
@@ -191,6 +199,27 @@ export function newMatch(game: GameSession): GameSession {
     customName: game.customName,
     customCards: game.customCards,
   };
+}
+
+// ── Pause: freeze the elapsed clock and block play until resumed ──
+export function isPaused(game: GameSession): boolean {
+  return game.pausedAt != null;
+}
+
+export function pauseGame(game: GameSession, now: number): GameSession {
+  if (game.pausedAt) return game;
+  return { ...game, pausedAt: now };
+}
+
+export function resumePlay(game: GameSession, now: number): GameSession {
+  if (!game.pausedAt) return game;
+  return { ...game, pausedAt: null, pausedMs: (game.pausedMs ?? 0) + (now - game.pausedAt) };
+}
+
+// Live elapsed ms with all paused time removed (back-compat: missing fields = 0).
+export function elapsedMs(game: GameSession, now: number): number {
+  const paused = (game.pausedMs ?? 0) + (game.pausedAt ? now - game.pausedAt : 0);
+  return Math.max(0, now - game.startTime - paused);
 }
 
 export function checkWin(score: { team1: number; team2: number }, config: GameConfig): 1 | 2 | null {

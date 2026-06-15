@@ -2,10 +2,10 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Card, DeckMode, DECK_MODES, getFilteredCards, shuffleArray } from "@/lib/cards";
-import { GameSession, GameConfig, createGame, addScore, sideOut, undoLast, resetScore, startNewGame, newMatch, matchWinner, seriesTally, saveGame, loadGame, clearSavedGame, formatTime } from "@/lib/game";
+import { GameSession, GameConfig, createGame, addScore, sideOut, undoLast, resetScore, startNewGame, newMatch, matchWinner, seriesTally, isPaused, pauseGame, resumePlay, elapsedMs, saveGame, loadGame, clearSavedGame, formatTime } from "@/lib/game";
 import { playScoreSound, playUndoSound, playCardFlipSound, playWinSound, playResetSound, triggerHaptic } from "@/lib/sounds";
 import { addMatch, deckToCards, CustomDeck, listFavoriteIds, toggleFavorite } from "@/lib/client-api";
-import { Sun, Moon, Play, X, Bug, HelpCircle } from "lucide-react";
+import { Sun, Moon, Play, Pause, X, Bug, HelpCircle } from "lucide-react";
 import TopBar from "@/components/TopBar";
 import CardDisplay from "@/components/CardDisplay";
 import ScoreKeeper from "@/components/ScoreKeeper";
@@ -101,9 +101,12 @@ export default function Home() {
 
   useEffect(() => {
     if (!game) return;
-    const i = setInterval(() => setElapsed(formatTime(Date.now() - game.startTime)), 1000);
+    const tick = () => setElapsed(formatTime(elapsedMs(game, Date.now())));
+    tick();
+    if (game.pausedAt) return; // clock frozen while paused
+    const i = setInterval(tick, 1000);
     return () => clearInterval(i);
-  }, [game?.startTime]);
+  }, [game?.startTime, game?.pausedAt, game?.pausedMs]);
 
   useEffect(() => { if (game) saveGame(game); }, [game]);
 
@@ -351,6 +354,8 @@ export default function Home() {
         onToggleLock={() => setGame({ ...game, config: { ...game.config, scoreLocked: !game.config.scoreLocked } })}
         onUndo={() => { setGame(undoLast(game)); if (game.config.soundEnabled) playUndoSound(); }}
         onReset={() => setConfirmReset(true)}
+        paused={isPaused(game)}
+        onTogglePause={() => setGame(isPaused(game) ? resumePlay(game, Date.now()) : pauseGame(game, Date.now()))}
         onOpenSettings={() => setShowSettings(true)}
         menuSlot={<AppMenu onOpenHistory={() => setShowHistory(true)} onOpenDecks={() => setShowDecks(true)} onOpenFavorites={() => setShowFavorites(true)} onOpenFeedback={() => setShowFeedback(true)} onOpenRules={() => setShowRules(true)} />}
       />
@@ -412,6 +417,26 @@ export default function Home() {
         onUpdate={handleConfigUpdate}
         onReset={() => { doReset(); setShowSettings(false); }}
       />
+
+      {isPaused(game) && !game.winner && (
+        <div role="dialog" aria-modal="true" aria-label="Game paused" className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/70 backdrop-blur-md">
+          <div className="glass rounded-3xl p-8 text-center max-w-sm w-full shadow-2xl anim-pop" style={{ border: "1px solid var(--border)" }}>
+            <div className="flex justify-center mb-4 anim-float" style={{ color: "var(--accent)" }}>
+              <Pause size={64} strokeWidth={1.5} />
+            </div>
+            <h2 className="font-display text-3xl font-black mb-1" style={{ color: "var(--text)" }}>Paused</h2>
+            <p className="text-sm mb-6" style={{ color: "var(--text-muted)" }}>{elapsed} elapsed · scoring is on hold</p>
+            <button
+              autoFocus
+              onClick={() => setGame(resumePlay(game, Date.now()))}
+              className="pressable w-full flex items-center justify-center gap-2 px-6 py-3 text-white font-bold rounded-full shadow-lg"
+              style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-dim))" }}
+            >
+              <Play size={18} fill="currentColor" /> Resume
+            </button>
+          </div>
+        </div>
+      )}
 
       {game.winner && (
         <WinCelebration

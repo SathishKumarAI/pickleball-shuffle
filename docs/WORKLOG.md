@@ -1,5 +1,16 @@
 # Worklog
 
+## 2026-06-15 16:05 - In-game pause (T3) + new-tab doc links + dash normalize
+
+**Summary:** Shipped the in-game pause feature, normalized long dashes to hyphens repo-wide, and made the GitHub Pages landing links open in a new tab.
+
+**Changes:**
+- T3 pause: `lib/game.ts` adds `pausedAt`/`pausedMs` to `GameSession` + `pauseGame`/`resumePlay`/`isPaused`/`elapsedMs`; `page.tsx` freezes the elapsed clock via `elapsedMs`, adds a full-screen "Paused" overlay (blocks scoring/drawing, autofocus Resume); `TopBar` gets a Pause/Resume quick-action. Pause persists in `GameSession` so a break survives reload; `startNewGame`/`newMatch` reset it.
+- Dashes: replaced all em/en dashes with `-` across source + docs (255 occurrences, 38 files).
+- Links: `docs/index.md` converted to explicit `target="_blank"` HTML anchors; new-tab script kept on the docs pages. (README on github.com can't be forced - GitHub sanitizes `target`/scripts; only the Pages site + the Vercel app obey it.)
+
+**Verification:** tsc clean, build green (14 routes).
+
 ## 2026-06-15 15:45 - Close audit tickets T8/T9/T10
 
 **Summary:** Completed the three follow-up tickets opened by the frontend audit.

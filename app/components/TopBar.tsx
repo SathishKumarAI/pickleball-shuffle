@@ -3,7 +3,7 @@
 import { GameSession } from "@/lib/game";
 import { DeckMode, DECK_MODES } from "@/lib/cards";
 import { MODE_ICONS } from "./icons";
-import { ArrowLeft, Settings, Sun, Moon, Undo2, Lock, LockOpen, Pencil, ChevronDown, RotateCcw } from "lucide-react";
+import { ArrowLeft, Settings, Sun, Moon, Undo2, Lock, LockOpen, Pencil, ChevronDown, RotateCcw, Pause, Play } from "lucide-react";
 import { useState } from "react";
 
 export default function TopBar({
@@ -19,6 +19,8 @@ export default function TopBar({
   onToggleLock,
   onUndo,
   onReset,
+  paused,
+  onTogglePause,
   onOpenSettings,
   menuSlot,
 }: {
@@ -34,6 +36,8 @@ export default function TopBar({
   onToggleLock: () => void;
   onUndo: () => void;
   onReset: () => void;
+  paused: boolean;
+  onTogglePause: () => void;
   onOpenSettings: () => void;
   menuSlot?: React.ReactNode;
 }) {
@@ -73,6 +77,9 @@ export default function TopBar({
           G{game.gameNumber} · {elapsed}
         </span>
         <span style={{ color: "var(--border)" }}>·</span>
+        <button onClick={onTogglePause} aria-label={paused ? "Resume game" : "Pause game"} aria-pressed={paused} className="pressable flex items-center justify-center gap-1 text-xs min-h-[44px] px-2" style={{ color: paused ? "var(--accent)" : "var(--text-secondary)" }}>
+          {paused ? <Play size={14} fill="currentColor" /> : <Pause size={14} />} {paused ? "Resume" : "Pause"}
+        </button>
         <button onClick={onUndo} disabled={game.history.length === 0} className="pressable flex items-center justify-center gap-1 text-xs min-h-[44px] px-2 disabled:opacity-30" style={{ color: "var(--text-secondary)" }}>
           <Undo2 size={14} /> Undo
         </button>
