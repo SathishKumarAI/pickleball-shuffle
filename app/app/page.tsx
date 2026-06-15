@@ -236,10 +236,15 @@ export default function Home() {
 
           <main className="flex-1 flex flex-col items-center justify-center gap-8 px-6 py-8 safe-bottom">
           <div className="text-center anim-fade-up">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl mb-4 anim-float"
-                 style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-dim))", boxShadow: "0 12px 34px -8px var(--accent-glow)" }}>
-              <span className="text-3xl font-black text-white tracking-tight">PB</span>
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/icons/app-icon.svg"
+              alt="Pickleball Card Games"
+              width={80}
+              height={80}
+              className="inline-block w-20 h-20 rounded-3xl mb-4 anim-float"
+              style={{ boxShadow: "0 12px 34px -8px var(--accent-glow)" }}
+            />
             <h1 className="text-4xl sm:text-5xl font-black tracking-tight" style={{ color: "var(--text)" }}>
               Pickleball <span style={{ color: "var(--accent)" }}>Card Games</span>
             </h1>
