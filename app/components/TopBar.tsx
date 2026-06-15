@@ -48,7 +48,7 @@ export default function TopBar({
           <ArrowLeft size={16} /> Back
         </button>
 
-        <button onClick={() => setShowModes(!showModes)} className="pressable min-w-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full" style={{ background: "var(--bg-elevated)" }}>
+        <button onClick={() => setShowModes(!showModes)} aria-haspopup="true" aria-expanded={showModes} aria-label="Change deck mode" className="pressable min-w-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full" style={{ background: "var(--bg-elevated)" }}>
           <ModeIcon size={15} style={{ color: "var(--accent)" }} />
           <span className="text-sm font-semibold truncate" style={{ color: "var(--text)" }}>
             {modeLabelOverride || DECK_MODES[mode].label}
@@ -79,10 +79,10 @@ export default function TopBar({
         <button onClick={onReset} disabled={game.score.team1 === 0 && game.score.team2 === 0} className="pressable flex items-center gap-1 text-xs disabled:opacity-30" style={{ color: "var(--text-secondary)" }}>
           <RotateCcw size={14} /> Reset
         </button>
-        <button onClick={onToggleLock} className="pressable flex items-center gap-1 text-xs" style={{ color: game.config.scoreLocked ? "var(--red)" : "var(--text-secondary)" }}>
+        <button onClick={onToggleLock} aria-label={game.config.scoreLocked ? "Unlock score" : "Lock score"} aria-pressed={game.config.scoreLocked} className="pressable flex items-center gap-1 text-xs min-h-[32px] px-1" style={{ color: game.config.scoreLocked ? "var(--red)" : "var(--text-secondary)" }}>
           {game.config.scoreLocked ? <Lock size={14} /> : <LockOpen size={14} />}
         </button>
-        <button onClick={onEditNames} className="pressable flex items-center gap-1 text-xs" style={{ color: "var(--text-secondary)" }}>
+        <button onClick={onEditNames} aria-label="Edit team names" className="pressable flex items-center gap-1 text-xs min-h-[32px] px-1" style={{ color: "var(--text-secondary)" }}>
           <Pencil size={14} />
         </button>
       </div>

@@ -1,6 +1,8 @@
 "use client";
 
+import { Settings } from "lucide-react";
 import { GameConfig, GameType } from "@/lib/game";
+import { Sheet } from "./HistoryPanel";
 
 export default function SettingsSheet({
   config,
@@ -18,17 +20,7 @@ export default function SettingsSheet({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-40" onClick={onClose}>
-      <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.5)" }} />
-      <div
-        className="absolute bottom-0 left-0 right-0 rounded-t-3xl p-6 pb-10 max-h-[70vh] overflow-y-auto"
-        style={{ background: "var(--bg-card)", borderTop: "1px solid var(--border)" }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="w-10 h-1 rounded-full mx-auto mb-6" style={{ background: "var(--border)" }} />
-
-        <h2 className="text-lg font-semibold mb-5" style={{ color: "var(--text)" }}>Settings</h2>
-
+    <Sheet title="Settings" icon={<Settings size={18} />} onClose={onClose}>
         {/* Game type */}
         <SettingRow label="Game type">
           <div className="flex gap-1.5">
@@ -57,12 +49,11 @@ export default function SettingsSheet({
         <Toggle label="Sound effects" value={config.soundEnabled} onChange={(v) => onUpdate("soundEnabled", v)} />
 
         <div className="mt-6 pt-4" style={{ borderTop: "1px solid var(--border)" }}>
-          <button onClick={onReset} className="w-full py-3 rounded-xl text-sm font-medium" style={{ background: "var(--bg-elevated)", color: "var(--red)" }}>
+          <button onClick={onReset} className="pressable w-full py-3 rounded-xl text-sm font-medium" style={{ background: "var(--bg-elevated)", color: "var(--red)" }}>
             Reset Score to 0 – 0
           </button>
         </div>
-      </div>
-    </div>
+    </Sheet>
   );
 }
 
@@ -81,6 +72,9 @@ function Toggle({ label, value, onChange }: { label: string; value: boolean; onC
       <span className="text-sm" style={{ color: "var(--text)" }}>{label}</span>
       <button
         onClick={() => onChange(!value)}
+        role="switch"
+        aria-checked={value}
+        aria-label={label}
         className="w-11 h-6 rounded-full transition-colors relative"
         style={{ background: value ? "var(--accent)" : "var(--bg-elevated)" }}
       >
@@ -94,7 +88,8 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
   return (
     <button
       onClick={onClick}
-      className="px-3 py-1 rounded-full text-xs font-medium transition-all"
+      aria-pressed={active}
+      className="pressable px-3 py-1 rounded-full text-xs font-medium transition-all"
       style={{
         background: active ? "var(--accent)" : "var(--bg-elevated)",
         color: active ? "#fff" : "var(--text-secondary)",

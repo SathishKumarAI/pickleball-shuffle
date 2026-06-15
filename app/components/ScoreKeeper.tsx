@@ -19,7 +19,7 @@ export default function ScoreKeeper({
     <div className="flex flex-col items-center gap-3 w-full max-w-sm">
       {/* Serving indicator */}
       {game.config.sideOutScoring && (
-        <button onClick={onSideOut} className="pressable flex items-center gap-1.5 text-xs px-3 py-1 rounded-full" style={{ background: "var(--bg-elevated)", color: "var(--yellow)", border: "1px solid var(--border)" }}>
+        <button onClick={onSideOut} aria-label="Side out — switch serving team" aria-live="polite" className="pressable flex items-center gap-1.5 text-xs px-3 py-1 rounded-full" style={{ background: "var(--bg-elevated)", color: "var(--yellow)", border: "1px solid var(--border)" }}>
           <CircleDot size={13} /> Serving: {game.servingTeam === 1 ? game.playerNames.team1 : game.playerNames.team2}
         </button>
       )}
@@ -78,10 +78,11 @@ function ScoreButton({ score, name, color, serving, disabled, onClick }: {
     <button
       onClick={onClick}
       disabled={disabled}
+      aria-label={`Add point to ${name}, currently ${score}${serving ? ", serving" : ""}`}
       className="flex flex-col items-center gap-1.5 transition-all active:scale-90 disabled:opacity-40"
     >
       <div
-        className={`relative w-20 h-20 sm:w-24 sm:h-24 rounded-3xl flex items-center justify-center text-4xl sm:text-5xl font-black text-white ${bump ? "anim-bump" : ""} ${serving ? "anim-ring" : ""}`}
+        className={`font-display relative w-20 h-20 sm:w-24 sm:h-24 rounded-3xl flex items-center justify-center text-4xl sm:text-5xl font-black text-white ${bump ? "anim-bump" : ""} ${serving ? "anim-ring" : ""}`}
         style={{
           background: `linear-gradient(150deg, ${color}, color-mix(in srgb, ${color} 65%, black))`,
           opacity: disabled ? 0.4 : 1,

@@ -155,6 +155,38 @@ export function startNewGame(game: GameSession): GameSession {
   };
 }
 
+// Best-of-3 series: first team to win 2 games takes the match.
+export const GAMES_TO_WIN_MATCH = 2;
+
+// Games won INCLUDING the just-finished game (gamesWon only updates on the next
+// game, so the live match tally during the win screen must add the current win).
+export function seriesTally(game: GameSession): { team1: number; team2: number } {
+  const won = { ...game.gamesWon };
+  if (game.winner === 1) won.team1++;
+  if (game.winner === 2) won.team2++;
+  return won;
+}
+
+// The match (series) winner, or null if the series isn't decided yet.
+export function matchWinner(game: GameSession): 1 | 2 | null {
+  if (!game.winner) return null;
+  const won = seriesTally(game);
+  if (won.team1 >= GAMES_TO_WIN_MATCH) return 1;
+  if (won.team2 >= GAMES_TO_WIN_MATCH) return 2;
+  return null;
+}
+
+// Start a brand-new match: fresh series, but keep the same teams, deck mode,
+// and settings the players already chose.
+export function newMatch(game: GameSession): GameSession {
+  return {
+    ...createGame(game.mode, game.playerNames),
+    config: game.config,
+    customName: game.customName,
+    customCards: game.customCards,
+  };
+}
+
 export function checkWin(score: { team1: number; team2: number }, config: GameConfig): 1 | 2 | null {
   const { pointsToWin, winByTwo } = config;
   if (score.team1 >= pointsToWin) {

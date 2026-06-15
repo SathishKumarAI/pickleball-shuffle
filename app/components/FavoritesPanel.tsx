@@ -21,8 +21,8 @@ export default function FavoritesPanel({
   return (
     <Sheet title="Favorite cards" icon={<Star size={18} />} onClose={onClose}>
       {cards.length === 0 ? (
-        <p className="text-sm text-center py-8" style={{ color: "var(--text-muted)" }}>
-          No favorites yet. Tap the ☆ on a card while playing to save it here.
+        <p className="text-sm text-center py-8 inline-flex flex-wrap items-center justify-center gap-1" style={{ color: "var(--text-muted)" }}>
+          No favorites yet. Tap the <Star size={13} className="inline" /> on a card while playing to save it here.
         </p>
       ) : (
         <div className="stagger flex flex-col gap-2">

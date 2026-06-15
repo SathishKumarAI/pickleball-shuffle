@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { X, Trophy, Clock, History, Trash2 } from "lucide-react";
 import { DECK_MODES, DeckMode } from "@/lib/cards";
 import { listMatches, clearMatches, SavedMatch } from "@/lib/client-api";
@@ -83,18 +83,51 @@ function Team({ name, score, win, color, right }: { name: string; score: number;
 }
 
 export function Sheet({ title, icon, onClose, children, action }: { title: string; icon: React.ReactNode; onClose: () => void; children: React.ReactNode; action?: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const prev = document.activeElement as HTMLElement | null;
+    ref.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.stopPropagation();
+        onClose();
+      } else if (e.key === "Tab" && ref.current) {
+        // Trap focus within the dialog
+        const f = ref.current.querySelectorAll<HTMLElement>(
+          'button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])'
+        );
+        if (f.length === 0) return;
+        const first = f[0];
+        const last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      prev?.focus?.(); // restore focus to the trigger on close
+    };
+  }, [onClose]);
+
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm" onClick={onClose}>
       <div
-        className="anim-fade-up w-full sm:max-w-md max-h-[88dvh] overflow-y-auto rounded-t-3xl sm:rounded-3xl glass p-5"
+        ref={ref}
+        role="dialog"
+        aria-modal="true"
+        aria-label={title}
+        tabIndex={-1}
+        className="anim-fade-up w-full sm:max-w-md max-h-[88dvh] overflow-y-auto rounded-t-3xl sm:rounded-3xl glass p-5 outline-none"
         style={{ border: "1px solid var(--border)", paddingBottom: "max(1.25rem, env(safe-area-inset-bottom))" }}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-4">
-          <h2 className="flex items-center gap-2 text-lg font-bold" style={{ color: "var(--text)" }}>{icon} {title}</h2>
+          <h2 className="font-display flex items-center gap-2 text-lg font-bold" style={{ color: "var(--text)" }}>{icon} {title}</h2>
           <div className="flex items-center gap-2">
             {action}
-            <button onClick={onClose} className="pressable p-1.5 rounded-full" style={{ background: "var(--bg-elevated)", color: "var(--text-secondary)" }}>
+            <button onClick={onClose} aria-label="Close" className="pressable p-1.5 rounded-full" style={{ background: "var(--bg-elevated)", color: "var(--text-secondary)" }}>
               <X size={18} />
             </button>
           </div>

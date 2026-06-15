@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Card, DeckMode, DECK_MODES, getFilteredCards, shuffleArray } from "@/lib/cards";
-import { GameSession, GameConfig, createGame, addScore, sideOut, undoLast, resetScore, startNewGame, saveGame, loadGame, clearSavedGame, formatTime } from "@/lib/game";
+import { GameSession, GameConfig, createGame, addScore, sideOut, undoLast, resetScore, startNewGame, newMatch, matchWinner, seriesTally, saveGame, loadGame, clearSavedGame, formatTime } from "@/lib/game";
 import { playScoreSound, playUndoSound, playCardFlipSound, playWinSound, playResetSound, triggerHaptic } from "@/lib/sounds";
 import { addMatch, deckToCards, CustomDeck, listFavoriteIds, toggleFavorite } from "@/lib/client-api";
 import { Sun, Moon, Play, X, Bug, HelpCircle } from "lucide-react";
@@ -246,7 +246,7 @@ export default function Home() {
               style={{ boxShadow: "0 12px 34px -8px var(--accent-glow)" }}
             />
             <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
-              <h1 className="text-4xl sm:text-5xl font-black tracking-tight" style={{ color: "var(--text)" }}>
+              <h1 className="font-display text-4xl sm:text-5xl font-black tracking-tight" style={{ color: "var(--text)" }}>
                 Pickleball <span style={{ color: "var(--accent)" }}>Card Games</span>
               </h1>
               <button
@@ -264,7 +264,7 @@ export default function Home() {
           {/* Resume last game */}
           {savedGame && (
             <div className="anim-pop w-full max-w-sm flex items-center gap-3 p-3 rounded-2xl glass" style={{ border: "1px solid var(--accent)" }}>
-              <button onClick={resumeGame} className="flex items-center gap-3 flex-1 min-w-0 text-left">
+              <button onClick={resumeGame} className="pressable flex items-center gap-3 flex-1 min-w-0 text-left rounded-xl">
                 <span className="flex items-center justify-center w-11 h-11 rounded-xl shrink-0 text-white" style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-dim))" }}>
                   <Play size={20} fill="currentColor" />
                 </span>
@@ -298,7 +298,7 @@ export default function Home() {
                   <div className="min-w-0">
                     <div className="text-base font-semibold transition-colors group-hover:text-[var(--accent)]" style={{ color: "var(--text)" }}>{label}</div>
                     <div className="text-xs" style={{ color: "var(--text-muted)" }}>
-                      {desc} · {cardCounts[key]} cards
+                      {desc}{allCards.length ? ` · ${cardCounts[key]} cards` : ""}
                     </div>
                   </div>
                 </button>
@@ -417,7 +417,10 @@ export default function Home() {
         <WinCelebration
           winnerName={game.winner === 1 ? game.playerNames.team1 : game.playerNames.team2}
           score={game.score}
+          matchOver={matchWinner(game) !== null}
+          seriesWon={seriesTally(game)}
           onNewGame={() => { setGame(startNewGame(game)); setCurrentCard(null); setCardHistory([]); setDeck(shuffleArray(basePool())); }}
+          onNewMatch={() => { setGame(newMatch(game)); setCurrentCard(null); setCardHistory([]); setDeck(shuffleArray(basePool())); }}
           onEndMatch={() => { clearSavedGame(); setSavedGame(null); setGame(null); }}
         />
       )}

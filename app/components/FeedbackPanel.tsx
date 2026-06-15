@@ -16,10 +16,16 @@ export default function FeedbackPanel({ open, onClose }: { open: boolean; onClos
   const [message, setMessage] = useState("");
   const [contact, setContact] = useState("");
   const [sent, setSent] = useState(false);
+  const [emailError, setEmailError] = useState("");
 
   if (!open) return null;
 
   const send = () => {
+    if (contact && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact)) {
+      setEmailError("Enter a valid email, or leave it blank.");
+      return;
+    }
+    setEmailError("");
     // Keep a local copy as backup.
     try {
       const prev = JSON.parse(localStorage.getItem(FEEDBACK_KEY) || "[]");
@@ -50,12 +56,12 @@ export default function FeedbackPanel({ open, onClose }: { open: boolean; onClos
           <span className="flex items-center justify-center w-14 h-14 rounded-full text-white anim-pop" style={{ background: "var(--accent)" }}>
             <Check size={28} />
           </span>
-          <p className="text-base font-semibold" style={{ color: "var(--text)" }}>Thanks for the feedback!</p>
-          <p className="text-sm" style={{ color: "var(--text-muted)" }}>Your email app should have opened. If it didn&apos;t, email us at {FEEDBACK_EMAIL}.</p>
+          <p className="text-base font-semibold" style={{ color: "var(--text)" }}>Almost done — send the email</p>
+          <p className="text-sm" style={{ color: "var(--text-muted)" }}>We opened your email app with the feedback ready. Tap <strong>send</strong> there to finish. If it didn&apos;t open, email us at {FEEDBACK_EMAIL}.</p>
           <button onClick={close} className="pressable mt-2 px-6 py-2.5 rounded-full text-white text-sm font-semibold" style={{ background: "var(--accent)" }}>Done</button>
         </div>
       ) : (
-        <div className="flex flex-col gap-4">
+        <form onSubmit={(e) => { e.preventDefault(); send(); }} className="flex flex-col gap-4">
           {/* Google Form — primary channel when configured */}
           {FORM_URL && (
             <a
@@ -92,21 +98,27 @@ export default function FeedbackPanel({ open, onClose }: { open: boolean; onClos
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder="What do you love? What's missing? Found a bug?"
+            aria-label="Your feedback"
             rows={4}
             className={input}
             style={inputStyle}
           />
-          <input
-            value={contact}
-            onChange={(e) => setContact(e.target.value)}
-            placeholder="Your email (optional, so we can reply)"
-            type="email"
-            className={input}
-            style={inputStyle}
-          />
+          <div>
+            <input
+              value={contact}
+              onChange={(e) => { setContact(e.target.value); if (emailError) setEmailError(""); }}
+              placeholder="Your email (optional, so we can reply)"
+              type="email"
+              aria-label="Your email (optional)"
+              aria-invalid={!!emailError}
+              className={input}
+              style={inputStyle}
+            />
+            {emailError && <p className="mt-1 text-xs" style={{ color: "var(--red)" }}>{emailError}</p>}
+          </div>
 
           <button
-            onClick={send}
+            type="submit"
             disabled={!rating && !message.trim()}
             className="pressable flex items-center justify-center gap-2 px-6 py-3 rounded-full text-white font-semibold disabled:opacity-50"
             style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-dim))" }}
@@ -127,7 +139,7 @@ export default function FeedbackPanel({ open, onClose }: { open: boolean; onClos
               <Bug size={12} /> Request a feature or raise an issue
             </a>
           </p>
-        </div>
+        </form>
       )}
     </Sheet>
   );

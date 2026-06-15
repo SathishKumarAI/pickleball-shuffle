@@ -25,8 +25,13 @@ export default function AppMenu({
     const close = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     };
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
     document.addEventListener("mousedown", close);
-    return () => document.removeEventListener("mousedown", close);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", close);
+      document.removeEventListener("keydown", onKey);
+    };
   }, []);
 
   const doExport = () => {
@@ -64,12 +69,14 @@ export default function AppMenu({
         className="pressable p-2 rounded-full"
         style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-secondary)" }}
         aria-label="Menu"
+        aria-haspopup="menu"
+        aria-expanded={open}
       >
         <Menu size={18} />
       </button>
 
       {open && (
-        <div className="anim-pop absolute right-0 mt-2 w-52 rounded-2xl overflow-hidden z-50 shadow-2xl" style={{ background: "var(--bg-card)", border: "1px solid var(--border)" }}>
+        <div role="menu" className="anim-pop absolute right-0 mt-2 w-52 rounded-2xl overflow-hidden z-50 shadow-2xl" style={{ background: "var(--bg-card)", border: "1px solid var(--border)" }}>
           <Item icon={<BookOpen size={16} />} label="Rules & help" onClick={() => { setOpen(false); onOpenRules(); }} />
           <Item icon={<History size={16} />} label="Match history" onClick={() => { setOpen(false); onOpenHistory(); }} />
           <Item icon={<Star size={16} />} label="Favorite cards" onClick={() => { setOpen(false); onOpenFavorites(); }} />
@@ -93,6 +100,7 @@ function Item({ icon, label, onClick }: { icon: React.ReactNode; label: string; 
   return (
     <button
       onClick={onClick}
+      role="menuitem"
       className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors hover:bg-[var(--bg-elevated)]"
       style={{ color: "var(--text)" }}
     >

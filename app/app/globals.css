@@ -8,7 +8,7 @@
   --border: #2c2c31;
   --text: #ededee;
   --text-secondary: #9a9aa1;
-  --text-muted: #5c5c63;
+  --text-muted: #7e7e87;
   --accent: #34d399;
   --accent-dim: #0b6b4f;
   --accent-glow: rgba(52, 211, 153, 0.22);
@@ -29,7 +29,7 @@
   --border: #d3d3da;
   --text: #1f1f24;
   --text-secondary: #6a6a73;
-  --text-muted: #a6a6ae;
+  --text-muted: #6f6f78;
   --accent: #059669;
   --accent-dim: #047857;
   --accent-glow: rgba(5, 150, 105, 0.18);
@@ -50,7 +50,7 @@ html, body {
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+  font-family: var(--font-body), -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: none;
@@ -209,6 +209,17 @@ svg.lucide { flex-shrink: 0; }
 }
 .pressable:active { transform: scale(0.96); }
 
+/* Distinctive display face for headings, scores, and card text */
+.font-display { font-family: var(--font-display), var(--font-body), system-ui, sans-serif; }
+
+/* Keyboard focus — visible ring on every interactive element (the tap-highlight
+   kill above removes the only other affordance, so this is the sole focus cue) */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 8px; }
@@ -220,5 +231,10 @@ svg.lucide { flex-shrink: 0; }
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  /* Fully suppress the infinite decorative loops (the 0.01ms override only
+     freezes them mid-transform; kill them outright) */
+  .mesh-bg::before, .anim-float, .anim-glow, .anim-ring {
+    animation: none !important;
   }
 }

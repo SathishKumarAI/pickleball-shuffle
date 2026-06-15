@@ -1,5 +1,28 @@
 # Worklog
 
+## 2026-06-15 15:38 — Frontend gap audit fixes + best-of-3 match screen
+
+**Summary:** Ran a 3-agent frontend audit, then applied four fix batches (accessibility, reduced-motion correctness, design-system consistency, custom typography) plus a new best-of-3 match-complete screen. tsc clean, build green, fonts load.
+
+**Changes:**
+- `globals.css` — global `:focus-visible` ring; `--text-muted` contrast bumped (dark `#5c5c63`→`#7e7e87`, light `#a6a6ae`→`#6f6f78`); reduced-motion now kills infinite loops (mesh/float/glow/ring); `.font-display` utility; body font → `var(--font-body)`.
+- `layout.tsx` — removed zoom lock (`maximumScale`/`userScalable`, WCAG 1.4.4); added `next/font` **Bricolage Grotesque** (display) + **Hanken Grotesk** (body) as CSS vars.
+- `HistoryPanel.tsx` (shared `Sheet`) — `role="dialog"`, `aria-modal`, `aria-label`, Escape-to-close, focus trap + focus-return; fixes 5 panels at once.
+- `SettingsSheet.tsx` — refactored onto the shared `Sheet` (was a divergent shell: no glass/X, `z-40`, `vh`); toggles `role="switch"`/`aria-checked`, chips `aria-pressed`.
+- `TopBar.tsx`, `CardDisplay.tsx`, `ScoreKeeper.tsx`, `AppMenu.tsx` — aria-labels on icon-only buttons, `aria-expanded`/menu semantics, score-button labels + serving announcement; reduced-motion card-flip timing; display font on scores/card title.
+- `WinCelebration.tsx` — confetti skipped under reduced-motion; dialog semantics + autofocus; **match-complete variant**.
+- `FeedbackPanel.tsx` — wrapped in `<form>`, email validation, softened false-success copy.
+- `FavoritesPanel.tsx` — emoji ☆ → lucide `Star`.
+- `manifest.json` — theme/background color `#030712`→`#0e0e11` (match app); added `id`/`scope`/`lang`/`dir`.
+- `lib/game.ts` — `GAMES_TO_WIN_MATCH`, `seriesTally`, `matchWinner`, `newMatch`; `page.tsx` wires the match-over screen + 0-cards-flash fix + resume-card press feedback.
+
+**Decisions:** Applied frontend-design craft *within* the existing emerald/glass system rather than a clashing redesign. Chose Bricolage Grotesque + Hanken Grotesk over the overused Inter/Space Grotesk. Best-of-3 is fixed (no new setting) — additive, never surprises single-game players (only fires at 2 games won). Left the dead auth stubs and `logo-mark.svg` orphan untracked (deletion needs explicit OK).
+
+**Follow-ups:**
+- [ ] In-game pause (ticket T3) — design approved, not yet built.
+- [ ] Feedback → Google Form (T1) may supersede the mailto flow.
+- [ ] Optional: make best-of-N a Settings option; tap-target sizes on a few quick-actions still <44px.
+
 ## 2026-06-10 — Rename Vercel project + URL to match the brand
 
 **Summary:** Renamed the Vercel project `pickleball-shuffle` → `pickleball-card-games` so the live URL matches the new name.

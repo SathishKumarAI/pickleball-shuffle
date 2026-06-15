@@ -14,5 +14,15 @@ Status: 🔴 not started · 🟡 in progress / blocked on input · ✅ done (kep
 | T7 | 🔴 | **`vercel dev` on :3001 broken** | Collides with the plain `next dev` on :3000 and won't route (404). Working dev server is **:3000**. For true `vercel dev`, `kill 211370` first, then `vercel dev` from repo root. |
 
 ## Recently shipped
-- ✅ **New pickleball + card logo** — landing hero, favicon, `icon.svg`, PWA icons (192/512/apple-touch). Committed `03fa40c`, pushed `main`, deployed prod. Live: https://pickleball-card-games.vercel.app
+- ✅ **Frontend gap fixes (4 batches)** — accessibility (focus-visible, zoom unlock, aria-labels, dialog semantics + Escape/focus-trap on shared Sheet, switch/chip roles, contrast), reduced-motion correctness (card flip, confetti, infinite loops), design-system consistency (SettingsSheet onto shared Sheet, emoji→lucide, manifest color), and custom fonts (Bricolage Grotesque + Hanken Grotesk). See WORKLOG 2026-06-15.
+- ✅ **Best-of-3 match-complete screen** — `WinCelebration` now shows a series-winner state ("wins the match", games tally, New Match) when a team reaches 2 games. Engine: `matchWinner`/`seriesTally`/`newMatch` in `lib/game.ts`.
+- ✅ **"How to use" chip** on landing (T2).
+- ✅ **New pickleball + card logo** — landing hero, favicon, `icon.svg`, PWA icons. Live: https://pickleball-card-games.vercel.app
 - ✅ **Security audit** — all untracked auth files are inert stubs; secret file gitignored; **no vulnerabilities** (see T4 for cleanup).
+
+## Newly opened (from the frontend audit)
+| # | Status | Ticket | Notes |
+|---|--------|--------|-------|
+| T8 | 🔴 | Tap targets <44px | A few TopBar quick-actions + card favorite/skip still below the 44px minimum; enlarge hit areas. |
+| T9 | 🔴 | Make best-of-N a Settings option | Series length is fixed best-of-3; expose 1/3/5 in SettingsSheet if wanted. |
+| T10 | 🔴 | Replace `alert()` in AppMenu import | Native alerts clash with the glass UI; route through an in-app banner. |
