@@ -6,7 +6,7 @@ Status: 🔴 not started · 🟡 in progress / blocked on input · ✅ done (kep
 | # | Status | Ticket | Notes / what's needed |
 |---|--------|--------|------------------------|
 | T1 | 🟡 | **Feedback → Google Form → Sheet** | Design approved (silent background POST from `FeedbackPanel`, no auth, stays local-first). **Blocked:** need your Google Form ID + the 3 `entry.NNN` field IDs (rating / message / contact). No code can create the Form. |
-| T2 | 🟡 | **"How to use" button on landing only** | Surface `RulesPanel` directly on the home page (not just the hamburger), in-game/settings untouched. **Blocked:** pick placement — A) pill under the mode grid (recommended), B) footer link, C) text under the subtitle. |
+| T2 | ✅ | **"How to use" button on landing** | Done — "How to use" chip beside the hero title (wraps below on narrow phones), opens `RulesPanel`; in-game/settings untouched. |
 | T3 | 🟡 | **In-game pause option** | App is a scorekeeper + card draw with no timer, so "pause" is undefined. Likely a full-screen pause/break overlay that hides the current card and dims the board until resumed. **Blocked:** 1-line spec of desired behavior. |
 | T4 | 🔴 | **Delete dead auth stubs** | `app/api/`, `app/login`, `app/signup`, `lib/db.ts`, `lib/auth.ts`, `lib/supabase/`, `components/AuthForm.tsx`, `components/UserMenu.tsx`, nested `app/app/package.json`+lock. Security audit (2026-06-15) confirms all are inert stubs, no vulns. `rm` is deny-listed → delete manually or grant permission. |
 | T5 | 🔴 | **Proper multi-size favicon.ico** | Current `favicon.ico` is a single 64×64 PNG wrapped in an ICO (no Pillow/ImageMagick on box). Works in modern browsers; regenerate with a real ICO tool (16/32/48) for legacy. |

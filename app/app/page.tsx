@@ -5,7 +5,7 @@ import { Card, DeckMode, DECK_MODES, getFilteredCards, shuffleArray } from "@/li
 import { GameSession, GameConfig, createGame, addScore, sideOut, undoLast, resetScore, startNewGame, saveGame, loadGame, clearSavedGame, formatTime } from "@/lib/game";
 import { playScoreSound, playUndoSound, playCardFlipSound, playWinSound, playResetSound, triggerHaptic } from "@/lib/sounds";
 import { addMatch, deckToCards, CustomDeck, listFavoriteIds, toggleFavorite } from "@/lib/client-api";
-import { Sun, Moon, Play, X, Bug } from "lucide-react";
+import { Sun, Moon, Play, X, Bug, HelpCircle } from "lucide-react";
 import TopBar from "@/components/TopBar";
 import CardDisplay from "@/components/CardDisplay";
 import ScoreKeeper from "@/components/ScoreKeeper";
@@ -245,9 +245,19 @@ export default function Home() {
               className="inline-block w-20 h-20 rounded-3xl mb-4 anim-float"
               style={{ boxShadow: "0 12px 34px -8px var(--accent-glow)" }}
             />
-            <h1 className="text-4xl sm:text-5xl font-black tracking-tight" style={{ color: "var(--text)" }}>
-              Pickleball <span style={{ color: "var(--accent)" }}>Card Games</span>
-            </h1>
+            <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
+              <h1 className="text-4xl sm:text-5xl font-black tracking-tight" style={{ color: "var(--text)" }}>
+                Pickleball <span style={{ color: "var(--accent)" }}>Card Games</span>
+              </h1>
+              <button
+                onClick={() => setShowRules(true)}
+                className="pressable inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium"
+                style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-secondary)" }}
+                aria-label="How to use this app"
+              >
+                <HelpCircle size={15} /> How to use
+              </button>
+            </div>
             <p className="mt-2 text-base" style={{ color: "var(--text-secondary)" }}>Draw twist cards. Shake up the game.</p>
           </div>
 

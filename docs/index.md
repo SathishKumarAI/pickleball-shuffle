@@ -11,6 +11,7 @@ Made just for fun and personal use only — not for making sales.
 - **Bugs / feature requests:** [open a GitHub issue](https://github.com/SathishKumarAI/pickleball-shuffle/issues/new)
 
 ## Docs
+- [Onboarding](ONBOARDING.md)
 - [Worklog](WORKLOG.md)
 - [Tickets / pending tasks](TICKETS.md)
 - [Bug log](BUG-LOG.md)
