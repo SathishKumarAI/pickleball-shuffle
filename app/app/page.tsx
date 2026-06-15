@@ -5,7 +5,7 @@ import { Card, DeckMode, DECK_MODES, getFilteredCards, shuffleArray } from "@/li
 import { GameSession, GameConfig, createGame, addScore, sideOut, undoLast, resetScore, startNewGame, saveGame, loadGame, clearSavedGame, formatTime } from "@/lib/game";
 import { playScoreSound, playUndoSound, playCardFlipSound, playWinSound, playResetSound, triggerHaptic } from "@/lib/sounds";
 import { addMatch, deckToCards, CustomDeck, listFavoriteIds, toggleFavorite } from "@/lib/client-api";
-import { Sun, Moon, Play, X } from "lucide-react";
+import { Sun, Moon, Play, X, Bug } from "lucide-react";
 import TopBar from "@/components/TopBar";
 import CardDisplay from "@/components/CardDisplay";
 import ScoreKeeper from "@/components/ScoreKeeper";
@@ -19,6 +19,8 @@ import DecksPanel from "@/components/DecksPanel";
 import FavoritesPanel from "@/components/FavoritesPanel";
 import FeedbackPanel from "@/components/FeedbackPanel";
 import { MODE_ICONS } from "@/components/icons";
+
+const GITHUB_URL = process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/SathishKumarAI/pickleball-shuffle";
 
 const LANDING_MODES: { key: DeckMode; label: string; desc: string }[] = [
   { key: "family", label: "Family", desc: "Fun for all ages" },
@@ -287,6 +289,24 @@ export default function Home() {
             })}
           </div>
           </main>
+
+          {/* About / community note */}
+          <footer className="safe-x safe-bottom px-6 pb-6 text-center">
+            <p className="mx-auto max-w-md text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>
+              Made just for fun — free to play and for personal use only, not for making sales.
+              Got an idea or hit a bug? Feel free to{" "}
+              <a
+                href={`${GITHUB_URL}/issues/new`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 font-medium underline-offset-2 hover:underline"
+                style={{ color: "var(--accent)" }}
+              >
+                <Bug size={12} /> request a feature or raise an issue
+              </a>{" "}
+              on GitHub.
+            </p>
+          </footer>
         </div>
 
         <HistoryPanel open={showHistory} onClose={() => setShowHistory(false)} />

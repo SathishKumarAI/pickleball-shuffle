@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { MessageSquare, Star, Send, Check } from "lucide-react";
+import { MessageSquare, Star, Send, Check, Bug } from "lucide-react";
 import { Sheet } from "./HistoryPanel";
 
 const FEEDBACK_EMAIL = process.env.NEXT_PUBLIC_FEEDBACK_EMAIL || "sathishkumar786.ml@gmail.com";
+const GITHUB_URL = process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/SathishKumarAI/pickleball-shuffle";
 const FEEDBACK_KEY = "pb-feedback";
 
 export default function FeedbackPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -97,6 +98,20 @@ export default function FeedbackPanel({ open, onClose }: { open: boolean; onClos
           >
             <Send size={18} /> Send feedback
           </button>
+
+          <p className="text-center text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>
+            This app is made just for fun and personal use — not for making sales.
+            Prefer GitHub?{" "}
+            <a
+              href={`${GITHUB_URL}/issues/new`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 font-medium underline-offset-2 hover:underline"
+              style={{ color: "var(--accent)" }}
+            >
+              <Bug size={12} /> Request a feature or raise an issue
+            </a>
+          </p>
         </div>
       )}
     </Sheet>
