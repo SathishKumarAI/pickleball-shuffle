@@ -18,6 +18,7 @@ import HistoryPanel from "@/components/HistoryPanel";
 import DecksPanel from "@/components/DecksPanel";
 import FavoritesPanel from "@/components/FavoritesPanel";
 import FeedbackPanel from "@/components/FeedbackPanel";
+import RulesPanel from "@/components/RulesPanel";
 import { MODE_ICONS } from "@/components/icons";
 
 const GITHUB_URL = process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/SathishKumarAI/pickleball-shuffle";
@@ -48,6 +49,7 @@ export default function Home() {
   const [showDecks, setShowDecks] = useState(false);
   const [showFavorites, setShowFavorites] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [showRules, setShowRules] = useState(false);
   const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
   const [confirmTeam, setConfirmTeam] = useState<1 | 2 | null>(null);
   const [confirmReset, setConfirmReset] = useState(false);
@@ -229,7 +231,7 @@ export default function Home() {
             <button onClick={() => setDarkMode(!darkMode)} className="pressable p-2 rounded-full" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-secondary)" }} aria-label="Toggle theme">
               {darkMode ? <Sun size={18} /> : <Moon size={18} />}
             </button>
-            <AppMenu onOpenHistory={() => setShowHistory(true)} onOpenDecks={() => setShowDecks(true)} onOpenFavorites={() => setShowFavorites(true)} onOpenFeedback={() => setShowFeedback(true)} />
+            <AppMenu onOpenHistory={() => setShowHistory(true)} onOpenDecks={() => setShowDecks(true)} onOpenFavorites={() => setShowFavorites(true)} onOpenFeedback={() => setShowFeedback(true)} onOpenRules={() => setShowRules(true)} />
           </header>
 
           <main className="flex-1 flex flex-col items-center justify-center gap-8 px-6 py-8 safe-bottom">
@@ -313,6 +315,7 @@ export default function Home() {
         <DecksPanel open={showDecks} onClose={() => setShowDecks(false)} onPlay={startCustomDeck} />
         <FavoritesPanel open={showFavorites} onClose={() => setShowFavorites(false)} cards={favoriteCards} onRemove={(id) => setFavoriteIds(toggleFavorite(id))} />
         <FeedbackPanel open={showFeedback} onClose={() => setShowFeedback(false)} />
+        <RulesPanel open={showRules} onClose={() => setShowRules(false)} />
       </>
     );
   }
@@ -334,7 +337,7 @@ export default function Home() {
         onUndo={() => { setGame(undoLast(game)); if (game.config.soundEnabled) playUndoSound(); }}
         onReset={() => setConfirmReset(true)}
         onOpenSettings={() => setShowSettings(true)}
-        menuSlot={<AppMenu onOpenHistory={() => setShowHistory(true)} onOpenDecks={() => setShowDecks(true)} onOpenFavorites={() => setShowFavorites(true)} onOpenFeedback={() => setShowFeedback(true)} />}
+        menuSlot={<AppMenu onOpenHistory={() => setShowHistory(true)} onOpenDecks={() => setShowDecks(true)} onOpenFavorites={() => setShowFavorites(true)} onOpenFeedback={() => setShowFeedback(true)} onOpenRules={() => setShowRules(true)} />}
       />
 
       <div className="flex-1 flex flex-col items-center gap-4 p-4 max-w-lg mx-auto w-full">
@@ -408,6 +411,7 @@ export default function Home() {
       <DecksPanel open={showDecks} onClose={() => setShowDecks(false)} onPlay={startCustomDeck} />
       <FavoritesPanel open={showFavorites} onClose={() => setShowFavorites(false)} cards={favoriteCards} onRemove={(id) => setFavoriteIds(toggleFavorite(id))} />
       <FeedbackPanel open={showFeedback} onClose={() => setShowFeedback(false)} />
+      <RulesPanel open={showRules} onClose={() => setShowRules(false)} />
     </div>
   );
 }

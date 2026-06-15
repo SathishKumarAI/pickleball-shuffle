@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Menu, History, Layers, Star, Download, Upload, MessageSquare } from "lucide-react";
+import { Menu, History, Layers, Star, Download, Upload, MessageSquare, BookOpen } from "lucide-react";
 import { exportData, importData } from "@/lib/client-api";
 
 export default function AppMenu({
@@ -9,11 +9,13 @@ export default function AppMenu({
   onOpenDecks,
   onOpenFavorites,
   onOpenFeedback,
+  onOpenRules,
 }: {
   onOpenHistory: () => void;
   onOpenDecks: () => void;
   onOpenFavorites: () => void;
   onOpenFeedback: () => void;
+  onOpenRules: () => void;
 }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -68,6 +70,7 @@ export default function AppMenu({
 
       {open && (
         <div className="anim-pop absolute right-0 mt-2 w-52 rounded-2xl overflow-hidden z-50 shadow-2xl" style={{ background: "var(--bg-card)", border: "1px solid var(--border)" }}>
+          <Item icon={<BookOpen size={16} />} label="Rules & help" onClick={() => { setOpen(false); onOpenRules(); }} />
           <Item icon={<History size={16} />} label="Match history" onClick={() => { setOpen(false); onOpenHistory(); }} />
           <Item icon={<Star size={16} />} label="Favorite cards" onClick={() => { setOpen(false); onOpenFavorites(); }} />
           <Item icon={<Layers size={16} />} label="Custom decks" onClick={() => { setOpen(false); onOpenDecks(); }} />
