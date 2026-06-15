@@ -16,6 +16,8 @@ Status: 🔴 not started · 🟡 in progress / blocked on input · ⏸️ deferr
 | T7 | ⏸️ | **`vercel dev` on :3001** | Not a real bug - collides with `next dev` on :3000. Working dev server is :3000; `kill 211370` first if you want `vercel dev`. |
 
 ## Recently shipped
+- ✅ **1,729-card deck + metadata + commentator voice** - grew 200 → 1,729 unique cards (Ramanujan taxicab number), each with `callout`/`intensity`/`rarity`/`tags`; rarity badge + callout shown on the card face; full documented dataset at [`docs/data/cards.json`](data/cards.json); "why 1729" mark on the landing. Generator: `scripts/generate_cards.py`.
+- ✅ **In-game pause (T3)** - Pause/Resume + "Paused" overlay, clock freeze, persists across reload.
 - ✅ **Frontend gap fixes (4 batches)** - accessibility (focus-visible, zoom unlock, aria-labels, dialog semantics + Escape/focus-trap on shared Sheet, switch/chip roles, contrast), reduced-motion correctness (card flip, confetti, infinite loops), design-system consistency (SettingsSheet onto shared Sheet, emoji→lucide, manifest color), and custom fonts (Bricolage Grotesque + Hanken Grotesk). See WORKLOG 2026-06-15.
 - ✅ **Best-of-3 match-complete screen** - `WinCelebration` now shows a series-winner state ("wins the match", games tally, New Match) when a team reaches 2 games. Engine: `matchWinner`/`seriesTally`/`newMatch` in `lib/game.ts`.
 - ✅ **"How to use" chip** on landing (T2).
