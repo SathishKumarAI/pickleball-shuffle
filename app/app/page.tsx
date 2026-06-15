@@ -401,6 +401,8 @@ export default function Home() {
         <CardDisplay
           card={currentCard}
           onDraw={drawCard}
+          commentary={game.config.commentaryMode}
+          onBack={() => { setSavedGame(game); setGame(null); }}
           deckRemaining={deck.length}
           isFavorite={currentCard ? favoriteIds.includes(currentCard.id) : false}
           onFavorite={currentCard ? () => setFavoriteIds(toggleFavorite(currentCard.id)) : undefined}

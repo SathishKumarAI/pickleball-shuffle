@@ -7,6 +7,7 @@ export interface Card {
   effect: string;
   vibe: string;
   /* Optional metadata (present on the 1729-card deck) — drives flavour + replay value. */
+  commentary?: string; // longer sports-commentator phrasing (Settings toggle)
   callout?: string;
   intensity?: number; // 1 (chill) .. 5 (chaos)
   rarity?: Rarity;

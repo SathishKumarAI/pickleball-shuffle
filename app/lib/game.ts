@@ -18,6 +18,8 @@ export interface GameConfig {
   gameType: GameType;
   /* Match length: 1 = single game, 3 = best of 3, 5 = best of 5. */
   bestOf: number;
+  /* Card text style: false = concise, true = commentator voice. */
+  commentaryMode: boolean;
 }
 
 import { Card } from "./cards";
@@ -58,6 +60,7 @@ export const DEFAULT_CONFIG: GameConfig = {
   soundEnabled: true,
   gameType: "doubles",
   bestOf: 3,
+  commentaryMode: false,
 };
 
 export function createGame(mode: string, names?: { team1: string; team2: string }): GameSession {

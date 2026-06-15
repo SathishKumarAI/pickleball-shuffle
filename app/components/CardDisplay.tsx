@@ -2,7 +2,7 @@
 
 import { Card, CATEGORY_COLORS, RARITY_STYLE } from "@/lib/cards";
 import { CategoryIcon } from "./icons";
-import { Shuffle, Star, SkipForward } from "lucide-react";
+import { Shuffle, Star, SkipForward, ArrowLeft } from "lucide-react";
 import { useState } from "react";
 
 export default function CardDisplay({
@@ -12,6 +12,8 @@ export default function CardDisplay({
   isFavorite,
   onFavorite,
   onSkip,
+  onBack,
+  commentary = false,
 }: {
   card: Card | null;
   onDraw: () => void;
@@ -19,6 +21,8 @@ export default function CardDisplay({
   isFavorite?: boolean;
   onFavorite?: () => void;
   onSkip?: () => void;
+  onBack?: () => void;
+  commentary?: boolean;
 }) {
   // If a card is already present on mount (e.g. resuming a game), show its face.
   const [flipped, setFlipped] = useState(!!card);
@@ -61,7 +65,7 @@ export default function CardDisplay({
       {/* Card - scales with the device viewport but stays compact */}
       <div
         className="card-3d cursor-pointer"
-        style={{ width: "min(78vw, 18rem)", height: "clamp(15rem, 38dvh, 22rem)" }}
+        style={{ width: "min(90vw, 22rem)", height: "clamp(17rem, 46dvh, 28rem)" }}
         onClick={handleDraw}
       >
         <div className={`card-3d-inner ${flipped ? "is-flipped" : ""}`}>
@@ -84,7 +88,7 @@ export default function CardDisplay({
           </div>
 
           {/* Face of card */}
-          <div className={`card-face card-face--back shine ${shine ? "shine-run" : ""} w-full h-full rounded-3xl bg-gradient-to-br ${gradient} flex flex-col p-6 select-none shadow-2xl`} style={{ border: "1px solid rgba(255,255,255,0.2)" }}>
+          <div className={`card-face card-face--back shine ${shine ? "shine-run" : ""} w-full h-full rounded-3xl overflow-hidden bg-gradient-to-br ${gradient} flex flex-col p-5 select-none shadow-2xl`} style={{ border: "1px solid rgba(255,255,255,0.2)" }}>
             <div className="flex justify-between items-start">
               <span className="flex items-center gap-2 min-w-0">
                 <span className="text-white drop-shadow shrink-0">{card && <CategoryIcon category={card.category} size={30} strokeWidth={2} />}</span>
@@ -104,11 +108,13 @@ export default function CardDisplay({
               )}
             </div>
 
-            <div className="flex-1 flex flex-col items-center justify-center gap-3 text-center px-2">
-              <h2 className="font-display text-2xl sm:text-3xl font-black text-white leading-tight drop-shadow-sm">{card?.name}</h2>
-              <p className="text-sm sm:text-base text-white/90 leading-relaxed">{card?.effect}</p>
+            <div className="flex-1 min-h-0 overflow-y-auto no-scrollbar w-full flex flex-col items-center justify-center gap-2 text-center px-1 py-2">
+              <h2 className="font-display text-xl sm:text-2xl font-black text-white leading-tight drop-shadow-sm break-words">{card?.name}</h2>
+              <p className={`${commentary ? "text-xs sm:text-sm" : "text-sm sm:text-base"} leading-snug text-white/90`}>
+                {commentary && card?.commentary ? card.commentary : card?.effect}
+              </p>
               {card?.callout && (
-                <p className="text-xs font-bold italic text-white/70 mt-1">&ldquo;{card.callout}&rdquo;</p>
+                <p className="text-[11px] font-bold italic text-white/70">&ldquo;{card.callout}&rdquo;</p>
               )}
             </div>
 
@@ -124,14 +130,26 @@ export default function CardDisplay({
         </div>
       </div>
 
-      {/* Draw button */}
-      <button
-        onClick={handleDraw}
-        className="pressable flex items-center gap-2 px-9 py-3.5 text-white text-base font-semibold rounded-full shadow-lg anim-glow"
-        style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-dim))" }}
-      >
-        <Shuffle size={18} /> {flipped ? "Draw Again" : "Draw Card"}
-      </button>
+      {/* Draw + Back row */}
+      <div className="flex items-center justify-center gap-3 flex-wrap">
+        <button
+          onClick={handleDraw}
+          className="pressable flex items-center gap-2 px-9 py-3.5 text-white text-base font-semibold rounded-full shadow-lg anim-glow"
+          style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-dim))" }}
+        >
+          <Shuffle size={18} /> {flipped ? "Draw Again" : "Draw Card"}
+        </button>
+        {onBack && (
+          <button
+            onClick={onBack}
+            aria-label="Back to home"
+            className="pressable flex items-center gap-1.5 px-5 py-3.5 text-sm font-semibold rounded-full"
+            style={{ background: "var(--bg-elevated)", color: "var(--text-secondary)", border: "1px solid var(--border)" }}
+          >
+            <ArrowLeft size={16} /> Back
+          </button>
+        )}
+      </div>
     </div>
   );
 }
