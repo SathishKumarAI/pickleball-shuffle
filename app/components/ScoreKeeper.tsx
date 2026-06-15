@@ -19,7 +19,7 @@ export default function ScoreKeeper({
     <div className="flex flex-col items-center gap-3 w-full max-w-sm">
       {/* Serving indicator */}
       {game.config.sideOutScoring && (
-        <button onClick={onSideOut} aria-label="Side out — switch serving team" aria-live="polite" className="pressable flex items-center gap-1.5 text-xs px-3 py-1 rounded-full" style={{ background: "var(--bg-elevated)", color: "var(--yellow)", border: "1px solid var(--border)" }}>
+        <button onClick={onSideOut} aria-label="Side out - switch serving team" aria-live="polite" className="pressable flex items-center gap-1.5 text-xs px-3 py-1 rounded-full" style={{ background: "var(--bg-elevated)", color: "var(--yellow)", border: "1px solid var(--border)" }}>
           <CircleDot size={13} /> Serving: {game.servingTeam === 1 ? game.playerNames.team1 : game.playerNames.team2}
         </button>
       )}

@@ -1,11 +1,11 @@
-# Feature — PWA + offline
+# Feature - PWA + offline
 
 You are a web-platform engineer. Your objective is to make the app installable and
 usable offline, without the classic stale-cache pitfalls.
 
 <context>
   <pwa>manifest.json, icons, apple-web-app meta, viewport-fit cover.</pwa>
-  <sw>public/sw.js — must serve fresh data online but work offline.</sw>
+  <sw>public/sw.js - must serve fresh data online but work offline.</sw>
 </context>
 
 ## Instructions

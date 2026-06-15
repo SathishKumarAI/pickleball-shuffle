@@ -2,7 +2,7 @@
 
 **Draw twist cards mid-match. Shake up the game.**
 
-A free, **mobile-first, local-first** web app with 200 pickleball twist cards across 10 categories. Tap to draw, read the rule, play the next point under that twist — then keep score with a real pickleball scoring engine.
+A free, **mobile-first, local-first** web app with 200 pickleball twist cards across 10 categories. Tap to draw, read the rule, play the next point under that twist - then keep score with a real pickleball scoring engine.
 
 ### ▶︎ Live app: **https://pickleball-card-games.vercel.app**
 
@@ -33,10 +33,10 @@ No login. No install. Open the link at the court and play.
 
 ## What it does
 
-You're mid-game on a pickleball court. Between points, someone taps the big card. It flips over: **"Dinks Only — every shot this point must be a dink."** You play the point under that constraint, tap the score, and draw again. The app is two things fused together:
+You're mid-game on a pickleball court. Between points, someone taps the big card. It flips over: **"Dinks Only - every shot this point must be a dink."** You play the point under that constraint, tap the score, and draw again. The app is two things fused together:
 
-1. **A twist-card deck** — 200 cards in 10 categories, filtered into 5 themed modes (Family → Chaos).
-2. **A pickleball scorekeeper** — side-out scoring, win-by-2, serving indicator, undo, best-of-3 tracking.
+1. **A twist-card deck** - 200 cards in 10 categories, filtered into 5 themed modes (Family → Chaos).
+2. **A pickleball scorekeeper** - side-out scoring, win-by-2, serving indicator, undo, best-of-3 tracking.
 
 Everything runs on the device. There is no account and no server round-trip during play.
 
@@ -52,45 +52,45 @@ This app deliberately has **no backend and no login.** That is a design decision
 | **Cost & ops** | No database, no auth provider, no secrets to rotate, no per-user billing. |
 | **Privacy** | Your games, decks, and settings never leave your device. |
 
-The tradeoff we accept: **no cross-device sync.** Custom decks and match history live in `localStorage`, so they're per-device. To move data between devices we provide a manual **Export / Import** backup (a JSON file). If a real sync/sharing need appears later, an optional auth + database layer can be added *without* changing the core — the local store is already isolated behind one module (`lib/client-api.ts`).
+The tradeoff we accept: **no cross-device sync.** Custom decks and match history live in `localStorage`, so they're per-device. To move data between devices we provide a manual **Export / Import** backup (a JSON file). If a real sync/sharing need appears later, an optional auth + database layer can be added *without* changing the core - the local store is already isolated behind one module (`lib/client-api.ts`).
 
 ## Feature overview
 
 ### Cards & decks
 - **200 cards** across 10 categories, each with a name + effect.
-- **5 deck modes** — Family, Party, Drill, Tournament, Chaos — each a category filter.
-- **Custom decks** — build your own twist cards (name + effect + category), save them locally, and play them.
-- **True 3D card flip** — perspective flip with a shine sweep on reveal.
-- **Recent draws** — the last 3 cards stay visible below the deck.
-- **Favorite / skip** — star cards you love; skip excludes a card from future draws this game.
+- **5 deck modes** - Family, Party, Drill, Tournament, Chaos - each a category filter.
+- **Custom decks** - build your own twist cards (name + effect + category), save them locally, and play them.
+- **True 3D card flip** - perspective flip with a shine sweep on reveal.
+- **Recent draws** - the last 3 cards stay visible below the deck.
+- **Favorite / skip** - star cards you love; skip excludes a card from future draws this game.
 
 ### Scoring & game engine
 - **Tap-to-score** scorekeeper with full game logic.
-- **Side-out scoring** — only the serving team can score (real pickleball rules); off-team taps trigger a side-out.
-- **Win detection** — first to 11 (configurable 7/15/21), **win by 2**.
-- **Serving indicator** — pulsing ring shows who serves; tap to switch.
-- **Undo stack** — reverses the last action completely (fixes wrong-team taps).
-- **Score lock** — prevents accidental taps.
-- **Confirm mode** — optional "Team 1 scores? Yes/No".
+- **Side-out scoring** - only the serving team can score (real pickleball rules); off-team taps trigger a side-out.
+- **Win detection** - first to 11 (configurable 7/15/21), **win by 2**.
+- **Serving indicator** - pulsing ring shows who serves; tap to switch.
+- **Undo stack** - reverses the last action completely (fixes wrong-team taps).
+- **Score lock** - prevents accidental taps.
+- **Confirm mode** - optional "Team 1 scores? Yes/No".
 - **Best-of-3 tracking** + per-game results.
-- **Resume last game** — leave to the menu and a *Resume* banner brings the in-progress match back, score intact.
+- **Resume last game** - leave to the menu and a *Resume* banner brings the in-progress match back, score intact.
 
 ### Match data (local)
-- **Match history** — every finished match is saved locally with score, mode, winner, and duration.
-- **Export / Import backup** — download all decks + history as JSON; restore on any device.
-- **In-app feedback** — star rating + message that opens a prefilled email to the maintainer (and keeps a local copy).
+- **Match history** - every finished match is saved locally with score, mode, winner, and duration.
+- **Export / Import backup** - download all decks + history as JSON; restore on any device.
+- **In-app feedback** - star rating + message that opens a prefilled email to the maintainer (and keeps a local copy).
 
 ### Experience
 - **Lucide icon set** throughout (no emoji) for a clean, consistent look.
 - **Dark / light mode** with the browser chrome (`theme-color`) tracking the toggle.
-- **Calm, low-strain palette** — softened off-black/off-white, gentle motion, `prefers-reduced-motion` respected.
+- **Calm, low-strain palette** - softened off-black/off-white, gentle motion, `prefers-reduced-motion` respected.
 - **Sound + haptics** on score and draw.
-- **Responsive** — the card and layout scale to the device with `clamp()`/`dvh` so nothing overflows on small phones.
-- **PWA** — installable, full-screen, safe-area aware, works offline after first load.
+- **Responsive** - the card and layout scale to the device with `clamp()`/`dvh` so nothing overflows on small phones.
+- **PWA** - installable, full-screen, safe-area aware, works offline after first load.
 
 ## Architecture (deep dive)
 
-**Stack:** Next.js 16 (App Router, Turbopack) · React 19 · TypeScript · Tailwind CSS v4 · lucide-react. The app ships as a single client-rendered route — there is no server-side data path in production.
+**Stack:** Next.js 16 (App Router, Turbopack) · React 19 · TypeScript · Tailwind CSS v4 · lucide-react. The app ships as a single client-rendered route - there is no server-side data path in production.
 
 ### Data flow
 
@@ -112,16 +112,16 @@ ScoreKeeper taps ──▶ lib/game.ts (pure reducers) ──▶ GameSession (st
                               localStorage(active game)    lib/client-api addMatch()
 ```
 
-The 200 cards are static JSON served from `public/`. All game logic is a set of **pure functions** in `lib/game.ts` (`addScore`, `sideOut`, `undoLast`, `checkWin`, …) that take a `GameSession` and return a new one — easy to reason about and trivially testable. React state in `app/page.tsx` is the single source of truth for the live game; everything else is derived.
+The 200 cards are static JSON served from `public/`. All game logic is a set of **pure functions** in `lib/game.ts` (`addScore`, `sideOut`, `undoLast`, `checkWin`, …) that take a `GameSession` and return a new one - easy to reason about and trivially testable. React state in `app/page.tsx` is the single source of truth for the live game; everything else is derived.
 
 ### The scoring engine
 
 `lib/game.ts` models a `GameSession` (score, serving team, history, config, card sets) and exposes immutable transitions:
 
-- **`addScore(game, team)`** — if side-out scoring is on and the scoring team isn't serving, it routes to `sideOut()` instead of adding a point (authentic rules). Otherwise it appends a timestamped `ScoreEvent` and recomputes the winner.
-- **`checkWin(score, config)`** — first to `pointsToWin`, enforcing win-by-2 when enabled.
-- **`undoLast`** — pops the last event and restores `scoreBefore`, clearing any winner.
-- **`startNewGame`** — rolls the current score into `gameResults`, increments game number, alternates the first server (best-of-N flow).
+- **`addScore(game, team)`** - if side-out scoring is on and the scoring team isn't serving, it routes to `sideOut()` instead of adding a point (authentic rules). Otherwise it appends a timestamped `ScoreEvent` and recomputes the winner.
+- **`checkWin(score, config)`** - first to `pointsToWin`, enforcing win-by-2 when enabled.
+- **`undoLast`** - pops the last event and restores `scoreBefore`, clearing any winner.
+- **`startNewGame`** - rolls the current score into `gameResults`, increments game number, alternates the first server (best-of-N flow).
 
 Because transitions are pure, the UI just calls them and stores the result; undo is "use the previous snapshot," not ad-hoc reversal logic.
 
@@ -132,30 +132,30 @@ All persistence is `localStorage`, isolated behind **`lib/client-api.ts`** so th
 | Key | Holds | Cap |
 |---|---|---|
 | `pickleball-shuffle-game` | the active `GameSession` (for resume) | 1 |
-| `pb-custom-decks` | user-authored decks `{ id, name, description, cards[] }` | — |
+| `pb-custom-decks` | user-authored decks `{ id, name, description, cards[] }` | - |
 | `pb-match-history` | finished matches `{ teams, score, winner, mode, duration }` | 200 |
 | `pb-feedback` | local backup of submitted feedback | 50 |
 
-`exportData()` serializes decks + history to a JSON blob (downloaded via an object URL); `importData()` restores them. Custom-deck cards are mapped to playable `Card`s with **negative ids** (`deckToCards`) so they never collide with the built-in 1–200 id space.
+`exportData()` serializes decks + history to a JSON blob (downloaded via an object URL); `importData()` restores them. Custom-deck cards are mapped to playable `Card`s with **negative ids** (`deckToCards`) so they never collide with the built-in 1-200 id space.
 
 ### Rendering & animation
 
-- **3D flip** — `.card-3d` sets `perspective`; an inner `preserve-3d` layer rotates `rotateY(180deg)` with `backface-visibility: hidden` on both faces. Draw logic flips to the back, swaps the card on the next frame (`requestAnimationFrame`), then flips to the face — so you never see the next card through the flip.
-- **Mesh backdrop** — a fixed, GPU-cheap radial-gradient layer that drifts slowly (`meshDrift`, 26s).
-- **Micro-interactions** — a small utility-class system in `globals.css` (`anim-pop`, `anim-fade-up`, `.pressable`, `.stagger`, `.shine`). Hover lifts are gated behind `@media (hover: hover)` so touch devices don't get stuck hover states.
+- **3D flip** - `.card-3d` sets `perspective`; an inner `preserve-3d` layer rotates `rotateY(180deg)` with `backface-visibility: hidden` on both faces. Draw logic flips to the back, swaps the card on the next frame (`requestAnimationFrame`), then flips to the face - so you never see the next card through the flip.
+- **Mesh backdrop** - a fixed, GPU-cheap radial-gradient layer that drifts slowly (`meshDrift`, 26s).
+- **Micro-interactions** - a small utility-class system in `globals.css` (`anim-pop`, `anim-fade-up`, `.pressable`, `.stagger`, `.shine`). Hover lifts are gated behind `@media (hover: hover)` so touch devices don't get stuck hover states.
 - All motion collapses under `prefers-reduced-motion: reduce`.
 
 ### PWA & service worker
 
-`public/sw.js` is **network-first with a cache fallback** (`pb-shuffle-v2`): online users always get fresh data; offline users get the last cached copy. The SW is **only registered in production** — in development the app actively unregisters any existing worker and clears caches, which avoids the classic "stale service worker serves old `cards.json`" trap during local dev.
+`public/sw.js` is **network-first with a cache fallback** (`pb-shuffle-v2`): online users always get fresh data; offline users get the last cached copy. The SW is **only registered in production** - in development the app actively unregisters any existing worker and clears caches, which avoids the classic "stale service worker serves old `cards.json`" trap during local dev.
 
 ### Mobile hardening
 
 The primary use case is a phone at a court, so the app is tuned for it:
 
 - **`100dvh`** layout (not `100vh`) so the mobile URL bar never clips content.
-- **16px form fonts** — prevents iOS from auto-zooming on input focus.
-- **`touch-action: manipulation`** on interactive elements — kills the 300ms tap delay and double-tap zoom.
+- **16px form fonts** - prevents iOS from auto-zooming on input focus.
+- **`touch-action: manipulation`** on interactive elements - kills the 300ms tap delay and double-tap zoom.
 - **Safe-area insets** (`env(safe-area-inset-*)`) on the header, sticky top bar, and bottom sheets for notches and home indicators.
 - **`overflow-x: hidden`** + responsive `clamp()` card sizing so nothing overflows or side-scrolls on small screens.
 - Header + scrollable `<main>` layout (no absolute-positioned controls) so nothing overlaps on short devices.
@@ -222,7 +222,7 @@ Current production alias: **https://pickleball-card-games.vercel.app**
 
 ## Data & privacy
 
-Everything you create — games, custom decks, match history, settings — is stored **only in your browser's `localStorage`**. Nothing is transmitted to any server. Clearing site data (or using a different device/browser) starts you fresh; use **Menu → Export backup** to save a JSON copy you can re-import anywhere.
+Everything you create - games, custom decks, match history, settings - is stored **only in your browser's `localStorage`**. Nothing is transmitted to any server. Clearing site data (or using a different device/browser) starts you fresh; use **Menu → Export backup** to save a JSON copy you can re-import anywhere.
 
 ## Reference tables
 
@@ -233,7 +233,7 @@ Everything you create — games, custom decks, match history, settings — is st
 | Shot Restriction | 20 | Limits what shots you can hit |
 | Body & Movement | 20 | Physical challenges and restrictions |
 | Wild Card / Swap | 20 | Partner swaps, paddle trades, side switches |
-| Penalty | 20 | Bad-luck draws — lose a serve, sit out |
+| Penalty | 20 | Bad-luck draws - lose a serve, sit out |
 | Bonus / Reward | 20 | Free points, double serves, advantages |
 | Social & Party | 20 | Selfies, compliments, trash talk |
 | Strategy / Skill | 20 | Erne bounties, ATP bonuses, coach's choice |
@@ -254,7 +254,7 @@ Everything you create — games, custom decks, match history, settings — is st
 ## Roadmap
 
 - Guest → account migration **if** an optional sync layer is ever added.
-- Shareable custom decks (link or QR) — the strongest reason to add a backend later.
+- Shareable custom decks (link or QR) - the strongest reason to add a backend later.
 - Per-card analytics (most-drawn, most-skipped) from local match history.
 
 ## License

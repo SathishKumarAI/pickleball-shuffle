@@ -2,7 +2,7 @@ import { GameSession } from "./game";
 import { Card } from "./cards";
 
 /*
- * Local-first store — everything lives in localStorage. No accounts, no server.
+ * Local-first store - everything lives in localStorage. No accounts, no server.
  * Export/import lets users back up or move their data between devices manually.
  */
 

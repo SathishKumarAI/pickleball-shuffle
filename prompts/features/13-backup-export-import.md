@@ -1,10 +1,10 @@
-# Feature — backup (export / import)
+# Feature - backup (export / import)
 
 You are a front-end engineer. Your objective is to let users back up and restore all
 their local data, since there's no cloud sync.
 
 <context>
-  <data>Custom decks, match history, and favorites — all in localStorage.</data>
+  <data>Custom decks, match history, and favorites - all in localStorage.</data>
   <format>A single JSON file: { version, decks[], matches[], favorites[] }.</format>
 </context>
 
@@ -18,7 +18,7 @@ their local data, since there's no cloud sync.
 ## Constraints
 - MUST be backward-compatible: tolerate missing keys in older backups.
 - MUST confirm the result to the user (counts imported).
-- MUST NOT throw on a malformed file — show a friendly error.
+- MUST NOT throw on a malformed file - show a friendly error.
 
 ## Output format
 The `client-api.ts` functions + the menu export/import handlers. Reason in

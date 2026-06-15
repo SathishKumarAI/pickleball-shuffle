@@ -1,6 +1,6 @@
-# Onboarding — Pickleball Card Games
+# Onboarding - Pickleball Card Games
 
-> A mobile-first, **local-first** web app: 200 pickleball "twist" cards + a real scorekeeper. No backend, no login, no database — all state in `localStorage`.
+> A mobile-first, **local-first** web app: 200 pickleball "twist" cards + a real scorekeeper. No backend, no login, no database - all state in `localStorage`.
 
 **Live:** https://pickleball-card-games.vercel.app · **Repo:** https://github.com/SathishKumarAI/pickleball-shuffle
 **Related docs:** [WORKLOG](WORKLOG.md) · [Bug log](BUG-LOG.md) · [UI layout notes](UI-LAYOUT-NOTES.md) · [Tickets](TICKETS.md)
@@ -9,7 +9,7 @@
 
 ## What is this?
 
-A free pickleball party game fused with a scorekeeper. Tap to draw a card, play the next point under that twist, keep score — phone-first, works offline after first load. **Local-first is a design decision, not a gap:** zero network in the hot path, no signup wall, data never leaves the device. Tradeoff: no cross-device sync (manual Export/Import backup instead).
+A free pickleball party game fused with a scorekeeper. Tap to draw a card, play the next point under that twist, keep score - phone-first, works offline after first load. **Local-first is a design decision, not a gap:** zero network in the hot path, no signup wall, data never leaves the device. Tradeoff: no cross-device sync (manual Export/Import backup instead).
 
 ---
 
@@ -20,7 +20,7 @@ A free pickleball party game fused with a scorekeeper. Tap to draw a card, play 
 |------|---------|-------|
 | Node.js | **24 LTS** | CI pins 24; repo manages runtimes via `mise` |
 | npm | 10+ | ships with Node 24 |
-| Vercel CLI | latest | only for deploys — `npm i -g vercel` |
+| Vercel CLI | latest | only for deploys - `npm i -g vercel` |
 
 ### Setup
 ```bash
@@ -67,7 +67,7 @@ No server, no DB, no auth. Deployed as a static/SSR Next app on Vercel (project 
 ## Key Files
 | Path | Purpose |
 |------|---------|
-| `app/app/page.tsx` | **The whole game** — landing, draw, score, resume, panel wiring (~20 KB; largest source file) |
+| `app/app/page.tsx` | **The whole game** - landing, draw, score, resume, panel wiring (~20 KB; largest source file) |
 | `app/lib/game.ts` | **Pure** game engine: `addScore`/`sideOut`/`undo`/`checkWin` + active-game persistence |
 | `app/lib/cards.ts` | Card types, deck modes, filtering, shuffle |
 | `app/lib/client-api.ts` | Local store: custom decks, match history, export/import (**the swap point if a real DB is ever added**) |
@@ -82,7 +82,7 @@ No server, no DB, no auth. Deployed as a static/SSR Next app on Vercel (project 
 - Game logic = **pure functions** in `lib/game.ts`; UI calls them and stores the returned `GameSession`.
 - All persistence routes through `lib/client-api.ts`.
 - Theme via CSS vars + `data-theme` on `<html>`; mobile-first (`100dvh`, 16px inputs, safe-area insets).
-- Icons from `lucide-react` only — no emoji.
+- Icons from `lucide-react` only - no emoji.
 
 ---
 
@@ -91,7 +91,7 @@ No server, no DB, no auth. Deployed as a static/SSR Next app on Vercel (project 
 **Add/edit cards** → edit `data/cards.json`, copy to `app/public/cards.json` (both must match).
 **Add a component** → `app/components/Foo.tsx`, import + wire state in `app/app/page.tsx`.
 **Regenerate logo/icons** → edit `app/app/icon.svg`, then `rsvg-convert -w <N> -h <N> app/app/icon.svg -o app/public/icons/icon-<N>.png`.
-**Deploy** → `bash deploy-vercel.sh` (runs `vercel --prod` from **repo root** — never from `app/`, or Vercel looks for `app/app` and fails). Pushing `main` also auto-deploys.
+**Deploy** → `bash deploy-vercel.sh` (runs `vercel --prod` from **repo root** - never from `app/`, or Vercel looks for `app/app` and fails). Pushing `main` also auto-deploys.
 
 ---
 
@@ -114,12 +114,15 @@ See [BUG-LOG.md](BUG-LOG.md) for the full history of fixes.
 - **Commits:** Conventional Commits (`feat:`, `fix:`, `docs:`).
 - **Before a PR:** `cd app && npm run lint && npx tsc --noEmit && npm run build`.
 
-### ⚠️ Dead code — do not extend
+### ⚠️ Dead code - do not extend
 An abandoned auth/Supabase experiment left inert stubs: `app/app/api/`, `app/app/login`, `app/app/signup`, `lib/db.ts`, `lib/auth.ts`, `lib/supabase/`, `components/AuthForm.tsx`, `components/UserMenu.tsx`. They are untracked, return HTTP 410 / render `null`, and are **safe to delete** (security-audited clean). The app is intentionally backend-free. See [TICKETS.md](TICKETS.md) T4.
 
 ---
 
 ## Audience Notes
 - **New contributor:** start in `app/app/page.tsx` (the game) and `app/lib/game.ts` (the engine). Those two cover ~80% of behavior.
-- **Reviewer/lead:** the architectural bet is *local-first, no backend* — validate any change keeps the hot path network-free and persistence inside `lib/client-api.ts`.
+- **Reviewer/lead:** the architectural bet is *local-first, no backend* - validate any change keeps the hot path network-free and persistence inside `lib/client-api.ts`.
 - **Contractor:** scope is the static Next app under `app/`. Don't add servers/DBs without revisiting the local-first decision (root `README.md` → "Why local-first").
+
+<!-- new-tab-links: open every link in a new tab on the GitHub Pages site -->
+<script>document.querySelectorAll('a[href]').forEach(function(a){a.target="_blank";a.rel="noopener noreferrer";});</script>

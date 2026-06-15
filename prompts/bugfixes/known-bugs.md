@@ -1,13 +1,13 @@
-# Bug-fix prompts — every issue we hit (with the fix)
+# Bug-fix prompts - every issue we hit (with the fix)
 
 Each section is a standalone prompt. Persona for all: **a senior engineer doing
-root-cause debugging — fix the cause, not the symptom, and add a guard so it can't
+root-cause debugging - fix the cause, not the symptom, and add a guard so it can't
 recur.** Output for all: the minimal diff + a one-line note on the guard. Reason in
 `<thinking>` first. Cross-ref: `docs/BUG-LOG.md`, `docs/UI-LAYOUT-NOTES.md`.
 
 ---
 
-## 1. "0 cards" — stale service worker
+## 1. "0 cards" - stale service worker
 <context>The SW was cache-first and never revalidated; an old/empty `cards.json`
 was served from cache. Dev showed zero cards.</context>
 Fix: make `sw.js` **network-first with cache fallback**, bump the cache name, delete
@@ -34,7 +34,7 @@ custom pool, not the built-in cards.
 ---
 
 ## 4. Card (shuffle box) too big
-<context>A responsive change used `height: clamp(17rem, 50dvh, 26rem)` — bigger than
+<context>A responsive change used `height: clamp(17rem, 50dvh, 26rem)` - bigger than
 the original on tall phones.</context>
 Fix: `width: min(78vw,18rem)`, `height: clamp(15rem,38dvh,22rem)`; scale the back
 glyph down. MUST verify it's not larger than the previous design on a tall phone.

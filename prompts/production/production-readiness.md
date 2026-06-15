@@ -58,7 +58,7 @@ mobile profile. Output: the measured before/after + the changes.
 Objective: learn what's used without harming the local-first promise.
 Instructions: add optional, cookieless, anonymous analytics (e.g. Plausible/Umami)
 behind an env flag and a visible opt-out; track only aggregate events (game started,
-mode chosen, deck created) — never card content or PII. MUST keep it off by default in
+mode chosen, deck created) - never card content or PII. MUST keep it off by default in
 dev and disclose it in a short privacy note. Output: the analytics wrapper + privacy note.
 
 ---

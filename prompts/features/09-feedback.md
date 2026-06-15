@@ -1,4 +1,4 @@
-# Feature — in-app feedback
+# Feature - in-app feedback
 
 You are a product engineer. Your objective is a lightweight feedback flow that works
 with NO backend.
@@ -10,7 +10,7 @@ with NO backend.
 </context>
 
 ## Instructions
-1. Build `components/FeedbackPanel.tsx`: 1–5 star rating, message textarea, optional
+1. Build `components/FeedbackPanel.tsx`: 1-5 star rating, message textarea, optional
    email, and a Send button.
 2. On send: store a local copy (key "pb-feedback", cap 50) and open a prefilled
    `mailto:` (subject includes the rating; body includes rating + message + contact).

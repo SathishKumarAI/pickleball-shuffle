@@ -1,4 +1,4 @@
-# Feature — theming + motion system
+# Feature - theming + motion system
 
 You are a design-minded front-end engineer. Your objective is the dark/light theme
 system and a small, reusable animation toolkit that feels polished but calm.
@@ -11,7 +11,7 @@ system and a small, reusable animation toolkit that feels polished but calm.
 </context>
 
 ## Instructions
-1. Define dark + light token sets (soft off-black/off-white — no pure #000/#fff).
+1. Define dark + light token sets (soft off-black/off-white - no pure #000/#fff).
 2. Build animation utilities: `anim-fade-up`, `anim-pop`, `anim-float`, `anim-bump`
    (score), `anim-glow` (soft, not harsh), `anim-ring` (serving), `.stagger`,
    `.shine`, `.pressable` (hover lift gated behind `@media (hover:hover)`).
@@ -20,7 +20,7 @@ system and a small, reusable animation toolkit that feels polished but calm.
 
 ## Constraints
 - MUST keep contrast readable in BOTH themes (test text on glass/elevated).
-- MUST keep motion subtle — slow drifts, soft glows; avoid constant harsh pulsing.
+- MUST keep motion subtle - slow drifts, soft glows; avoid constant harsh pulsing.
 - MUST collapse all animation under `prefers-reduced-motion: reduce`.
 
 ## Output format

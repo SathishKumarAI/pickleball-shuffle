@@ -1,7 +1,7 @@
 name: CI
 
 # Lint, type-check, and build on every push and PR. Pair this with branch
-# protection (require the "build" check) so broken code can't reach `main` —
+# protection (require the "build" check) so broken code can't reach `main` -
 # and since Vercel auto-deploys `main` to production, that keeps prod green.
 
 on:

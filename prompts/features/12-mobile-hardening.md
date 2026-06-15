@@ -1,7 +1,7 @@
-# Feature — mobile / browser hardening
+# Feature - mobile / browser hardening
 
 You are a mobile-web specialist. Your objective is to make the app feel native on
-iOS and Android browsers and PWAs — the primary use case is a phone at a court.
+iOS and Android browsers and PWAs - the primary use case is a phone at a court.
 
 <context>
   <targets>iOS Safari, Android Chrome, installed PWA. Small phones down to 320px.</targets>

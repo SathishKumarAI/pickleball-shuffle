@@ -1,7 +1,7 @@
 # Scaffold the Pickleball Card Games app
 
 You are a senior full-stack engineer. Your objective is to scaffold a **local-first**
-Next.js web app — a pickleball twist-card game + scorekeeper — with a clean,
+Next.js web app - a pickleball twist-card game + scorekeeper - with a clean,
 mobile-first foundation that later feature prompts will build on.
 
 <context>
@@ -28,7 +28,7 @@ mobile-first foundation that later feature prompts will build on.
 - MUST keep all persistence behind `lib/client-api.ts` (the swap point).
 - MUST be mobile-first and theme-aware from line one.
 - MUST NOT introduce a backend, auth, database, or any secret.
-- MUST NOT use emoji as UI icons — use lucide-react.
+- MUST NOT use emoji as UI icons - use lucide-react.
 
 ## Output format
 The created/changed files as paste-ready code, then the exact commands to run.

@@ -1,4 +1,4 @@
-# Feature — resume an in-progress game
+# Feature - resume an in-progress game
 
 You are a React engineer. Your objective is to let players leave a match and resume
 it later with the score AND the last drawn card intact.
@@ -22,7 +22,7 @@ it later with the score AND the last drawn card intact.
 ## Constraints
 - MUST persist custom-deck context so a custom game resumes into the right pool.
 - MUST show the restored card's FACE (CardDisplay inits `flipped = !!card`).
-- MUST NOT auto-resume silently — give the user an explicit choice.
+- MUST NOT auto-resume silently - give the user an explicit choice.
 
 ## Output format
 The `page.tsx` changes (state, effects, resume/discard handlers, banner) and any

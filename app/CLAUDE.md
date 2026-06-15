@@ -9,28 +9,28 @@ Live: https://pickleball-card-games.vercel.app
 - Next.js 16 (App Router, Turbopack) + React 19 + TypeScript + Tailwind v4
 - lucide-react for all icons (no emoji)
 - Cards loaded from `public/cards.json`; everything else is client state + localStorage
-- Deployed on Vercel — run `vercel --prod` from the **repo root** (not this dir; project rootDirectory is already `app`), or use `../deploy-vercel.sh`
+- Deployed on Vercel - run `vercel --prod` from the **repo root** (not this dir; project rootDirectory is already `app`), or use `../deploy-vercel.sh`
 
 ## Commands
 ```bash
 npm run dev      # http://localhost:3000 (binds 0.0.0.0 for phone testing)
 npm run build    # production build
 npm start        # serve production build
-vercel --prod    # deploy — run from REPO ROOT, not app/
+vercel --prod    # deploy - run from REPO ROOT, not app/
 ```
 
 ## Structure
 ```
-app/page.tsx          — the whole game: state, draw, score, resume, panels
-components/           — CardDisplay (3D flip), ScoreKeeper, TopBar, CardHistory,
+app/page.tsx          - the whole game: state, draw, score, resume, panels
+components/           - CardDisplay (3D flip), ScoreKeeper, TopBar, CardHistory,
                         WinCelebration, PlayerNames, SettingsSheet, AppMenu,
                         HistoryPanel, DecksPanel, FeedbackPanel, icons.tsx
-lib/cards.ts          — card types, deck modes, filtering, shuffle
-lib/game.ts           — PURE game engine (addScore/sideOut/undo/checkWin) + active-game localStorage
-lib/client-api.ts     — local store: custom decks, match history, export/import
-lib/sounds.ts         — Web Audio SFX + haptics
-public/cards.json     — 200 cards
-public/sw.js          — network-first service worker (prod only; dev unregisters it)
+lib/cards.ts          - card types, deck modes, filtering, shuffle
+lib/game.ts           - PURE game engine (addScore/sideOut/undo/checkWin) + active-game localStorage
+lib/client-api.ts     - local store: custom decks, match history, export/import
+lib/sounds.ts         - Web Audio SFX + haptics
+public/cards.json     - 200 cards
+public/sw.js          - network-first service worker (prod only; dev unregisters it)
 ```
 
 ## Conventions
@@ -39,7 +39,7 @@ public/sw.js          — network-first service worker (prod only; dev unregiste
 - Theme via CSS vars + `data-theme` on `<html>`; animation utilities live in `globals.css`.
 - Mobile-first: `100dvh`, 16px inputs, `touch-action: manipulation`, safe-area insets, responsive `clamp()` card.
 
-## Dead code (inert stubs from an abandoned auth experiment — safe to delete)
+## Dead code (inert stubs from an abandoned auth experiment - safe to delete)
 `app/api/`, `app/login`, `app/signup`, `lib/db.ts`, `lib/auth.ts`, `lib/supabase/`,
 `components/AuthForm.tsx`, `components/UserMenu.tsx`. Also pre-existing orphans
 `components/GameSettings.tsx`, `components/DeckModeSelector.tsx`.

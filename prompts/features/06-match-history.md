@@ -1,4 +1,4 @@
-# Feature — match history (localStorage)
+# Feature - match history (localStorage)
 
 You are a React engineer. Your objective is to save every finished match locally and
 let users browse and clear that history.
@@ -6,7 +6,7 @@ let users browse and clear that history.
 <context>
   <store>client-api.ts, key "pb-match-history" (cap 200). Match shape: teams,
   scores, winner, mode, game_number, duration_ms, results[], created_at.</store>
-  <trigger>Save exactly once when a game reaches a winner — guard against double
+  <trigger>Save exactly once when a game reaches a winner - guard against double
   saves on re-render.</trigger>
 </context>
 

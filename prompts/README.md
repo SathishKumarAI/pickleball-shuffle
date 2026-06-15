@@ -1,15 +1,15 @@
-# Prompt Library — build Pickleball Card Games to production
+# Prompt Library - build Pickleball Card Games to production
 
 A set of **paste-ready, engineered prompts** for an AI coding agent (Claude Code)
 to rebuild this app from scratch and harden it for production. Each prompt is
-self-contained and follows one structure — role + objective, XML-tagged context,
+self-contained and follows one structure - role + objective, XML-tagged context,
 numbered instructions, MUST/MUST NOT guardrails, explicit output format, and a
 think-then-answer step.
 
 ## How to use
 
 1. Open a prompt file, replace any `{{placeholder}}`, and paste it into the agent.
-2. Run them **in order** — each assumes the previous ones exist. Build the scaffold
+2. Run them **in order** - each assumes the previous ones exist. Build the scaffold
    first, then features, then bug-fixes, then production hardening.
 3. After each prompt: `npm run build` must pass and the change must be verified in
    the running app before moving on.

@@ -9,11 +9,11 @@ type Section = { q: string; a: string };
 const HOW_TO_PLAY: Section[] = [
   {
     q: "The basics",
-    a: "Play pickleball as usual. Games go to 11 points, win by 2 (you can change this in Settings). Use the on-screen scorekeeper to track each team — tap a team to add a point, and use Side out when the serve changes.",
+    a: "Play pickleball as usual. Games go to 11 points, win by 2 (you can change this in Settings). Use the on-screen scorekeeper to track each team - tap a team to add a point, and use Side out when the serve changes.",
   },
   {
     q: "Drawing twist cards",
-    a: "Between rallies, tap the card to draw a random twist — a shot restriction, a dare, a drill, or a wild swap. The current rule applies to the next rally (or as the card says). Draw a new card whenever you want a fresh twist.",
+    a: "Between rallies, tap the card to draw a random twist - a shot restriction, a dare, a drill, or a wild swap. The current rule applies to the next rally (or as the card says). Draw a new card whenever you want a fresh twist.",
   },
   {
     q: "Deck modes",
@@ -21,14 +21,14 @@ const HOW_TO_PLAY: Section[] = [
   },
   {
     q: "Winning",
-    a: "First team to reach the points target (default 11) by 2 clear points wins. A win celebration pops up — start a new game to keep the match going, or end the match to save it to history.",
+    a: "First team to reach the points target (default 11) by 2 clear points wins. A win celebration pops up - start a new game to keep the match going, or end the match to save it to history.",
   },
 ];
 
 const USING_APP: Section[] = [
   {
     q: "Scorekeeper",
-    a: "Tap a team's side to add a point. Use Side out when serve passes over, Undo to take back the last action, and Reset to set the score back to 0–0 (your match history is kept). The lock button stops accidental taps.",
+    a: "Tap a team's side to add a point. Use Side out when serve passes over, Undo to take back the last action, and Reset to set the score back to 0-0 (your match history is kept). The lock button stops accidental taps.",
   },
   {
     q: "Custom decks & favorites",
@@ -36,7 +36,7 @@ const USING_APP: Section[] = [
   },
   {
     q: "Match history & backup",
-    a: "Finished matches are saved automatically under Match history. Everything lives on your device — use Export backup to save a file, and Import backup to restore it on another device.",
+    a: "Finished matches are saved automatically under Match history. Everything lives on your device - use Export backup to save a file, and Import backup to restore it on another device.",
   },
   {
     q: "Install on your phone",
@@ -47,11 +47,11 @@ const USING_APP: Section[] = [
 const FAQ: Section[] = [
   {
     q: "Is this app free?",
-    a: "Yes — it's made just for fun and personal use only. Not for making sales.",
+    a: "Yes - it's made just for fun and personal use only. Not for making sales.",
   },
   {
     q: "Where is my data stored?",
-    a: "Entirely on your own device (local storage). There's no account, no server, and no database — nothing is uploaded.",
+    a: "Entirely on your own device (local storage). There's no account, no server, and no database - nothing is uploaded.",
   },
   {
     q: "How do I request a feature or report a bug?",
@@ -59,7 +59,7 @@ const FAQ: Section[] = [
   },
   {
     q: "Can I change the points to win?",
-    a: "Yes — open Settings during a game to adjust points to win and the win-by-two rule.",
+    a: "Yes - open Settings during a game to adjust points to win and the win-by-two rule.",
   },
 ];
 

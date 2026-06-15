@@ -1,7 +1,7 @@
-# Feature — favorite cards (persistent)
+# Feature - favorite cards (persistent)
 
 You are a React engineer. Your objective is to let users star cards and view their
-favorites anytime — persisted across games, not just for the current match.
+favorites anytime - persisted across games, not just for the current match.
 
 <context>
   <store>client-api.ts, key "pb-favorites" = number[] of card ids.</store>

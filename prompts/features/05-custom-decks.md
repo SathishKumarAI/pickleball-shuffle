@@ -1,4 +1,4 @@
-# Feature — custom decks (localStorage)
+# Feature - custom decks (localStorage)
 
 You are a React + TypeScript engineer. Your objective is to let users author, save,
 and play their own twist-card decks, persisted locally.
@@ -8,7 +8,7 @@ and play their own twist-card decks, persisted locally.
   { id, name, description, cards: {name,effect,category}[], created_at }.
   Key: "pb-custom-decks".</store>
   <play>Custom cards become playable Cards with NEGATIVE ids (deckToCards) so they
-  never collide with the 1–200 built-ins.</play>
+  never collide with the 1-200 built-ins.</play>
 </context>
 
 ## Instructions

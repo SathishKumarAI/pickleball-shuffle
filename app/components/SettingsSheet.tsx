@@ -61,7 +61,7 @@ export default function SettingsSheet({
 
         <div className="mt-6 pt-4" style={{ borderTop: "1px solid var(--border)" }}>
           <button onClick={onReset} className="pressable w-full py-3 rounded-xl text-sm font-medium" style={{ background: "var(--bg-elevated)", color: "var(--red)" }}>
-            Reset Score to 0 – 0
+            Reset Score to 0 - 0
           </button>
         </div>
     </Sheet>

@@ -68,7 +68,7 @@ export default function Home() {
     }
   }, []);
 
-  // Offer to resume an unfinished game (don't auto-enter — let the user choose).
+  // Offer to resume an unfinished game (don't auto-enter - let the user choose).
   useEffect(() => {
     const saved = loadGame();
     if (saved && !saved.winner) setSavedGame(saved);
@@ -271,7 +271,7 @@ export default function Home() {
                 <span className="min-w-0">
                   <span className="block text-sm font-semibold" style={{ color: "var(--text)" }}>Resume last game</span>
                   <span className="block text-xs truncate" style={{ color: "var(--text-muted)" }}>
-                    {savedGame.playerNames.team1} {savedGame.score.team1}–{savedGame.score.team2} {savedGame.playerNames.team2} · {savedGame.customName ?? DECK_MODES[savedGame.mode as DeckMode]?.label ?? savedGame.mode}
+                    {savedGame.playerNames.team1} {savedGame.score.team1}-{savedGame.score.team2} {savedGame.playerNames.team2} · {savedGame.customName ?? DECK_MODES[savedGame.mode as DeckMode]?.label ?? savedGame.mode}
                   </span>
                 </span>
               </button>
@@ -310,7 +310,7 @@ export default function Home() {
           {/* About / community note */}
           <footer className="safe-x safe-bottom px-6 pb-6 text-center">
             <p className="mx-auto max-w-md text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>
-              Made just for fun — free to play and for personal use only, not for making sales.
+              Made just for fun - free to play and for personal use only, not for making sales.
               Got an idea or hit a bug? Feel free to{" "}
               <a
                 href={`${GITHUB_URL}/issues/new`}
@@ -378,7 +378,7 @@ export default function Home() {
         {/* Confirm reset */}
         {confirmReset && (
           <div className="anim-pop glass flex items-center gap-3 p-3 rounded-xl" style={{ border: "1px solid var(--border)" }}>
-            <span className="text-sm" style={{ color: "var(--text-secondary)" }}>Reset score to 0 – 0?</span>
+            <span className="text-sm" style={{ color: "var(--text-secondary)" }}>Reset score to 0 - 0?</span>
             <button
               onClick={() => { doReset(); setConfirmReset(false); }}
               className="pressable px-4 py-1.5 rounded-full text-xs font-medium text-white"

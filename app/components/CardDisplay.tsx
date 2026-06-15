@@ -58,7 +58,7 @@ export default function CardDisplay({
 
   return (
     <div className="flex flex-col items-center gap-5 flex-1 justify-center">
-      {/* Card — scales with the device viewport but stays compact */}
+      {/* Card - scales with the device viewport but stays compact */}
       <div
         className="card-3d cursor-pointer"
         style={{ width: "min(78vw, 18rem)", height: "clamp(15rem, 38dvh, 22rem)" }}

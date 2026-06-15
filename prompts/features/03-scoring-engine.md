@@ -1,4 +1,4 @@
-# Feature — pickleball scoring engine
+# Feature - pickleball scoring engine
 
 You are a TypeScript engineer who values pure, testable functions. Your objective is
 the game state model and a set of **pure** transition functions for pickleball scoring.
@@ -18,7 +18,7 @@ the game state model and a set of **pure** transition functions for pickleball s
 3. `addScore`: if `sideOutScoring` and the scoring team isn't serving → `sideOut`
    (no point). Else append a timestamped event and recompute the winner.
 4. `resetScore`: zero the score, reset serving, and **clear the undo stack**
-   (`history: []`) — a reset is a clean slate, not an undoable event.
+   (`history: []`) - a reset is a clean slate, not an undoable event.
 5. Add `saveGame/loadGame/clearSavedGame` (localStorage active game) + `formatTime`.
 
 ## Constraints
@@ -27,5 +27,5 @@ the game state model and a set of **pure** transition functions for pickleball s
 - MUST NOT touch saved Match history from `resetScore` (different concern).
 
 ## Output format
-`lib/game.ts` as paste-ready code, plus 3–5 example assertions showing the rules.
+`lib/game.ts` as paste-ready code, plus 3-5 example assertions showing the rules.
 Reason in `<thinking>` about the side-out edge cases first.

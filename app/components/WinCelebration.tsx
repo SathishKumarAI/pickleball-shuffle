@@ -24,7 +24,7 @@ export default function WinCelebration({
   const nextBtn = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    // Don't render confetti for reduced-motion users — the global CSS override
+    // Don't render confetti for reduced-motion users - the global CSS override
     // would otherwise freeze 90 colored squares mid-fall instead of a celebration.
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const colors = ["#f38ba8", "#a6e3a1", "#89b4fa", "#f9e2af", "#cba6f7", "#fab387", "#34d399"];
@@ -68,11 +68,11 @@ export default function WinCelebration({
           {matchOver ? `${winnerName} wins the match!` : `${winnerName} Wins!`}
         </h2>
         <p className="text-xl font-semibold mb-1" style={{ color: "var(--text-secondary)" }}>
-          {score.team1} — {score.team2}
+          {score.team1} - {score.team2}
         </p>
         {seriesWon && (
           <p className="text-sm font-medium mb-6" style={{ color: matchOver ? "var(--yellow)" : "var(--text-muted)" }}>
-            Match {seriesWon.team1}–{seriesWon.team2}
+            Match {seriesWon.team1}-{seriesWon.team2}
           </p>
         )}
         {!seriesWon && <div className="mb-6" />}

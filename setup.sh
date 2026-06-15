@@ -1,5 +1,5 @@
 #!/bin/bash
-# Pickleball Shuffle — Local Setup
+# Pickleball Shuffle - Local Setup
 # Run as: bash setup.sh
 
 set -e

@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Dark mode (default) — softened to reduce eye strain (no pure black / pure white) */
+/* Dark mode (default) - softened to reduce eye strain (no pure black / pure white) */
 :root, [data-theme="dark"] {
   --bg: #0e0e11;
   --bg-card: #18181b;
@@ -21,7 +21,7 @@
   --glass: rgba(24, 24, 27, 0.72);
 }
 
-/* Light mode — soft off-white, not glaring */
+/* Light mode - soft off-white, not glaring */
 [data-theme="light"] {
   --bg: #f4f4f6;
   --bg-card: #ffffff;
@@ -68,12 +68,12 @@ button, a, [role="button"], select, label, summary {
   touch-action: manipulation;
 }
 
-/* iOS zooms on focus when inputs are < 16px — force 16px on all form controls */
+/* iOS zooms on focus when inputs are < 16px - force 16px on all form controls */
 input, textarea, select {
   font-size: 16px;
 }
 
-/* Icons must never be compressed by a tight flex row — the #1 cause of icon
+/* Icons must never be compressed by a tight flex row - the #1 cause of icon
    overlap. lucide-react renders <svg class="lucide …">, so guard them globally. */
 svg.lucide { flex-shrink: 0; }
 
@@ -212,7 +212,7 @@ svg.lucide { flex-shrink: 0; }
 /* Distinctive display face for headings, scores, and card text */
 .font-display { font-family: var(--font-display), var(--font-body), system-ui, sans-serif; }
 
-/* Keyboard focus — visible ring on every interactive element (the tap-highlight
+/* Keyboard focus - visible ring on every interactive element (the tap-highlight
    kill above removes the only other affordance, so this is the sole focus cue) */
 :focus-visible {
   outline: 2px solid var(--accent);
