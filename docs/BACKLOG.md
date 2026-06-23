@@ -332,9 +332,9 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 ### C1 · Testing
 | ID | Feature | Pri | Eff | Status |
 |---|---|---|---|---|
-| F251 | Unit tests — scoring engine | P0 | M | todo |
+| F251 | Unit tests — scoring engine | P0 | M | done |
 | F252 | Unit tests — shuffle/rotation algorithms | P0 | M | todo |
-| F253 | Unit tests — card draw/weighting | P0 | M | todo |
+| F253 | Unit tests — card draw/weighting | P0 | M | done |
 | F254 | Component tests (RTL) | P0 | M | todo |
 | F255 | E2E tests (Playwright) core flows | P0 | L | todo |
 | F256 | Visual-regression tests | P1 | M | todo |
@@ -349,7 +349,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F265 | Contract tests — API | P2 | M | todo |
 | F266 | Seed/fixture factory for tests | P1 | S | todo |
 | F267 | Mutation testing | P2 | M | todo |
-| F268 | Lint + typecheck gate in CI | P0 | S | wip |
+| F268 | Lint + typecheck gate in CI | P0 | S | done |
 | F269 | Pre-commit hooks (husky/lint-staged) | P0 | S | todo |
 | F270 | Test-data generator for decks | P2 | S | todo |
 | F271 | Flaky-test detection / retry | P2 | S | todo |
