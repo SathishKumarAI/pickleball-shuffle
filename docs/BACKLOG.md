@@ -287,8 +287,8 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | ID | Feature | Pri | Eff | Status |
 |---|---|---|---|---|
 | F217 | Optimistic UI on all actions | P1 | M | todo |
-| F218 | Toast / snackbar system | P0 | S | todo |
-| F219 | Undo toasts for destructive acts | P0 | S | todo |
+| F218 | Toast / snackbar system | P0 | S | done |
+| F219 | Undo toasts for destructive acts | P0 | S | done |
 | F220 | Inline form validation | P1 | S | todo |
 | F221 | Haptic-feedback tuning settings | P2 | S | todo |
 | F222 | Volume + mute per sound category | P2 | S | todo |

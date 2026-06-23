@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import NetworkStatus from "@/components/NetworkStatus";
+import { ToastProvider } from "@/components/Toast";
 
 const display = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-display", display: "swap" });
 const body = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-body", display: "swap" });
@@ -60,8 +61,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       </head>
       <body className="min-h-full">
-        <NetworkStatus />
-        {children}
+        <ToastProvider>
+          <NetworkStatus />
+          {children}
+        </ToastProvider>
       </body>
     </html>
   );

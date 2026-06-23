@@ -21,6 +21,7 @@ import FeedbackPanel from "@/components/FeedbackPanel";
 import RulesPanel from "@/components/RulesPanel";
 import { MODE_ICONS } from "@/components/icons";
 import { useFocusTrap } from "@/lib/useFocusTrap";
+import { useToast } from "@/components/Toast";
 
 const GITHUB_URL = process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/SathishKumarAI/pickleball-shuffle";
 
@@ -65,6 +66,7 @@ export default function Home() {
   const [confirmTeam, setConfirmTeam] = useState<1 | 2 | null>(null);
   const [confirmReset, setConfirmReset] = useState(false);
   const savedMatchRef = useRef<string | null>(null);
+  const toast = useToast();
   const introRef = useRef<HTMLDivElement>(null);
   const pauseRef = useRef<HTMLDivElement>(null);
 
@@ -267,10 +269,12 @@ export default function Home() {
   // Saved Match history is intentionally left untouched.
   const doReset = () => {
     if (!game) return;
+    const prev = game; // snapshot so the reset can be undone (F219)
     setGame(resetScore(game));
     setCurrentCard(null);
     setCardHistory([]);
     if (game.config.soundEnabled) playResetSound();
+    toast("Score reset", { label: "Undo", onClick: () => setGame(prev) });
   };
 
   const cardCounts = Object.fromEntries(
