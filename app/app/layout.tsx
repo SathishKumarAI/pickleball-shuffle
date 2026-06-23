@@ -12,10 +12,33 @@ export const viewport: Viewport = {
   themeColor: "#0e0e11",
 };
 
+const SITE_URL = "https://pickleball-card-games.vercel.app";
+const TITLE = "Pickleball Card Games";
+const DESCRIPTION =
+  "Draw twist cards mid-match and shake up your pickleball game. 1,729 cards, 5 deck modes, a real side-out scorekeeper - free, mobile-first, works offline.";
+
 export const metadata: Metadata = {
-  title: "Pickleball Card Games",
-  description: "Draw twist cards mid-match. 1,729 cards, 5 deck modes.",
+  metadataBase: new URL(SITE_URL),
+  title: { default: TITLE, template: "%s - Pickleball Card Games" },
+  description: DESCRIPTION,
+  applicationName: TITLE,
+  keywords: ["pickleball", "card game", "scorekeeper", "twist cards", "doubles", "drills", "PWA"],
   manifest: "/manifest.json",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    siteName: TITLE,
+    title: TITLE,
+    description: DESCRIPTION,
+    images: [{ url: "/icons/icon-512.png", width: 512, height: 512, alt: TITLE }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+    images: ["/icons/icon-512.png"],
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
