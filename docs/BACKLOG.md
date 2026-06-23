@@ -152,12 +152,12 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 ### A7 · Stats & history
 | ID | Feature | Pri | Eff | Status |
 |---|---|---|---|---|
-| F111 | Lifetime win/loss record (local) | P1 | S | todo |
+| F111 | Lifetime win/loss record (local) | P1 | S | done |
 | F112 | Per-deck play stats | P2 | M | todo |
 | F113 | Most-drawn-cards leaderboard | P2 | S | todo |
 | F114 | Card win-rate correlation | P2 | M | todo |
 | F115 | Session history list with filters | P1 | M | todo |
-| F116 | Export full history CSV | P1 | S | todo |
+| F116 | Export full history CSV | P1 | S | done |
 | F117 | Streaks & personal records | P2 | S | todo |
 | F118 | Heatmap calendar of play days | P2 | M | todo |
 | F119 | Head-to-head records between players | P2 | M | todo |

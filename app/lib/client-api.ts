@@ -88,6 +88,48 @@ export function clearMatches() {
   write(MATCHES_KEY, []);
 }
 
+// Lifetime win/loss per team name, most wins first (backlog F111). No accounts,
+// so records are keyed by the names players type in.
+export function playerRecords(): { name: string; wins: number; played: number }[] {
+  const map = new Map<string, { wins: number; played: number }>();
+  for (const g of listMatches()) {
+    for (const [name, won] of [
+      [g.team1_name, g.winner === 1],
+      [g.team2_name, g.winner === 2],
+    ] as const) {
+      if (!name?.trim()) continue;
+      const r = map.get(name) ?? { wins: 0, played: 0 };
+      r.played += 1;
+      if (won) r.wins += 1;
+      map.set(name, r);
+    }
+  }
+  return [...map.entries()]
+    .map(([name, r]) => ({ name, ...r }))
+    .sort((a, b) => b.wins - a.wins || b.played - a.played);
+}
+
+// Match history as CSV for spreadsheets/backup (backlog F116).
+export function matchesToCsv(): string {
+  const esc = (v: string | number) => {
+    const s = String(v);
+    return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+  };
+  const header = ["date", "mode", "team1", "score1", "team2", "score2", "winner", "games", "minutes"];
+  const rows = listMatches().map((g) => [
+    new Date(g.created_at).toISOString(),
+    g.mode,
+    g.team1_name,
+    g.score_team1,
+    g.team2_name,
+    g.score_team2,
+    g.winner === 1 ? g.team1_name : g.winner === 2 ? g.team2_name : "",
+    g.results.length || g.game_number,
+    Math.round(g.duration_ms / 60000),
+  ]);
+  return [header, ...rows].map((r) => r.map(esc).join(",")).join("\n");
+}
+
 /* ─── Favorite cards (persist across games) ─── */
 export function listFavoriteIds(): number[] {
   return read<number[]>(FAVORITES_KEY, []);
