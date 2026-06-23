@@ -20,6 +20,7 @@ import FavoritesPanel from "@/components/FavoritesPanel";
 import FeedbackPanel from "@/components/FeedbackPanel";
 import RulesPanel from "@/components/RulesPanel";
 import { MODE_ICONS } from "@/components/icons";
+import { useFocusTrap } from "@/lib/useFocusTrap";
 
 const GITHUB_URL = process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/SathishKumarAI/pickleball-shuffle";
 
@@ -64,6 +65,19 @@ export default function Home() {
   const [confirmTeam, setConfirmTeam] = useState<1 | 2 | null>(null);
   const [confirmReset, setConfirmReset] = useState(false);
   const savedMatchRef = useRef<string | null>(null);
+  const introRef = useRef<HTMLDivElement>(null);
+  const pauseRef = useRef<HTMLDivElement>(null);
+
+  const dismissIntro = useCallback(() => {
+    try { localStorage.setItem(BEGINNER_INTRO_KEY, "1"); } catch {}
+    setShowBeginnerIntro(false);
+  }, []);
+  useFocusTrap(introRef, showBeginnerIntro, dismissIntro);
+  const paused = !!game && isPaused(game) && !game.winner;
+  const resumeFromPause = useCallback(() => {
+    setGame((g) => (g && isPaused(g) ? resumePlay(g, Date.now()) : g));
+  }, []);
+  useFocusTrap(pauseRef, paused, resumeFromPause);
 
   useEffect(() => {
     fetch("/cards.json", { cache: "no-store" }).then((r) => r.json()).then(setAllCards);
@@ -513,7 +527,7 @@ export default function Home() {
 
       {isPaused(game) && !game.winner && (
         <div role="dialog" aria-modal="true" aria-label="Game paused" className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/70 backdrop-blur-md">
-          <div className="glass rounded-3xl p-8 text-center max-w-sm w-full shadow-2xl anim-pop" style={{ border: "1px solid var(--border)" }}>
+          <div ref={pauseRef} tabIndex={-1} className="glass rounded-3xl p-8 text-center max-w-sm w-full shadow-2xl anim-pop outline-none" style={{ border: "1px solid var(--border)" }}>
             <div className="flex justify-center mb-4 anim-float" style={{ color: "var(--accent)" }}>
               <Pause size={64} strokeWidth={1.5} />
             </div>
@@ -545,7 +559,7 @@ export default function Home() {
 
       {showBeginnerIntro && (
         <div role="dialog" aria-modal="true" aria-label="How to play" className="fixed inset-0 z-[70] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md">
-          <div className="glass rounded-3xl p-7 max-w-sm w-full shadow-2xl anim-pop" style={{ border: "1px solid var(--accent)" }}>
+          <div ref={introRef} tabIndex={-1} className="glass rounded-3xl p-7 max-w-sm w-full shadow-2xl anim-pop outline-none" style={{ border: "1px solid var(--accent)" }}>
             <div className="flex justify-center mb-3" style={{ color: "var(--accent)" }}>
               <Sprout size={48} strokeWidth={1.5} />
             </div>
@@ -565,7 +579,7 @@ export default function Home() {
             </ol>
             <button
               autoFocus
-              onClick={() => { try { localStorage.setItem(BEGINNER_INTRO_KEY, "1"); } catch {} setShowBeginnerIntro(false); }}
+              onClick={dismissIntro}
               className="pressable w-full px-6 py-3 text-white font-bold rounded-full shadow-lg"
               style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-dim))" }}
             >

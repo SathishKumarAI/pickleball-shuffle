@@ -175,10 +175,10 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 ### B1 · Onboarding
 | ID | Feature | Pri | Eff | Status |
 |---|---|---|---|---|
-| F126 | First-run interactive tutorial | P0 | M | todo |
+| F126 | First-run interactive tutorial | P0 | M | wip |
 | F127 | Sample-game walkthrough | P1 | M | todo |
 | F128 | Coachmarks / tooltips on key buttons | P1 | S | todo |
-| F129 | Empty-state guidance everywhere | P0 | M | todo |
+| F129 | Empty-state guidance everywhere | P0 | M | done |
 | F130 | "What's new" changelog modal | P1 | S | todo |
 | F131 | Quick-start preset (1-tap demo game) | P0 | S | done |
 | F132 | Contextual "?" help per screen | P1 | S | todo |
@@ -301,7 +301,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F229 | Sync-status indicator (hybrid) | P1 | S | todo |
 | F230 | Pull-to-draw card gesture | P2 | S | todo |
 | F231 | Keyboard shortcut for draw/score | P1 | S | todo |
-| F232 | Focus-trap in modals | P0 | S | todo |
+| F232 | Focus-trap in modals | P0 | S | done |
 | F233 | Scroll-restore on back | P1 | S | todo |
 | F234 | Animated score-number transitions | P2 | S | todo |
 
