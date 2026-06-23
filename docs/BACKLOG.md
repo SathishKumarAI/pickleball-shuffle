@@ -297,7 +297,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F225 | Gesture cheat-sheet | P2 | S | todo |
 | F226 | Confirm only when truly needed | P1 | S | todo |
 | F227 | Auto-save indicators | P1 | S | todo |
-| F228 | Online/offline status banner | P0 | S | todo |
+| F228 | Online/offline status banner | P0 | S | done |
 | F229 | Sync-status indicator (hybrid) | P1 | S | todo |
 | F230 | Pull-to-draw card gesture | P2 | S | todo |
 | F231 | Keyboard shortcut for draw/score | P1 | S | todo |
@@ -446,7 +446,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 ### C6 · PWA & offline
 | ID | Feature | Pri | Eff | Status |
 |---|---|---|---|---|
-| F345 | SW update flow (skipWaiting prompt) | P0 | S | todo |
+| F345 | SW update flow (skipWaiting prompt) | P0 | S | done |
 | F346 | Offline fallback page | P1 | S | todo |
 | F347 | Background sync for hybrid uploads | P1 | M | todo |
 | F348 | Cache-versioning strategy | P1 | S | todo |
