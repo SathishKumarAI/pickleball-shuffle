@@ -359,20 +359,20 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | ID | Feature | Pri | Eff | Status |
 |---|---|---|---|---|
 | F273 | GitHub Actions CI pipeline | P0 | M | done |
-| F274 | PR preview deploys (Vercel) | P0 | S | todo |
-| F275 | Required status checks on main | P0 | S | todo |
-| F276 | Automated dependency updates | P1 | S | todo |
+| F274 | PR preview deploys (Vercel) | P0 | S | done |
+| F275 | Required status checks on main | P0 | S | wip |
+| F276 | Automated dependency updates | P1 | S | done |
 | F277 | Semantic-release / changelog automation | P1 | M | todo |
 | F278 | Conventional-commits enforcement | P1 | S | todo |
 | F279 | Branch-protection rules doc | P1 | S | todo |
-| F280 | Rollback runbook + one-click rollback | P0 | S | todo |
+| F280 | Rollback runbook + one-click rollback | P0 | S | done |
 | F281 | Canary / rolling-release config | P2 | M | todo |
 | F282 | Build-size budget check in CI | P1 | S | todo |
 | F283 | Lighthouse-CI budget gate | P1 | M | todo |
 | F284 | Bundle-analyzer CI artifact | P1 | S | todo |
 | F285 | Staging environment | P1 | S | todo |
 | F286 | Env-var management via `vercel env` | P0 | S | todo |
-| F287 | Secret scanning in CI | P0 | S | todo |
+| F287 | Secret scanning in CI | P0 | S | done |
 | F288 | SBOM generation | P2 | S | todo |
 | F289 | Release-tagging automation | P2 | S | todo |
 | F290 | Deploy notifications (Slack/Discord) | P2 | S | todo |
@@ -432,7 +432,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F332 | CSRF protection | P0 | S | todo |
 | F333 | Supabase RLS policies | P0 | M | todo |
 | F334 | Secrets-out-of-client-bundle audit | P0 | S | todo |
-| F335 | Dependency vuln scanning | P0 | S | todo |
+| F335 | Dependency vuln scanning | P0 | S | done |
 | F336 | OWASP top-10 review | P1 | M | todo |
 | F337 | Bot protection (Vercel BotID) on auth | P1 | S | todo |
 | F338 | Password policy + breach check | P1 | S | todo |
