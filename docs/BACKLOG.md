@@ -94,7 +94,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F062 | Switch-sides-at-midpoint reminder | P1 | S | todo |
 | F063 | Doubles serving rotation indicator (server 1/2) | P0 | M | todo |
 | F064 | Let-serve toggle | P2 | S | todo |
-| F065 | Manual score correction | P0 | S | todo |
+| F065 | Manual score correction | P0 | S | done |
 | F066 | Point-by-point timeline log | P1 | M | todo |
 | F067 | Per-point twist attribution in log | P2 | M | todo |
 | F068 | Game clock / elapsed time | P2 | S | todo |
@@ -197,7 +197,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F141 | Full keyboard navigation | P0 | M | todo |
 | F142 | Visible focus rings everywhere | P0 | S | done |
 | F143 | ARIA labels on all controls | P0 | M | todo |
-| F144 | Screen-reader live region for score/cards | P0 | M | todo |
+| F144 | Screen-reader live region for score/cards | P0 | M | done |
 | F145 | Honor reduced-motion | P0 | S | todo |
 | F146 | High-contrast theme | P1 | S | todo |
 | F147 | Color-blind-safe palette + patterns | P1 | M | todo |

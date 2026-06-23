@@ -110,6 +110,18 @@ export function addScore(game: GameSession, team: 1 | 2): GameSession {
   };
 }
 
+// Manual score correction (backlog F065): nudge a team's score by delta,
+// clamped at 0, recomputing the winner. Logged so it can be undone.
+export function adjustScore(game: GameSession, team: 1 | 2, delta: number): GameSession {
+  const key = team === 1 ? "team1" : "team2";
+  const next = Math.max(0, game.score[key] + delta);
+  if (next === game.score[key]) return game;
+  const scoreBefore = { ...game.score };
+  const scoreAfter = { ...game.score, [key]: next };
+  const event: ScoreEvent = { team, type: "score", scoreBefore, scoreAfter, timestamp: Date.now() };
+  return { ...game, score: scoreAfter, history: [...game.history, event], winner: checkWin(scoreAfter, game.config) };
+}
+
 export function sideOut(game: GameSession): GameSession {
   const newServingTeam: 1 | 2 = game.servingTeam === 1 ? 2 : 1;
   const newServerNumber: 1 | 2 = game.serverNumber === 1 ? 2 : 1;

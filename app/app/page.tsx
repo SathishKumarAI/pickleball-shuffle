@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Card, DeckMode, DECK_MODES, getFilteredCards, getDeck, shuffleArray, SKILL_LEVELS, SkillLevel, selectionLabel } from "@/lib/cards";
-import { GameSession, GameConfig, createGame, addScore, sideOut, undoLast, resetScore, startNewGame, newMatch, matchWinner, seriesTally, isPaused, pauseGame, resumePlay, elapsedMs, saveGame, loadGame, clearSavedGame, formatTime } from "@/lib/game";
+import { GameSession, GameConfig, createGame, addScore, adjustScore, sideOut, undoLast, resetScore, startNewGame, newMatch, matchWinner, seriesTally, isPaused, pauseGame, resumePlay, elapsedMs, saveGame, loadGame, clearSavedGame, formatTime } from "@/lib/game";
 import { playScoreSound, playUndoSound, playCardFlipSound, playWinSound, playResetSound, triggerHaptic } from "@/lib/sounds";
 import { addMatch, deckToCards, CustomDeck, listFavoriteIds, toggleFavorite } from "@/lib/client-api";
 import { Sun, Moon, Play, Pause, X, Bug, HelpCircle, Sparkles, Sprout, TrendingUp, Flame } from "lucide-react";
@@ -425,7 +425,7 @@ export default function Home() {
           />
         )}
 
-        <ScoreKeeper game={game} onScore={handleScore} onSideOut={() => setGame(sideOut(game))} />
+        <ScoreKeeper game={game} onScore={handleScore} onSideOut={() => setGame(sideOut(game))} onAdjust={(team, delta) => { setGame(adjustScore(game, team, delta)); triggerHaptic("light"); }} />
 
         {confirmTeam && (
           <div className="anim-pop glass flex items-center gap-3 p-3 rounded-xl" style={{ border: "1px solid var(--border)" }}>
@@ -451,6 +451,12 @@ export default function Home() {
             <button onClick={() => setConfirmReset(false)} className="pressable px-4 py-1.5 rounded-full text-xs font-medium" style={{ background: "var(--bg-card)", color: "var(--text-secondary)" }}>Cancel</button>
           </div>
         )}
+
+        {/* Screen-reader announcement for the latest draw + score (F144) */}
+        <div className="sr-only" role="status" aria-live="polite">
+          {currentCard ? `Drew ${currentCard.name}. ${currentCard.effect}` : ""}
+          {` Score: ${game.playerNames.team1} ${game.score.team1}, ${game.playerNames.team2} ${game.score.team2}.`}
+        </div>
 
         <CardDisplay
           card={currentCard}

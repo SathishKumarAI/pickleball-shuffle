@@ -1,17 +1,19 @@
 "use client";
 
 import { GameSession } from "@/lib/game";
-import { CircleDot } from "lucide-react";
+import { CircleDot, Minus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 export default function ScoreKeeper({
   game,
   onScore,
   onSideOut,
+  onAdjust,
 }: {
   game: GameSession;
   onScore: (team: 1 | 2) => void;
   onSideOut: () => void;
+  onAdjust?: (team: 1 | 2, delta: number) => void;
 }) {
   const locked = game.config.scoreLocked || !!game.winner;
 
@@ -47,6 +49,15 @@ export default function ScoreKeeper({
         />
       </div>
 
+      {/* Manual score correction - subtle -1 per team (F065) */}
+      {onAdjust && !game.config.scoreLocked && (game.score.team1 > 0 || game.score.team2 > 0) && (
+        <div className="flex items-center justify-center gap-6 sm:gap-8 -mt-1">
+          <CorrectButton name={game.playerNames.team1} disabled={game.score.team1 === 0} onClick={() => onAdjust(1, -1)} />
+          <span className="w-6" />
+          <CorrectButton name={game.playerNames.team2} disabled={game.score.team2 === 0} onClick={() => onAdjust(2, -1)} />
+        </div>
+      )}
+
       {/* Game progress */}
       {game.gameResults.length > 0 && (
         <div className="flex items-center gap-2 text-xs flex-wrap justify-center" style={{ color: "var(--text-muted)" }}>
@@ -56,6 +67,20 @@ export default function ScoreKeeper({
         </div>
       )}
     </div>
+  );
+}
+
+function CorrectButton({ name, disabled, onClick }: { name: string; disabled: boolean; onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={`Subtract a point from ${name}`}
+      className="pressable flex items-center justify-center w-7 h-7 rounded-full disabled:opacity-25"
+      style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-muted)" }}
+    >
+      <Minus size={13} />
+    </button>
   );
 }
 

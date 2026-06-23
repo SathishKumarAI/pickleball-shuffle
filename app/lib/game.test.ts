@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   createGame,
   addScore,
+  adjustScore,
   sideOut,
   undoLast,
   resetScore,
@@ -124,6 +125,31 @@ describe("undoLast", () => {
   it("is a no-op on empty history", () => {
     const g = rallyGame();
     expect(undoLast(g)).toBe(g);
+  });
+});
+
+describe("adjustScore (manual correction)", () => {
+  it("clamps at zero and is a no-op below", () => {
+    const g = rallyGame();
+    expect(adjustScore(g, 1, -1)).toBe(g); // already 0
+  });
+
+  it("decrements and logs an undoable event", () => {
+    let g = addScore(rallyGame(), 1);
+    g = addScore(g, 1); // 2-0
+    const fixed = adjustScore(g, 1, -1);
+    expect(fixed.score.team1).toBe(1);
+    expect(fixed.history.length).toBe(g.history.length + 1);
+    expect(undoLast(fixed).score.team1).toBe(2);
+  });
+
+  it("clears the winner when correcting below the win line", () => {
+    let g = rallyGame();
+    for (let i = 0; i < 11; i++) g = addScore(g, 1);
+    expect(g.winner).toBe(1);
+    const fixed = adjustScore(g, 1, -1);
+    expect(fixed.winner).toBeNull();
+    expect(fixed.score.team1).toBe(10);
   });
 });
 
