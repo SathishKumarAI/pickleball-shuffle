@@ -5,6 +5,32 @@ import { CategoryIcon } from "./icons";
 import { Shuffle, Star, SkipForward, ArrowLeft } from "lucide-react";
 import { useState } from "react";
 
+// Intensity 1 (chill) .. 5 (chaos) shown as a small dot meter (backlog F522).
+const INTENSITY_LABEL = ["", "Chill", "Light", "Spicy", "Intense", "Chaos"];
+function IntensityDots({ value }: { value: number }) {
+  const n = Math.max(1, Math.min(5, value));
+  return (
+    <span
+      className="flex items-center gap-1.5"
+      role="img"
+      aria-label={`Intensity ${n} of 5${INTENSITY_LABEL[n] ? `, ${INTENSITY_LABEL[n]}` : ""}`}
+    >
+      <span className="text-[10px] font-semibold uppercase tracking-wider text-white/55">
+        {INTENSITY_LABEL[n]}
+      </span>
+      <span className="flex items-center gap-0.5" aria-hidden>
+        {[1, 2, 3, 4, 5].map((i) => (
+          <span
+            key={i}
+            className="w-1.5 h-1.5 rounded-full"
+            style={{ background: i <= n ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.28)" }}
+          />
+        ))}
+      </span>
+    </span>
+  );
+}
+
 export default function CardDisplay({
   card,
   onDraw,
@@ -113,6 +139,12 @@ export default function CardDisplay({
               <p className={`${commentary ? "text-xs sm:text-sm" : "text-sm sm:text-base"} leading-snug text-white/90`}>
                 {commentary && card?.commentary ? card.commentary : card?.effect}
               </p>
+              {card?.detail && (
+                <p className="text-[11px] sm:text-xs leading-snug text-white/70 max-w-[18rem]">{card.detail}</p>
+              )}
+              {typeof card?.intensity === "number" && (
+                <IntensityDots value={card.intensity} />
+              )}
               {card?.callout && (
                 <p className="text-[11px] font-bold italic text-white/70">&ldquo;{card.callout}&rdquo;</p>
               )}

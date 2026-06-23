@@ -657,3 +657,71 @@ Shuffle engine F093–F097 · Scoring fixes F063, F065 · Tests F251–F255, F25
 
 **Wave 3 — Growth & polish (P1)**
 Onboarding depth, deck builder F037–F048, sharing F393–F402, i18n F163–F165, accounts F376–F381.
+
+---
+
+## E. Card Content & Readability (F501–F550)
+
+Make the 1,729 cards genuinely fun to read, with real description and depth.
+
+### E1 · Writing quality
+| ID | Feature | Pri | Eff | Status |
+|---|---|---|---|---|
+| F501 | Rewrite originals' commentary in true caller voice (stop duplicating effect) | P0 | S | done |
+| F502 | Add a richer `detail` description to every card | P0 | M | done |
+| F503 | Strategy "how to win it" tip line per card | P1 | M | done |
+| F504 | Vary commentator hooks/stingers to cut repetition | P1 | S | done |
+| F505 | Plain-words difficulty/skill-level label | P1 | S | todo |
+| F506 | "Why it's fun" flavour line | P2 | S | todo |
+| F507 | Equipment/setup note where relevant | P2 | S | todo |
+| F508 | Safety note on physical-challenge cards | P1 | S | todo |
+| F509 | Impact note (one point vs whole game) | P2 | S | todo |
+| F510 | Term tooltip for jargon (erne, dink, kitchen) | P2 | M | todo |
+| F511 | Reading-level pass (concise, scannable) | P1 | S | todo |
+| F512 | De-duplicate similar phrasings across deck | P2 | M | todo |
+| F513 | Per-card example scenario | P2 | M | todo |
+| F514 | Inclusive, non-gendered language pass | P1 | S | todo |
+| F515 | Emoji-free, icon-driven consistency (house rule) | P1 | S | todo |
+| F516 | Tighten card names for clarity | P2 | S | todo |
+| F517 | Extract card strings to i18n keys | P2 | L | todo |
+| F518 | Family-safe / profanity lint on generated text | P1 | S | todo |
+| F519 | Tone presets (chill / hype / coach) for text | P2 | M | todo |
+| F520 | Lore / backstory for legendaries | P2 | M | todo |
+
+### E2 · Display & interaction
+| ID | Feature | Pri | Eff | Status |
+|---|---|---|---|---|
+| F521 | Show `detail` description on the card face | P0 | S | done |
+| F522 | Show intensity as a dot meter on the card | P1 | S | done |
+| F523 | Show tags as tappable chips | P2 | S | todo |
+| F524 | Expandable "more" for long descriptions | P2 | S | todo |
+| F525 | Text-size control for card readability | P1 | S | todo |
+| F526 | High-contrast card-text mode | P1 | S | todo |
+| F527 | Long-press card to open full detail sheet | P2 | M | todo |
+| F528 | Card detail sheet with all metadata | P2 | M | todo |
+| F529 | Copy card text to clipboard | P2 | S | todo |
+| F530 | Read card aloud (TTS) with voice pick | P2 | M | todo |
+| F531 | Animated reveal of detail after the name | P2 | S | todo |
+| F532 | Two-column name + detail layout on tablet | P2 | S | todo |
+| F533 | Graceful truncation + scroll for long text | P1 | S | todo |
+| F534 | Rarity-themed typography accents | P2 | S | todo |
+| F535 | Category color legend | P2 | S | todo |
+| F536 | Discoverable card "info" affordance | P2 | S | todo |
+| F537 | Persist last text style (concise/commentator) | P1 | S | todo |
+| F538 | Auto font-scale for very long names | P2 | S | todo |
+| F539 | Dark/light tuned card-text contrast | P1 | S | todo |
+| F540 | Reduce-motion-friendly detail reveal | P1 | S | todo |
+
+### E3 · Content management & quality
+| ID | Feature | Pri | Eff | Status |
+|---|---|---|---|---|
+| F541 | Card-content unit tests (every card complete) | P0 | S | done |
+| F542 | Schema validation for cards.json in CI | P0 | S | done |
+| F543 | Card-content style-guide doc | P1 | S | todo |
+| F544 | Card-text linter (length, banned words) | P1 | M | todo |
+| F545 | Versioned card dataset + changelog | P2 | S | todo |
+| F546 | Author/source attribution for hand-written cards | P2 | S | todo |
+| F547 | Report-a-card feedback wired to card id | P1 | S | todo |
+| F548 | A/B variants of card phrasing | P2 | M | todo |
+| F549 | Search/browse all cards with full detail | P1 | M | todo |
+| F550 | Export deck as printable cards (PDF) | P2 | M | todo |
