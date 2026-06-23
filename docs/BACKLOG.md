@@ -25,7 +25,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F005 | Dink-only challenge mode | P2 | S | todo |
 | F006 | Speed-up / timed game mode | P2 | M | todo |
 | F007 | Solo practice / drill mode (no opponent) | P1 | M | todo |
-| F008 | Singles (1v1) toggle alongside doubles default | P1 | S | todo |
+| F008 | Singles (1v1) toggle alongside doubles default | P1 | S | done |
 | F009 | Skinny-singles mode | P2 | S | todo |
 | F010 | Co-op vs deck (cards act as opponent) | P2 | M | todo |
 | F011 | Single-elimination bracket | P1 | L | todo |
@@ -50,7 +50,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F026 | Weighted-draw-by-rarity tuning UI | P2 | M | todo |
 | F027 | No-repeat window (avoid recent cards) | P1 | S | todo |
 | F028 | Per-team separate draws | P2 | M | todo |
-| F029 | Draw-history strip (last N cards) | P1 | S | todo |
+| F029 | Draw-history strip (last N cards) | P1 | S | done |
 | F030 | Card peek/preview before commit | P2 | S | todo |
 | F031 | Voice readout of drawn card (TTS) | P2 | M | todo |
 | F032 | Card flip/deal animation options | P2 | M | todo |
@@ -88,9 +88,9 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 ### A4 · Scoring engine
 | ID | Feature | Pri | Eff | Status |
 |---|---|---|---|---|
-| F059 | Rally scoring option (vs side-out) | P1 | M | todo |
-| F060 | Custom win target (11/15/21) | P1 | S | todo |
-| F061 | Win-by-1 option | P1 | S | todo |
+| F059 | Rally scoring option (vs side-out) | P1 | M | done |
+| F060 | Custom win target (11/15/21) | P1 | S | done |
+| F061 | Win-by-1 option | P1 | S | done |
 | F062 | Switch-sides-at-midpoint reminder | P1 | S | todo |
 | F063 | Doubles serving rotation indicator (server 1/2) | P0 | M | todo |
 | F064 | Let-serve toggle | P2 | S | todo |
@@ -106,13 +106,13 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F074 | Score gestures (swipe up/down) | P2 | S | todo |
 | F075 | Foot-fault / fault counters | P2 | S | todo |
 | F076 | Timeout tracking | P2 | S | todo |
-| F077 | Auto game-point / match-point banner | P1 | S | todo |
+| F077 | Auto game-point / match-point banner | P1 | S | done |
 | F078 | Tiebreak handling | P2 | M | todo |
 
 ### A5 · Match structure & flow
 | ID | Feature | Pri | Eff | Status |
 |---|---|---|---|---|
-| F079 | Best-of-N configurable (1/3/5/7) | P1 | S | todo |
+| F079 | Best-of-N configurable (1/3/5/7) | P1 | S | done |
 | F080 | Save match templates | P2 | S | todo |
 | F081 | Side-switch every N points config | P2 | S | todo |
 | F082 | Warmup timer before match | P2 | S | todo |
@@ -123,7 +123,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F087 | Pre-match coin toss / serve picker | P2 | S | todo |
 | F088 | Game-to-game carryover display | P2 | S | todo |
 | F089 | Match summary screen → export image | P1 | M | todo |
-| F090 | One-tap rematch | P1 | S | todo |
+| F090 | One-tap rematch | P1 | S | done |
 | F091 | Match tagging (casual/league/practice) | P2 | S | todo |
 | F092 | Match-complete shareable card image | P1 | M | todo |
 

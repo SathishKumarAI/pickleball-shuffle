@@ -248,6 +248,21 @@ export function checkWin(score: { team1: number; team2: number }, config: GameCo
   return null;
 }
 
+// Is a team one point from winning the game (or the whole match)? Drives the
+// "Game point / Match point" banner (backlog F077). Returns null otherwise.
+export function pointStatus(game: GameSession): { team: 1 | 2; match: boolean } | null {
+  if (game.winner) return null;
+  for (const team of [1, 2] as const) {
+    const key = team === 1 ? "team1" : "team2";
+    const probe = { ...game.score, [key]: game.score[key] + 1 };
+    if (checkWin(probe, game.config) === team) {
+      const wonAfter = (team === 1 ? game.gamesWon.team1 : game.gamesWon.team2) + 1;
+      return { team, match: wonAfter >= gamesToWinMatch(game.config) };
+    }
+  }
+  return null;
+}
+
 export function formatTime(ms: number): string {
   const seconds = Math.floor(ms / 1000);
   const m = Math.floor(seconds / 60);

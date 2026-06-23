@@ -1,7 +1,7 @@
 "use client";
 
-import { GameSession } from "@/lib/game";
-import { CircleDot, Minus } from "lucide-react";
+import { GameSession, pointStatus } from "@/lib/game";
+import { CircleDot, Minus, Flame } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 export default function ScoreKeeper({
@@ -16,9 +16,23 @@ export default function ScoreKeeper({
   onAdjust?: (team: 1 | 2, delta: number) => void;
 }) {
   const locked = game.config.scoreLocked || !!game.winner;
+  const point = pointStatus(game);
 
   return (
     <div className="flex flex-col items-center gap-3 w-full max-w-sm">
+      {/* Game / match point banner (F077) */}
+      {point && (
+        <div
+          className="anim-pop flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full"
+          role="status"
+          aria-live="polite"
+          style={{ background: "var(--bg-elevated)", color: point.match ? "var(--red)" : "var(--yellow)", border: `1px solid ${point.match ? "var(--red)" : "var(--yellow)"}` }}
+        >
+          <Flame size={13} />
+          {point.match ? "Match point" : "Game point"}: {point.team === 1 ? game.playerNames.team1 : game.playerNames.team2}
+        </div>
+      )}
+
       {/* Serving indicator */}
       {game.config.sideOutScoring && (
         <button onClick={onSideOut} aria-label="Side out - switch serving team" aria-live="polite" className="pressable flex items-center gap-1.5 text-xs px-3 py-1 rounded-full" style={{ background: "var(--bg-elevated)", color: "var(--yellow)", border: "1px solid var(--border)" }}>

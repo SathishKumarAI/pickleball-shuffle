@@ -11,6 +11,7 @@ import {
   gamesToWinMatch,
   seriesTally,
   matchWinner,
+  pointStatus,
   newMatch,
   isPaused,
   pauseGame,
@@ -196,6 +197,33 @@ describe("best-of-N match flow", () => {
     g = startNewGame(g);
     for (let i = 0; i < 11; i++) g = addScore(g, 1); // 2-0, takes it
     expect(matchWinner(g)).toBe(1);
+  });
+});
+
+describe("pointStatus (game/match point)", () => {
+  it("is null when nobody is one point away", () => {
+    expect(pointStatus(rallyGame())).toBeNull();
+  });
+
+  it("flags game point at 10-5 (win by 2 satisfied)", () => {
+    let g = rallyGame();
+    for (let i = 0; i < 10; i++) g = addScore(g, 1);
+    for (let i = 0; i < 5; i++) g = addScore(g, 2);
+    const p = pointStatus(g);
+    expect(p).toEqual({ team: 1, match: false });
+  });
+
+  it("flags match point when winning the game takes the series", () => {
+    let g = rallyGame({ bestOf: 3 });
+    g = { ...g, gamesWon: { team1: 1, team2: 0 } }; // already up a game
+    for (let i = 0; i < 10; i++) g = addScore(g, 1); // 10-0, one from the game = match
+    expect(pointStatus(g)).toEqual({ team: 1, match: true });
+  });
+
+  it("is null once the game is won", () => {
+    let g = rallyGame();
+    for (let i = 0; i < 11; i++) g = addScore(g, 1);
+    expect(pointStatus(g)).toBeNull();
   });
 });
 
