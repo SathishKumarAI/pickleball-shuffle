@@ -1,9 +1,14 @@
 import { defineConfig } from "vitest/config";
+import { fileURLToPath } from "node:url";
 
-// Unit tests for the pure game/card logic in lib/ (backlog F251, F253).
+// Unit + a11y tests for lib/ logic and key components (F251, F253, F161, F258).
 export default defineConfig({
+  resolve: {
+    alias: {
+      "@": fileURLToPath(new URL(".", import.meta.url)),
+    },
+  },
   test: {
-    environment: "node",
     include: ["lib/**/*.test.ts", "lib/**/*.test.tsx"],
   },
 });

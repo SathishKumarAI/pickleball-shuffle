@@ -194,9 +194,9 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 ### B2 · Accessibility
 | ID | Feature | Pri | Eff | Status |
 |---|---|---|---|---|
-| F141 | Full keyboard navigation | P0 | M | todo |
+| F141 | Full keyboard navigation | P0 | M | done |
 | F142 | Visible focus rings everywhere | P0 | S | done |
-| F143 | ARIA labels on all controls | P0 | M | todo |
+| F143 | ARIA labels on all controls | P0 | M | done |
 | F144 | Screen-reader live region for score/cards | P0 | M | done |
 | F145 | Honor reduced-motion | P0 | S | done |
 | F146 | High-contrast theme | P1 | S | todo |
@@ -214,7 +214,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F158 | Landmark roles for layout | P1 | S | todo |
 | F159 | Respect prefers-color-scheme | P1 | S | done? |
 | F160 | Switch-control / large-button mode | P2 | M | todo |
-| F161 | axe-core automated a11y test in CI | P0 | M | todo |
+| F161 | axe-core automated a11y test in CI | P0 | M | done |
 | F162 | WCAG 2.2 AA audit checklist doc | P1 | S | todo |
 
 ### B3 · Internationalization
@@ -335,11 +335,11 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F251 | Unit tests — scoring engine | P0 | M | done |
 | F252 | Unit tests — shuffle/rotation algorithms | P0 | M | todo |
 | F253 | Unit tests — card draw/weighting | P0 | M | done |
-| F254 | Component tests (RTL) | P0 | M | todo |
+| F254 | Component tests (RTL) | P0 | M | done |
 | F255 | E2E tests (Playwright) core flows | P0 | L | todo |
 | F256 | Visual-regression tests | P1 | M | todo |
 | F257 | PWA/offline E2E test | P1 | M | todo |
-| F258 | Accessibility tests (axe) in CI | P0 | M | todo |
+| F258 | Accessibility tests (axe) in CI | P0 | M | done |
 | F259 | Coverage reporting + threshold | P1 | S | todo |
 | F260 | Property-based tests — scoring edge cases | P1 | M | todo |
 | F261 | Snapshot tests — card rendering | P2 | S | todo |
