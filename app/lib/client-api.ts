@@ -116,6 +116,16 @@ export function importData(json: string): { decks: number; matches: number } {
 }
 
 /* Turn a custom deck's cards into playable Card objects (negative ids avoid clashing). */
+// Wipe every local trace of the user's data (backlog F342). Local-first means
+// there's nothing on a server to delete - clearing these keys is a full erase.
+export function clearAllData() {
+  try {
+    [DECKS_KEY, MATCHES_KEY, FAVORITES_KEY, "pickleball-shuffle-game", "pb-beginner-intro-seen"].forEach((k) =>
+      localStorage.removeItem(k),
+    );
+  } catch {}
+}
+
 export function deckToCards(deck: CustomDeck): Card[] {
   return deck.cards.map((c, i) => ({
     id: -(i + 1),

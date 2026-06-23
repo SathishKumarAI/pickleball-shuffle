@@ -139,6 +139,33 @@ export default function Home() {
     meta.setAttribute("content", darkMode ? "#0e0e11" : "#f4f4f6");
   }, [darkMode]);
 
+  // Keep the screen awake during an active game so it doesn't dim mid-match
+  // on a phone propped courtside (backlog F188). Re-acquires after the tab
+  // returns to the foreground; released when the game ends or unmounts.
+  useEffect(() => {
+    if (!game || game.winner) return;
+    type WakeLockSentinelLike = { release: () => Promise<void> };
+    let sentinel: WakeLockSentinelLike | null = null;
+    let cancelled = false;
+    const nav = navigator as Navigator & { wakeLock?: { request: (t: "screen") => Promise<WakeLockSentinelLike> } };
+    const acquire = async () => {
+      try {
+        if (nav.wakeLock && document.visibilityState === "visible") {
+          sentinel = await nav.wakeLock.request("screen");
+          if (cancelled) { sentinel.release().catch(() => {}); sentinel = null; }
+        }
+      } catch {}
+    };
+    const onVisible = () => { if (document.visibilityState === "visible") acquire(); };
+    acquire();
+    document.addEventListener("visibilitychange", onVisible);
+    return () => {
+      cancelled = true;
+      document.removeEventListener("visibilitychange", onVisible);
+      sentinel?.release().catch(() => {});
+    };
+  }, [game]);
+
   const basePool = useCallback(
     () => customCards ?? getDeck(allCards, mode),
     [customCards, allCards, mode]

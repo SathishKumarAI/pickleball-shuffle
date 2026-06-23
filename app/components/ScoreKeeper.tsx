@@ -76,10 +76,14 @@ function CorrectButton({ name, disabled, onClick }: { name: string; disabled: bo
       onClick={onClick}
       disabled={disabled}
       aria-label={`Subtract a point from ${name}`}
-      className="pressable flex items-center justify-center w-7 h-7 rounded-full disabled:opacity-25"
-      style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-muted)" }}
+      className="pressable flex items-center justify-center min-w-[44px] min-h-[44px] disabled:opacity-25"
     >
-      <Minus size={13} />
+      <span
+        className="flex items-center justify-center w-7 h-7 rounded-full"
+        style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-muted)" }}
+      >
+        <Minus size={13} />
+      </span>
     </button>
   );
 }

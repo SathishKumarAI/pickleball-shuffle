@@ -2,8 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { Menu, History, Layers, Star, Download, Upload, MessageSquare, BookOpen, Check, AlertTriangle, Info } from "lucide-react";
-import { exportData, importData } from "@/lib/client-api";
+import { Menu, History, Layers, Star, Download, Upload, MessageSquare, BookOpen, Check, AlertTriangle, Info, Trash2 } from "lucide-react";
+import { exportData, importData, clearAllData } from "@/lib/client-api";
 
 export default function AppMenu({
   onOpenHistory,
@@ -50,6 +50,15 @@ export default function AppMenu({
     a.click();
     URL.revokeObjectURL(url);
     setOpen(false);
+  };
+
+  const doDeleteAll = () => {
+    setOpen(false);
+    const ok = typeof window !== "undefined" &&
+      window.confirm("Delete all local data - matches, custom decks, favorites and the current game? This cannot be undone.");
+    if (!ok) return;
+    clearAllData();
+    window.location.reload();
   };
 
   const doImport = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -105,6 +114,17 @@ export default function AppMenu({
               <span style={{ color: "var(--accent)" }}><Info size={16} /></span>
               About &amp; privacy
             </Link>
+          </div>
+          <div style={{ borderTop: "1px solid var(--border)" }}>
+            <button
+              onClick={doDeleteAll}
+              role="menuitem"
+              className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors hover:bg-[var(--bg-elevated)]"
+              style={{ color: "var(--red)" }}
+            >
+              <span style={{ color: "var(--red)" }}><Trash2 size={16} /></span>
+              Delete all data
+            </button>
           </div>
         </div>
       )}

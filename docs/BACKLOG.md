@@ -180,7 +180,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F128 | Coachmarks / tooltips on key buttons | P1 | S | todo |
 | F129 | Empty-state guidance everywhere | P0 | M | todo |
 | F130 | "What's new" changelog modal | P1 | S | todo |
-| F131 | Quick-start preset (1-tap demo game) | P0 | S | todo |
+| F131 | Quick-start preset (1-tap demo game) | P0 | S | done |
 | F132 | Contextual "?" help per screen | P1 | S | todo |
 | F133 | Skippable + resumable onboarding | P1 | S | todo |
 | F134 | Persona picker (player/organizer/coach) | P2 | M | todo |
@@ -198,12 +198,12 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F142 | Visible focus rings everywhere | P0 | S | done |
 | F143 | ARIA labels on all controls | P0 | M | todo |
 | F144 | Screen-reader live region for score/cards | P0 | M | done |
-| F145 | Honor reduced-motion | P0 | S | todo |
+| F145 | Honor reduced-motion | P0 | S | done |
 | F146 | High-contrast theme | P1 | S | todo |
 | F147 | Color-blind-safe palette + patterns | P1 | M | todo |
 | F148 | Font-size / text-scaling control | P1 | S | todo |
 | F149 | Dyslexia-friendly font option | P2 | S | todo |
-| F150 | 44px min tap-target audit | P0 | S | todo |
+| F150 | 44px min tap-target audit | P0 | S | done |
 | F151 | Skip-to-content link | P1 | S | todo |
 | F152 | Haptic alternatives for audio cues | P2 | S | todo |
 | F153 | Captions for audio/TTS | P2 | S | todo |
@@ -249,7 +249,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F185 | Bottom-sheet patterns for mobile | P1 | M | todo |
 | F186 | Swipe-gesture navigation | P2 | M | todo |
 | F187 | Prevent accidental double-tap actions | P1 | S | todo |
-| F188 | Wake-lock to keep screen on during match | P0 | S | todo |
+| F188 | Wake-lock to keep screen on during match | P0 | S | done |
 | F189 | Orientation-lock toggle | P2 | S | todo |
 | F190 | Cast / external-display support | P2 | L | todo |
 | F191 | Wearable companion (stretch) | P2 | L | todo |
@@ -403,7 +403,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | ID | Feature | Pri | Eff | Status |
 |---|---|---|---|---|
 | F309 | Code-split routes/components | P1 | M | todo |
-| F310 | Lazy/chunked load of 1,729-card data | P0 | M | todo |
+| F310 | Lazy/chunked load of 1,729-card data | P0 | M | done |
 | F311 | Virtualize long card lists | P1 | M | todo |
 | F312 | Image optimization (next/image) audit | P1 | S | todo |
 | F313 | Font subsetting + preload | P1 | S | todo |
@@ -439,7 +439,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F339 | Account-lockout / brute-force guard | P1 | S | todo |
 | F340 | Audit log for auth events | P2 | S | todo |
 | F341 | PII data-handling review | P1 | S | todo |
-| F342 | GDPR/CCPA data export + delete | P0 | M | todo |
+| F342 | GDPR/CCPA data export + delete | P0 | M | done |
 | F343 | Penetration-test checklist | P2 | S | todo |
 | F344 | security.txt + disclosure policy | P2 | S | todo |
 
@@ -464,7 +464,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 |---|---|---|---|---|
 | F357 | Supabase schema — users/decks/games | P1 | M | todo |
 | F358 | Local ↔ cloud sync engine | P1 | L | todo |
-| F359 | Anonymous local mode default (no account) | P0 | S | todo |
+| F359 | Anonymous local mode default (no account) | P0 | S | done |
 | F360 | Account upgrade claims local data | P1 | M | todo |
 | F361 | Multi-device sync | P1 | L | todo |
 | F362 | Realtime deck sharing via Supabase | P2 | M | todo |
