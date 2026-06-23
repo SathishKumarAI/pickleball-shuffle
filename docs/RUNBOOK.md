@@ -24,6 +24,15 @@ Small app, no backend - operations are mostly "deploy" and "roll back". (Backlog
 - Smoke: load `/`, draw a card, score a point, refresh (resume works), go offline (banner shows, app still works).
 - Routes that must 200: `/`, `/about`, `/privacy`, `/terms`, `/robots.txt`, `/sitemap.xml`.
 
+## Secrets & env vars (F334, F286)
+
+- The app ships **no secrets**: it is local-first with no backend, no API keys, no
+  auth. The only `NEXT_PUBLIC_*` value is a public GitHub URL. So nothing sensitive
+  can leak into the client bundle, and gitleaks (CI) guards against accidental
+  commits.
+- If a future feature needs config, manage it with `vercel env add/pull` and keep
+  real secrets out of `NEXT_PUBLIC_*` (those are inlined into the client).
+
 ## Branch protection (one-time, GitHub repo settings - needs admin)
 
 - Settings → Branches → protect `main`: require the **CI** checks (build + secret-scan) to pass before merge (F275).

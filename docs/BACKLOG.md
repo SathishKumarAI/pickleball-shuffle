@@ -371,7 +371,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F283 | Lighthouse-CI budget gate | P1 | M | todo |
 | F284 | Bundle-analyzer CI artifact | P1 | S | todo |
 | F285 | Staging environment | P1 | S | todo |
-| F286 | Env-var management via `vercel env` | P0 | S | todo |
+| F286 | Env-var management via `vercel env` | P0 | S | done |
 | F287 | Secret scanning in CI | P0 | S | done |
 | F288 | SBOM generation | P2 | S | todo |
 | F289 | Release-tagging automation | P2 | S | todo |
@@ -431,7 +431,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F331 | Input validation (zod) on all endpoints | P0 | M | todo |
 | F332 | CSRF protection | P0 | S | todo |
 | F333 | Supabase RLS policies | P0 | M | todo |
-| F334 | Secrets-out-of-client-bundle audit | P0 | S | todo |
+| F334 | Secrets-out-of-client-bundle audit | P0 | S | done |
 | F335 | Dependency vuln scanning | P0 | S | done |
 | F336 | OWASP top-10 review | P1 | M | todo |
 | F337 | Bot protection (Vercel BotID) on auth | P1 | S | todo |
