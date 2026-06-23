@@ -1,10 +1,16 @@
 "use client";
 
 import { GameSession } from "@/lib/game";
-import { DeckMode, DECK_MODES } from "@/lib/cards";
+import { DeckMode, DECK_MODES, SKILL_LEVELS, SkillLevel, isSkillLevel, selectionLabel } from "@/lib/cards";
 import { MODE_ICONS } from "./icons";
-import { ArrowLeft, Settings, Sun, Moon, Undo2, Lock, LockOpen, Pencil, ChevronDown, RotateCcw, Pause, Play } from "lucide-react";
+import { ArrowLeft, Settings, Sun, Moon, Undo2, Lock, LockOpen, Pencil, ChevronDown, RotateCcw, Pause, Play, Sprout, TrendingUp, Flame, Shuffle } from "lucide-react";
 import { useState } from "react";
+
+const SKILL_ICONS: Record<SkillLevel, typeof Sprout> = {
+  beginner: Sprout,
+  intermediate: TrendingUp,
+  advanced: Flame,
+};
 
 export default function TopBar({
   game,
@@ -25,13 +31,13 @@ export default function TopBar({
   menuSlot,
 }: {
   game: GameSession;
-  mode: DeckMode;
+  mode: string;
   modeLabelOverride?: string | null;
   elapsed: string;
   darkMode: boolean;
   onBack: () => void;
   onToggleDark: () => void;
-  onModeChange: (m: DeckMode) => void;
+  onModeChange: (m: string) => void;
   onEditNames: () => void;
   onToggleLock: () => void;
   onUndo: () => void;
@@ -42,7 +48,7 @@ export default function TopBar({
   menuSlot?: React.ReactNode;
 }) {
   const [showModes, setShowModes] = useState(false);
-  const ModeIcon = MODE_ICONS[mode];
+  const ModeIcon = isSkillLevel(mode) ? SKILL_ICONS[mode] : (MODE_ICONS[mode as DeckMode] ?? Shuffle);
 
   return (
     <div className="w-full sticky top-0 z-30 glass" style={{ borderBottom: "1px solid var(--border)", paddingTop: "env(safe-area-inset-top)" }}>
@@ -55,7 +61,7 @@ export default function TopBar({
         <button onClick={() => setShowModes(!showModes)} aria-haspopup="true" aria-expanded={showModes} aria-label="Change deck mode" className="pressable min-w-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full" style={{ background: "var(--bg-elevated)" }}>
           <ModeIcon size={15} style={{ color: "var(--accent)" }} />
           <span className="text-sm font-semibold truncate" style={{ color: "var(--text)" }}>
-            {modeLabelOverride || DECK_MODES[mode].label}
+            {modeLabelOverride || selectionLabel(mode)}
           </span>
           <ChevronDown size={13} style={{ color: "var(--text-muted)", transform: showModes ? "rotate(180deg)" : "none", transition: "transform .2s" }} />
         </button>
@@ -97,6 +103,26 @@ export default function TopBar({
       {/* Mode selector dropdown */}
       {showModes && (
         <div className="px-4 pb-3 max-w-lg mx-auto anim-fade-up">
+          <div className="flex flex-wrap gap-1.5 justify-center mb-1.5">
+            {(Object.keys(SKILL_LEVELS) as SkillLevel[]).map((m) => {
+              const Icon = SKILL_ICONS[m];
+              const active = mode === m && !modeLabelOverride;
+              return (
+                <button
+                  key={m}
+                  onClick={() => { onModeChange(m); setShowModes(false); }}
+                  className="pressable flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium"
+                  style={{
+                    background: active ? "var(--accent)" : "var(--bg-elevated)",
+                    color: active ? "#fff" : "var(--text-secondary)",
+                    boxShadow: active ? "0 4px 14px -4px var(--accent-glow)" : "none",
+                  }}
+                >
+                  <Icon size={13} /> {SKILL_LEVELS[m].label}
+                </button>
+              );
+            })}
+          </div>
           <div className="flex flex-wrap gap-1.5 justify-center">
             {(Object.keys(DECK_MODES) as DeckMode[]).map((m) => {
               const Icon = MODE_ICONS[m];

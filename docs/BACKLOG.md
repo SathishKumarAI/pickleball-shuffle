@@ -1,4 +1,4 @@
-# Feature Backlog — 500
+# Feature Backlog — 557
 
 Production-readiness + user-friendliness roadmap for the Pickleball Card Games app.
 
@@ -725,3 +725,19 @@ Make the 1,729 cards genuinely fun to read, with real description and depth.
 | F548 | A/B variants of card phrasing | P2 | M | todo |
 | F549 | Search/browse all cards with full detail | P1 | M | todo |
 | F550 | Export deck as printable cards (PDF) | P2 | M | todo |
+
+---
+
+## F. Skill Levels & Beginner Onboarding (F551–F557)
+
+Added so beginner/intermediate players aren't overwhelmed.
+
+| ID | Feature | Pri | Eff | Status |
+|---|---|---|---|---|
+| F551 | Beginner / Intermediate / Advanced on the main menu | P0 | M | done |
+| F552 | Level filtering by intensity + category | P0 | S | done |
+| F553 | Beginner plain-language + bigger card text | P0 | S | done |
+| F554 | First-run beginner "how to play" intro | P1 | S | done |
+| F555 | Skill levels in the in-game deck switcher | P1 | S | done |
+| F556 | Skill-level unit tests | P1 | S | done |
+| F557 | Mobile readability pass on the card face | P0 | S | done |

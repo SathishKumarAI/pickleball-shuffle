@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { Card, DeckMode, DECK_MODES, getFilteredCards, shuffleArray } from "@/lib/cards";
+import { Card, DeckMode, DECK_MODES, getFilteredCards, getDeck, shuffleArray, SKILL_LEVELS, SkillLevel, selectionLabel } from "@/lib/cards";
 import { GameSession, GameConfig, createGame, addScore, sideOut, undoLast, resetScore, startNewGame, newMatch, matchWinner, seriesTally, isPaused, pauseGame, resumePlay, elapsedMs, saveGame, loadGame, clearSavedGame, formatTime } from "@/lib/game";
 import { playScoreSound, playUndoSound, playCardFlipSound, playWinSound, playResetSound, triggerHaptic } from "@/lib/sounds";
 import { addMatch, deckToCards, CustomDeck, listFavoriteIds, toggleFavorite } from "@/lib/client-api";
-import { Sun, Moon, Play, Pause, X, Bug, HelpCircle, Sparkles } from "lucide-react";
+import { Sun, Moon, Play, Pause, X, Bug, HelpCircle, Sparkles, Sprout, TrendingUp, Flame } from "lucide-react";
 import TopBar from "@/components/TopBar";
 import CardDisplay from "@/components/CardDisplay";
 import ScoreKeeper from "@/components/ScoreKeeper";
@@ -31,6 +31,15 @@ const LANDING_MODES: { key: DeckMode; label: string; desc: string }[] = [
   { key: "chaos", label: "Chaos", desc: "All 1,729 cards" },
 ];
 
+// Skill levels shown first on the menu, for players picking by ability.
+const SKILL_ORDER: { key: SkillLevel; Icon: typeof Sprout }[] = [
+  { key: "beginner", Icon: Sprout },
+  { key: "intermediate", Icon: TrendingUp },
+  { key: "advanced", Icon: Flame },
+];
+
+const BEGINNER_INTRO_KEY = "pb-beginner-intro-seen";
+
 export default function Home() {
   const [allCards, setAllCards] = useState<Card[]>([]);
   const [deck, setDeck] = useState<Card[]>([]);
@@ -39,7 +48,8 @@ export default function Home() {
   const [game, setGame] = useState<GameSession | null>(null);
   const [savedGame, setSavedGame] = useState<GameSession | null>(null);
   const [elapsed, setElapsed] = useState("0:00");
-  const [mode, setMode] = useState<DeckMode>("chaos");
+  const [mode, setMode] = useState<string>("chaos");
+  const [showBeginnerIntro, setShowBeginnerIntro] = useState(false);
   const [customCards, setCustomCards] = useState<Card[] | null>(null);
   const [customName, setCustomName] = useState<string | null>(null);
   const [darkMode, setDarkMode] = useState(true);
@@ -76,12 +86,12 @@ export default function Home() {
 
   const resumeGame = useCallback(() => {
     if (!savedGame) return;
-    const m = savedGame.mode as DeckMode;
+    const m = savedGame.mode;
     const custom = savedGame.customCards ?? null;
     setMode(m);
     setCustomCards(custom);
     setCustomName(savedGame.customName ?? null);
-    const pool = custom ?? getFilteredCards(allCards, m);
+    const pool = custom ?? getDeck(allCards, m);
     setDeck(shuffleArray(pool));
     // Restore the last drawn card + recent history from the saved game's own pool.
     const byId = new Map(pool.map((c) => [c.id, c] as const));
@@ -130,19 +140,25 @@ export default function Home() {
   }, [darkMode]);
 
   const basePool = useCallback(
-    () => customCards ?? getFilteredCards(allCards, mode),
+    () => customCards ?? getDeck(allCards, mode),
     [customCards, allCards, mode]
   );
 
-  const startGameHandler = useCallback((m: DeckMode) => {
+  const startGameHandler = useCallback((m: string) => {
     setSavedGame(null);
     setCustomCards(null);
     setCustomName(null);
-    setDeck(shuffleArray(getFilteredCards(allCards, m)));
+    setDeck(shuffleArray(getDeck(allCards, m)));
     setCurrentCard(null);
     setCardHistory([]);
     setMode(m);
     setGame(createGame(m));
+    // First time into Beginner, show a short how-to-play intro.
+    if (m === "beginner") {
+      try {
+        if (!localStorage.getItem(BEGINNER_INTRO_KEY)) setShowBeginnerIntro(true);
+      } catch {}
+    }
   }, [allCards]);
 
   const startCustomDeck = useCallback((d: CustomDeck) => {
@@ -192,11 +208,11 @@ export default function Home() {
     setConfirmTeam(null);
   };
 
-  const handleModeChange = (m: DeckMode) => {
+  const handleModeChange = (m: string) => {
     setCustomCards(null);
     setCustomName(null);
     setMode(m);
-    setDeck(shuffleArray(getFilteredCards(allCards, m)));
+    setDeck(shuffleArray(getDeck(allCards, m)));
     setCurrentCard(null);
     setCardHistory([]);
   };
@@ -274,7 +290,7 @@ export default function Home() {
                 <span className="min-w-0">
                   <span className="block text-sm font-semibold" style={{ color: "var(--text)" }}>Resume last game</span>
                   <span className="block text-xs truncate" style={{ color: "var(--text-muted)" }}>
-                    {savedGame.playerNames.team1} {savedGame.score.team1}-{savedGame.score.team2} {savedGame.playerNames.team2} · {savedGame.customName ?? DECK_MODES[savedGame.mode as DeckMode]?.label ?? savedGame.mode}
+                    {savedGame.playerNames.team1} {savedGame.score.team1}-{savedGame.score.team2} {savedGame.playerNames.team2} · {savedGame.customName ?? selectionLabel(savedGame.mode)}
                   </span>
                 </span>
               </button>
@@ -283,6 +299,44 @@ export default function Home() {
               </button>
             </div>
           )}
+
+          {/* Skill levels first - the gentle on-ramp for newer players */}
+          <div className="w-full max-w-sm flex flex-col gap-2">
+            <div className="flex items-center gap-2 px-1">
+              <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Pick your level</span>
+              <span className="flex-1 h-px" style={{ background: "var(--border)" }} />
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+              {SKILL_ORDER.map(({ key, Icon }) => {
+                const lvl = SKILL_LEVELS[key];
+                const count = allCards.length ? getDeck(allCards, key).length : 0;
+                return (
+                  <button
+                    key={key}
+                    onClick={() => { triggerHaptic("light"); startGameHandler(key); }}
+                    className="group pressable glass flex flex-col items-center gap-1.5 p-3 rounded-2xl text-center"
+                    style={{ border: "1px solid var(--border)" }}
+                    aria-label={`${lvl.label} - ${lvl.description}`}
+                  >
+                    <span className="flex items-center justify-center w-10 h-10 rounded-xl transition-transform duration-300 group-hover:scale-110"
+                          style={{ background: "var(--bg-elevated)", color: "var(--accent)" }}>
+                      <Icon size={20} />
+                    </span>
+                    <span className="text-sm font-semibold leading-tight" style={{ color: "var(--text)" }}>{lvl.label}</span>
+                    <span className="text-[11px] leading-tight" style={{ color: "var(--text-muted)" }}>{lvl.description}</span>
+                    {allCards.length > 0 && (
+                      <span className="text-[10px]" style={{ color: "var(--text-muted)" }}>{count} cards</span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="w-full max-w-sm flex items-center gap-2 px-1 -mb-3">
+            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Or a themed deck</span>
+            <span className="flex-1 h-px" style={{ background: "var(--border)" }} />
+          </div>
 
           <div className="stagger grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-sm">
             {LANDING_MODES.map(({ key, label, desc }) => {
@@ -401,7 +455,8 @@ export default function Home() {
         <CardDisplay
           card={currentCard}
           onDraw={drawCard}
-          commentary={game.config.commentaryMode}
+          commentary={game.config.commentaryMode && game.mode !== "beginner"}
+          large={game.mode === "beginner"}
           onBack={() => { setSavedGame(game); setGame(null); }}
           deckRemaining={deck.length}
           isFavorite={currentCard ? favoriteIds.includes(currentCard.id) : false}
@@ -453,6 +508,38 @@ export default function Home() {
           onNewMatch={() => { setGame(newMatch(game)); setCurrentCard(null); setCardHistory([]); setDeck(shuffleArray(basePool())); }}
           onEndMatch={() => { clearSavedGame(); setSavedGame(null); setGame(null); }}
         />
+      )}
+
+      {showBeginnerIntro && (
+        <div role="dialog" aria-modal="true" aria-label="How to play" className="fixed inset-0 z-[70] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md">
+          <div className="glass rounded-3xl p-7 max-w-sm w-full shadow-2xl anim-pop" style={{ border: "1px solid var(--accent)" }}>
+            <div className="flex justify-center mb-3" style={{ color: "var(--accent)" }}>
+              <Sprout size={48} strokeWidth={1.5} />
+            </div>
+            <h2 className="font-display text-2xl font-black text-center mb-1" style={{ color: "var(--text)" }}>Welcome - here&apos;s how to play</h2>
+            <p className="text-sm text-center mb-5" style={{ color: "var(--text-muted)" }}>Beginner mode keeps it simple.</p>
+            <ol className="flex flex-col gap-3 mb-6">
+              {[
+                "Tap the card to draw a twist - a simple rule for the next point.",
+                "Play that point under the rule. Read the tip if you're unsure.",
+                "Tap a team's score to give them the point. First to 11 (win by 2) wins.",
+              ].map((step, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <span className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold shrink-0 text-white" style={{ background: "var(--accent)" }}>{i + 1}</span>
+                  <span className="text-sm" style={{ color: "var(--text)" }}>{step}</span>
+                </li>
+              ))}
+            </ol>
+            <button
+              autoFocus
+              onClick={() => { try { localStorage.setItem(BEGINNER_INTRO_KEY, "1"); } catch {} setShowBeginnerIntro(false); }}
+              className="pressable w-full px-6 py-3 text-white font-bold rounded-full shadow-lg"
+              style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-dim))" }}
+            >
+              Got it - let&apos;s play
+            </button>
+          </div>
+        </div>
       )}
 
       <HistoryPanel open={showHistory} onClose={() => setShowHistory(false)} />

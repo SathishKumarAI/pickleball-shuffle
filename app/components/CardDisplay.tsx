@@ -40,6 +40,7 @@ export default function CardDisplay({
   onSkip,
   onBack,
   commentary = false,
+  large = false,
 }: {
   card: Card | null;
   onDraw: () => void;
@@ -49,6 +50,7 @@ export default function CardDisplay({
   onSkip?: () => void;
   onBack?: () => void;
   commentary?: boolean;
+  large?: boolean;
 }) {
   // If a card is already present on mount (e.g. resuming a game), show its face.
   const [flipped, setFlipped] = useState(!!card);
@@ -135,12 +137,12 @@ export default function CardDisplay({
             </div>
 
             <div className="flex-1 min-h-0 overflow-y-auto no-scrollbar w-full flex flex-col items-center justify-center gap-2 text-center px-1 py-2">
-              <h2 className="font-display text-xl sm:text-2xl font-black text-white leading-tight drop-shadow-sm break-words">{card?.name}</h2>
-              <p className={`${commentary ? "text-xs sm:text-sm" : "text-sm sm:text-base"} leading-snug text-white/90`}>
+              <h2 className={`font-display ${large ? "text-2xl sm:text-3xl" : "text-xl sm:text-2xl"} font-black text-white leading-tight drop-shadow-sm break-words`}>{card?.name}</h2>
+              <p className={`${large ? "text-base sm:text-lg font-medium" : commentary ? "text-xs sm:text-sm" : "text-sm sm:text-base"} leading-snug text-white drop-shadow-sm`}>
                 {commentary && card?.commentary ? card.commentary : card?.effect}
               </p>
               {card?.detail && (
-                <p className="text-[11px] sm:text-xs leading-snug text-white/70 max-w-[18rem]">{card.detail}</p>
+                <p className={`${large ? "text-sm" : "text-[11px] sm:text-xs"} leading-snug text-white/80 max-w-[18rem]`}>{card.detail}</p>
               )}
               {typeof card?.intensity === "number" && (
                 <IntensityDots value={card.intensity} />

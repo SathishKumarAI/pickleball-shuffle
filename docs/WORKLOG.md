@@ -1,5 +1,37 @@
 # Worklog
 
+## 2026-06-23 — 557-feature backlog + autonomous prod/UX/onboarding build loop
+
+**Summary:** Built a 557-item prioritized feature backlog across all categories, two
+reusable prompts, then ran an autonomous build loop shipping verified P0 items on
+branch `feat/wave1-prod-hardening`: security headers + SEO, vitest harness (44
+tests), offline/SW-update banner, privacy/terms/about pages, focus rings, richer
+card content (commentary + detail + intensity meter), and Beginner/Intermediate/
+Advanced skill levels with a beginner how-to-play intro and bigger, mobile-readable
+card text. All verified live in the browser (Chrome DevTools MCP), incl. mobile width.
+
+**Changes:**
+- `docs/BACKLOG.md` — 550 features (A gameplay · B UX/a11y · C infra/quality · D growth · E card content), P0/P1/P2 + S/M/L + status + build-order waves; 23 marked done.
+- `prompts/feature-backlog-and-loop.md`, `prompts/feature-prompt-template.md` — reusable prompts for backlog generation + per-feature work.
+- `app/next.config.ts` — security headers + baseline CSP on every route (F327/F328).
+- `app/app/layout.tsx` — metadataBase, OpenGraph/Twitter, canonical (F482/F492/F493); mounts NetworkStatus.
+- `app/app/robots.ts`, `app/app/sitemap.ts` — SEO routes (F483).
+- `app/vitest.config.ts` + `lib/game.test.ts`, `lib/cards.test.ts`, `lib/cards-data.test.ts` — vitest harness, 38 tests; wired `npm test` into CI (F251/F253/F268/F541/F542).
+- `app/components/NetworkStatus.tsx` — offline banner + SW update prompt (F228/F345).
+- `app/app/(info)/` privacy/terms/about pages + AppMenu link (F243-F246).
+- `app/app/globals.css` — keyboard focus rings (F142) + info-page prose styles.
+- `scripts/generate_cards.py` + regenerated `cards.json` ×3 — real commentator voice on originals (no more effect dupes), new `detail` description + intensity meter per card (F501-F504); `lib/cards.ts` Card gains `detail`; `CardDisplay.tsx` shows detail + intensity dots (F521/F522).
+
+**Decisions:**
+- Hybrid local-first chosen, but **no account/login built yet** (per user) and the dead auth/supabase stubs left **parked** (app/CLAUDE.md flags them dead).
+- Refocused the loop on hardening the **existing** card-game + scorekeeper rather than building the new roster/rotation product implied by some P0 backlog items.
+- Every iteration verified: lint + tsc + tests + build, and key UI confirmed live in the browser via Chrome DevTools MCP (dev server on :3001).
+
+**Follow-ups:**
+- [ ] Branch `feat/wave1-prod-hardening` not pushed / no PR yet (awaiting user).
+- [ ] Remaining P0s needing decisions: error tracking DSN (F291), GDPR specifics, doubles server-1/2 rotation (F063, behavior-changing).
+- [ ] Continue loop: onboarding (F126/F131), more a11y (F143/F144/F150/F232), perf (F310).
+
 ## 2026-06-15 16:55 - Docs overhaul: full README, CONTRIBUTING, in-app discovery
 
 **Summary:** Documented every feature for end users and contributors, added a contribution guide + a tasteful star/issues ask, and surfaced the new features in-app.

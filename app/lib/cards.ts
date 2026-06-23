@@ -111,3 +111,61 @@ export function getFilteredCards(cards: Card[], mode: DeckMode): Card[] {
   const cats = DECK_MODES[mode].categories;
   return cards.filter((c) => cats.includes(c.category));
 }
+
+// ── Skill levels (beginner / intermediate / advanced) ────────────────
+// A second way onto the court, aimed at newer players. Filters by BOTH the
+// category (which twists make sense yet) AND intensity (how disruptive), so
+// beginners get clear, low-chaos cards and advanced players get everything.
+export type SkillLevel = "beginner" | "intermediate" | "advanced";
+
+export const SKILL_LEVELS: Record<
+  SkillLevel,
+  { label: string; description: string; categories: string[]; maxIntensity: number; plain: boolean }
+> = {
+  beginner: {
+    label: "Beginner",
+    description: "Easy twists, clear rules",
+    categories: ["Shot Restriction", "Strategy / Skill", "Body & Movement", "Bonus / Reward"],
+    maxIntensity: 2,
+    plain: true, // concise text, bigger type, no commentator voice
+  },
+  intermediate: {
+    label: "Intermediate",
+    description: "More variety, a little spice",
+    categories: [
+      "Shot Restriction", "Strategy / Skill", "Body & Movement", "Bonus / Reward",
+      "Social & Party", "Court / Environment", "Wild Card / Swap",
+    ],
+    maxIntensity: 3,
+    plain: false,
+  },
+  advanced: {
+    label: "Advanced",
+    description: "Everything, including chaos",
+    categories: [...CATEGORIES],
+    maxIntensity: 5,
+    plain: false,
+  },
+};
+
+export function isSkillLevel(key: string): key is SkillLevel {
+  return key in SKILL_LEVELS;
+}
+
+export function getCardsForLevel(cards: Card[], level: SkillLevel): Card[] {
+  const { categories, maxIntensity } = SKILL_LEVELS[level];
+  const cats = new Set(categories);
+  return cards.filter((c) => cats.has(c.category) && (c.intensity ?? 3) <= maxIntensity);
+}
+
+// Resolve any landing selection (themed deck mode OR skill level) to a card pool.
+export function getDeck(cards: Card[], key: string): Card[] {
+  if (isSkillLevel(key)) return getCardsForLevel(cards, key);
+  return getFilteredCards(cards, key as DeckMode);
+}
+
+// Human label for a selection key (used on resume, headers).
+export function selectionLabel(key: string): string {
+  if (isSkillLevel(key)) return SKILL_LEVELS[key].label;
+  return DECK_MODES[key as DeckMode]?.label ?? key;
+}
