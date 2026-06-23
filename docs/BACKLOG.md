@@ -195,7 +195,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | ID | Feature | Pri | Eff | Status |
 |---|---|---|---|---|
 | F141 | Full keyboard navigation | P0 | M | todo |
-| F142 | Visible focus rings everywhere | P0 | S | todo |
+| F142 | Visible focus rings everywhere | P0 | S | done |
 | F143 | ARIA labels on all controls | P0 | M | todo |
 | F144 | Screen-reader live region for score/cards | P0 | M | todo |
 | F145 | Honor reduced-motion | P0 | S | todo |
