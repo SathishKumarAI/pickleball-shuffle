@@ -316,10 +316,10 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F240 | In-app feedback form | P1 | S | todo |
 | F241 | Report-a-card-issue button | P1 | S | todo |
 | F242 | Keyboard-shortcut reference | P2 | S | todo |
-| F243 | Accessibility statement page | P1 | S | todo |
-| F244 | Privacy policy page | P0 | S | todo |
-| F245 | Terms of service page | P0 | S | todo |
-| F246 | About / credits page | P1 | S | todo |
+| F243 | Accessibility statement page | P1 | S | done |
+| F244 | Privacy policy page | P0 | S | done |
+| F245 | Terms of service page | P0 | S | done |
+| F246 | About / credits page | P1 | S | done |
 | F247 | Public roadmap page | P2 | S | todo |
 | F248 | Release-notes feed | P2 | S | todo |
 | F249 | Login-free welcome screen | P1 | S | todo |

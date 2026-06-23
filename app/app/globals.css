@@ -242,3 +242,23 @@ svg.lucide { flex-shrink: 0; }
     animation: none !important;
   }
 }
+
+/* Readable prose for the static info pages (privacy / terms / about). */
+.info-prose { color: var(--text); line-height: 1.65; }
+.info-prose h1 {
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.9rem; font-weight: 700; margin: 0 0 0.5rem;
+}
+.info-prose h2 {
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.2rem; font-weight: 600; margin: 1.75rem 0 0.5rem;
+}
+.info-prose p, .info-prose ul { margin: 0 0 0.85rem; }
+.info-prose .lede { color: var(--text-secondary); font-size: 1.05rem; }
+.info-prose ul { padding-left: 1.25rem; list-style: disc; }
+.info-prose li { margin: 0.3rem 0; }
+.info-prose a { color: var(--accent); text-decoration: underline; }
+.info-prose code {
+  font-size: 0.9em; padding: 0.1em 0.35em; border-radius: 0.35rem;
+  background: var(--bg-elevated); border: 1px solid var(--border);
+}

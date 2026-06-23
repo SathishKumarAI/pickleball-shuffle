@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Menu, History, Layers, Star, Download, Upload, MessageSquare, BookOpen, Check, AlertTriangle } from "lucide-react";
+import Link from "next/link";
+import { Menu, History, Layers, Star, Download, Upload, MessageSquare, BookOpen, Check, AlertTriangle, Info } from "lucide-react";
 import { exportData, importData } from "@/lib/client-api";
 
 export default function AppMenu({
@@ -94,6 +95,16 @@ export default function AppMenu({
           </div>
           <div style={{ borderTop: "1px solid var(--border)" }}>
             <Item icon={<MessageSquare size={16} />} label="Send feedback" onClick={() => { setOpen(false); onOpenFeedback(); }} />
+            <Link
+              href="/about"
+              role="menuitem"
+              onClick={() => setOpen(false)}
+              className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors hover:bg-[var(--bg-elevated)]"
+              style={{ color: "var(--text)" }}
+            >
+              <span style={{ color: "var(--accent)" }}><Info size={16} /></span>
+              About &amp; privacy
+            </Link>
           </div>
         </div>
       )}
