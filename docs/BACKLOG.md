@@ -101,7 +101,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F069 | Shot clock per serve option | P2 | S | todo |
 | F070 | Time-cap games (most points at time) | P2 | M | todo |
 | F071 | Score announce TTS | P2 | S | todo |
-| F072 | Big-score TV / cast display mode | P1 | M | todo |
+| F072 | Big-score TV / cast display mode | P1 | M | done |
 | F073 | Two-team custom names + colors | P1 | S | todo |
 | F074 | Score gestures (swipe up/down) | P2 | S | todo |
 | F075 | Foot-fault / fault counters | P2 | S | todo |

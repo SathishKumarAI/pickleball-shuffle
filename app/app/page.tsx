@@ -20,6 +20,7 @@ import FavoritesPanel from "@/components/FavoritesPanel";
 import FeedbackPanel from "@/components/FeedbackPanel";
 import RulesPanel from "@/components/RulesPanel";
 import CardBrowserPanel from "@/components/CardBrowserPanel";
+import TVScore from "@/components/TVScore";
 import { MODE_ICONS } from "@/components/icons";
 import { useFocusTrap } from "@/lib/useFocusTrap";
 import { useToast } from "@/components/Toast";
@@ -79,6 +80,7 @@ export default function Home() {
   const [showFeedback, setShowFeedback] = useState(false);
   const [showRules, setShowRules] = useState(false);
   const [showBrowser, setShowBrowser] = useState(false);
+  const [showTv, setShowTv] = useState(false);
   const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
   const [confirmTeam, setConfirmTeam] = useState<1 | 2 | null>(null);
   const [confirmReset, setConfirmReset] = useState(false);
@@ -528,6 +530,7 @@ export default function Home() {
         modeLabelOverride={customName}
         elapsed={elapsed}
         theme={theme}
+        onToggleTv={() => setShowTv(true)}
         onBack={() => { setSavedGame(game); setGame(null); }}
         onCycleTheme={cycleTheme}
         onModeChange={handleModeChange}
@@ -608,6 +611,10 @@ export default function Home() {
         onReset={() => { doReset(); setShowSettings(false); }}
         onReplayIntro={() => { setShowSettings(false); setShowBeginnerIntro(true); }}
       />
+
+      {showTv && (
+        <TVScore game={game} onScore={handleScore} onExit={() => setShowTv(false)} />
+      )}
 
       {isPaused(game) && !game.winner && (
         <div role="dialog" aria-modal="true" aria-label="Game paused" className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/70 backdrop-blur-md">

@@ -3,7 +3,7 @@
 import { GameSession } from "@/lib/game";
 import { DeckMode, DECK_MODES, SKILL_LEVELS, SkillLevel, isSkillLevel, selectionLabel } from "@/lib/cards";
 import { MODE_ICONS } from "./icons";
-import { ArrowLeft, Settings, Sun, Moon, Monitor, Undo2, Lock, LockOpen, Pencil, ChevronDown, RotateCcw, Pause, Play, Sprout, TrendingUp, Flame, Shuffle } from "lucide-react";
+import { ArrowLeft, Settings, Sun, Moon, Monitor, Undo2, Lock, LockOpen, Pencil, ChevronDown, RotateCcw, Pause, Play, Sprout, TrendingUp, Flame, Shuffle, Tv } from "lucide-react";
 import { useState } from "react";
 
 const SKILL_ICONS: Record<SkillLevel, typeof Sprout> = {
@@ -20,6 +20,7 @@ export default function TopBar({
   theme,
   onBack,
   onCycleTheme,
+  onToggleTv,
   onModeChange,
   onEditNames,
   onToggleLock,
@@ -37,6 +38,7 @@ export default function TopBar({
   theme: "dark" | "light" | "auto";
   onBack: () => void;
   onCycleTheme: () => void;
+  onToggleTv: () => void;
   onModeChange: (m: string) => void;
   onEditNames: () => void;
   onToggleLock: () => void;
@@ -67,6 +69,9 @@ export default function TopBar({
         </button>
 
         <div className="flex items-center gap-2 shrink-0">
+          <button onClick={onToggleTv} className="pressable p-2 rounded-full" style={{ background: "var(--bg-elevated)", color: "var(--text-secondary)" }} aria-label="Big-score display">
+            <Tv size={18} />
+          </button>
           <button onClick={onOpenSettings} className="pressable p-2 rounded-full" style={{ background: "var(--bg-elevated)", color: "var(--text-secondary)" }} aria-label="Settings">
             <Settings size={18} />
           </button>
