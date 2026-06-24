@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Card, DeckMode, DECK_MODES, getFilteredCards, getDeck, shuffleArray, SKILL_LEVELS, SkillLevel, selectionLabel } from "@/lib/cards";
-import { GameSession, GameConfig, createGame, addScore, adjustScore, sideOut, undoLast, resetScore, startNewGame, newMatch, matchWinner, seriesTally, isPaused, pauseGame, resumePlay, elapsedMs, saveGame, loadGame, clearSavedGame, formatTime } from "@/lib/game";
+import { GameSession, GameConfig, createGame, addScore, adjustScore, sideOut, undoLast, resetScore, startNewGame, newMatch, matchWinner, seriesTally, isPaused, pauseGame, resumePlay, elapsedMs, saveGame, listSavedGames, clearSavedGame, formatTime } from "@/lib/game";
 import { playScoreSound, playUndoSound, playCardFlipSound, playWinSound, playResetSound, triggerHaptic } from "@/lib/sounds";
 import { addMatch, deckToCards, CustomDeck, listFavoriteIds, toggleFavorite, bumpStat } from "@/lib/client-api";
 import { Sun, Moon, Monitor, Play, Pause, X, Bug, HelpCircle, Sparkles, Sprout, TrendingUp, Flame } from "lucide-react";
@@ -63,7 +63,7 @@ export default function Home() {
   const [currentCard, setCurrentCard] = useState<Card | null>(null);
   const [cardHistory, setCardHistory] = useState<Card[]>([]);
   const [game, setGame] = useState<GameSession | null>(null);
-  const [savedGame, setSavedGame] = useState<GameSession | null>(null);
+  const [savedGames, setSavedGames] = useState<GameSession[]>([]);
   const [elapsed, setElapsed] = useState("0:00");
   const [mode, setMode] = useState<string>("chaos");
   const [showBeginnerIntro, setShowBeginnerIntro] = useState(false);
@@ -115,35 +115,33 @@ export default function Home() {
     }
   }, []);
 
-  // Offer to resume an unfinished game (don't auto-enter - let the user choose).
+  // Offer to resume unfinished games (don't auto-enter - let the user choose).
+  // Refreshes whenever we're back on the landing screen (F085).
   useEffect(() => {
-    const saved = loadGame();
-    if (saved && !saved.winner) setSavedGame(saved);
-  }, [allCards]);
+    if (!game) setSavedGames(listSavedGames());
+  }, [game, allCards]);
 
-  const resumeGame = useCallback(() => {
-    if (!savedGame) return;
-    const m = savedGame.mode;
-    const custom = savedGame.customCards ?? null;
+  const resumeGame = useCallback((saved: GameSession) => {
+    const m = saved.mode;
+    const custom = saved.customCards ?? null;
     setMode(m);
     setCustomCards(custom);
-    setCustomName(savedGame.customName ?? null);
+    setCustomName(saved.customName ?? null);
     const pool = custom ?? getDeck(allCards, m);
     setDeck(shuffleArray(pool));
     // Restore the last drawn card + recent history from the saved game's own pool.
     const byId = new Map(pool.map((c) => [c.id, c] as const));
-    const drawn = savedGame.drawnCardIds;
+    const drawn = saved.drawnCardIds;
     setCurrentCard(drawn.length ? byId.get(drawn[drawn.length - 1]) ?? null : null);
     setCardHistory(
       drawn.slice(-3).reverse().map((id) => byId.get(id)).filter(Boolean) as Card[]
     );
-    setGame(savedGame);
-    setSavedGame(null);
-  }, [savedGame, allCards]);
+    setGame(saved);
+  }, [allCards]);
 
-  const discardSaved = useCallback(() => {
-    clearSavedGame();
-    setSavedGame(null);
+  const discardSaved = useCallback((id: string) => {
+    clearSavedGame(id);
+    setSavedGames(listSavedGames());
   }, []);
 
   useEffect(() => {
@@ -227,7 +225,6 @@ export default function Home() {
   );
 
   const startGameHandler = useCallback((m: string) => {
-    setSavedGame(null);
     setCustomCards(null);
     setCustomName(null);
     setDeck(shuffleArray(getDeck(allCards, m)));
@@ -255,7 +252,6 @@ export default function Home() {
     }
     const cards = pool.slice(0, 30);
     const label = `Daily - ${now.toLocaleDateString(undefined, { month: "short", day: "numeric" })}`;
-    setSavedGame(null);
     setCustomCards(cards);
     setCustomName(label);
     setMode("chaos");
@@ -271,7 +267,6 @@ export default function Home() {
   }, [allCards]);
 
   const startCustomDeck = useCallback((d: CustomDeck) => {
-    setSavedGame(null);
     const cards = deckToCards(d);
     setCustomCards(cards);
     setCustomName(d.name);
@@ -393,23 +388,34 @@ export default function Home() {
             <p className="mt-2 text-base" style={{ color: "var(--text-secondary)" }}>Draw twist cards. Shake up the game.</p>
           </div>
 
-          {/* Resume last game */}
-          {savedGame && (
-            <div className="anim-pop w-full max-w-sm flex items-center gap-3 p-3 rounded-2xl glass" style={{ border: "1px solid var(--accent)" }}>
-              <button onClick={resumeGame} className="pressable flex items-center gap-3 flex-1 min-w-0 text-left rounded-xl">
-                <span className="flex items-center justify-center w-11 h-11 rounded-xl shrink-0 text-white" style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-dim))" }}>
-                  <Play size={20} fill="currentColor" />
+          {/* Resume in-progress games - multiple supported (F085) */}
+          {savedGames.length > 0 && (
+            <div className="w-full max-w-sm flex flex-col gap-2">
+              {savedGames.length > 1 && (
+                <span className="text-xs font-semibold uppercase tracking-wider px-1" style={{ color: "var(--text-muted)" }}>
+                  Resume a game ({savedGames.length})
                 </span>
-                <span className="min-w-0">
-                  <span className="block text-sm font-semibold" style={{ color: "var(--text)" }}>Resume last game</span>
-                  <span className="block text-xs truncate" style={{ color: "var(--text-muted)" }}>
-                    {savedGame.playerNames.team1} {savedGame.score.team1}-{savedGame.score.team2} {savedGame.playerNames.team2} · {savedGame.customName ?? selectionLabel(savedGame.mode)}
-                  </span>
-                </span>
-              </button>
-              <button onClick={discardSaved} className="pressable p-1.5 rounded-full shrink-0" style={{ background: "var(--bg-elevated)", color: "var(--text-muted)" }} aria-label="Discard saved game">
-                <X size={16} />
-              </button>
+              )}
+              {savedGames.map((sg) => (
+                <div key={sg.id} className="anim-pop flex items-center gap-3 p-3 rounded-2xl glass" style={{ border: "1px solid var(--accent)" }}>
+                  <button onClick={() => resumeGame(sg)} className="pressable flex items-center gap-3 flex-1 min-w-0 text-left rounded-xl">
+                    <span className="flex items-center justify-center w-11 h-11 rounded-xl shrink-0 text-white" style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-dim))" }}>
+                      <Play size={20} fill="currentColor" />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block text-sm font-semibold" style={{ color: "var(--text)" }}>
+                        {savedGames.length > 1 ? "Resume" : "Resume last game"}
+                      </span>
+                      <span className="block text-xs truncate" style={{ color: "var(--text-muted)" }}>
+                        {sg.playerNames.team1} {sg.score.team1}-{sg.score.team2} {sg.playerNames.team2} · {sg.customName ?? selectionLabel(sg.mode)}
+                      </span>
+                    </span>
+                  </button>
+                  <button onClick={() => discardSaved(sg.id)} className="pressable p-1.5 rounded-full shrink-0" style={{ background: "var(--bg-elevated)", color: "var(--text-muted)" }} aria-label="Discard this saved game">
+                    <X size={16} />
+                  </button>
+                </div>
+              ))}
             </div>
           )}
 
@@ -537,7 +543,7 @@ export default function Home() {
         elapsed={elapsed}
         theme={theme}
         onToggleTv={() => setShowTv(true)}
-        onBack={() => { setSavedGame(game); setGame(null); }}
+        onBack={() => { setGame(null); }}
         onCycleTheme={cycleTheme}
         onModeChange={handleModeChange}
         onEditNames={() => setShowNameEditor(!showNameEditor)}
@@ -596,7 +602,7 @@ export default function Home() {
           onDraw={drawCard}
           commentary={game.config.commentaryMode && game.mode !== "beginner"}
           large={game.mode === "beginner"}
-          onBack={() => { setSavedGame(game); setGame(null); }}
+          onBack={() => { setGame(null); }}
           deckRemaining={deck.length}
           isFavorite={currentCard ? favoriteIds.includes(currentCard.id) : false}
           onFavorite={currentCard ? () => setFavoriteIds(toggleFavorite(currentCard.id)) : undefined}
@@ -650,7 +656,7 @@ export default function Home() {
           seriesWon={seriesTally(game)}
           onNewGame={() => { setGame(startNewGame(game)); setCurrentCard(null); setCardHistory([]); setDeck(shuffleArray(basePool())); }}
           onNewMatch={() => { setGame(newMatch(game)); setCurrentCard(null); setCardHistory([]); setDeck(shuffleArray(basePool())); }}
-          onEndMatch={() => { clearSavedGame(); setSavedGame(null); setGame(null); }}
+          onEndMatch={() => { clearSavedGame(game.id); setGame(null); }}
         />
       )}
 

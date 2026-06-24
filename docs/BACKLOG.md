@@ -118,7 +118,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F082 | Warmup timer before match | P2 | S | todo |
 | F083 | Between-game rest timer | P2 | S | todo |
 | F084 | Match notes field | P2 | S | todo |
-| F085 | Resume multiple in-progress matches | P1 | M | todo |
+| F085 | Resume multiple in-progress matches | P1 | M | done |
 | F086 | Match templates per venue | P2 | S | todo |
 | F087 | Pre-match coin toss / serve picker | P2 | S | todo |
 | F088 | Game-to-game carryover display | P2 | S | todo |

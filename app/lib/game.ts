@@ -270,26 +270,75 @@ export function formatTime(ms: number): string {
   return `${m}:${s.toString().padStart(2, "0")}`;
 }
 
-const STORAGE_KEY = "pickleball-shuffle-game";
+const STORAGE_KEY = "pickleball-shuffle-game"; // legacy single-game key (migrated)
+const GAMES_KEY = "pickleball-shuffle-games"; // map of id -> GameSession (F085)
+const MAX_SAVED = 8;
 
+function readGames(): Record<string, GameSession> {
+  try {
+    const raw = localStorage.getItem(GAMES_KEY);
+    if (raw) return JSON.parse(raw);
+    // One-time migration from the old single-game key.
+    const legacy = localStorage.getItem(STORAGE_KEY);
+    if (legacy) {
+      const g = JSON.parse(legacy) as GameSession;
+      return { [g.id]: g };
+    }
+  } catch {}
+  return {};
+}
+
+function writeGames(map: Record<string, GameSession>) {
+  // Keep only the most recent few so storage can't grow without bound.
+  const trimmed = Object.values(map)
+    .sort((a, b) => b.startTime - a.startTime)
+    .slice(0, MAX_SAVED);
+  const out: Record<string, GameSession> = {};
+  for (const g of trimmed) out[g.id] = g;
+  try {
+    localStorage.setItem(GAMES_KEY, JSON.stringify(out));
+  } catch {}
+}
+
+// Save (or update) one game in the keyed store. Mirrors to the legacy key so an
+// older build still finds the most recent game.
 export function saveGame(game: GameSession) {
+  const map = readGames();
+  map[game.id] = game;
+  writeGames(map);
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(game));
   } catch {}
 }
 
-export function loadGame(): GameSession | null {
-  try {
-    const data = localStorage.getItem(STORAGE_KEY);
-    if (!data) return null;
-    return JSON.parse(data);
-  } catch {
-    return null;
-  }
+// All unfinished games, most recently started first (F085).
+export function listSavedGames(): GameSession[] {
+  return Object.values(readGames())
+    .filter((g) => g && !g.winner)
+    .sort((a, b) => b.startTime - a.startTime);
 }
 
-export function clearSavedGame() {
+// Back-compat: the most recent unfinished game.
+export function loadGame(): GameSession | null {
+  return listSavedGames()[0] ?? null;
+}
+
+// Remove one saved game by id, or all when no id is given.
+export function clearSavedGame(id?: string) {
   try {
-    localStorage.removeItem(STORAGE_KEY);
+    if (!id) {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(GAMES_KEY);
+      return;
+    }
+    const map = readGames();
+    delete map[id];
+    writeGames(map);
+    const legacy = localStorage.getItem(STORAGE_KEY);
+    if (legacy) {
+      try {
+        if ((JSON.parse(legacy) as GameSession).id === id) localStorage.removeItem(STORAGE_KEY);
+      } catch {}
+    }
   } catch {}
 }
