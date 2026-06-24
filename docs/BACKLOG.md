@@ -125,7 +125,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F089 | Match summary screen → export image | P1 | M | todo |
 | F090 | One-tap rematch | P1 | S | done |
 | F091 | Match tagging (casual/league/practice) | P2 | S | todo |
-| F092 | Match-complete shareable card image | P1 | M | todo |
+| F092 | Match-complete shareable card image | P1 | M | done |
 
 ### A6 · Player roster & shuffle (the rotation engine)
 | ID | Feature | Pri | Eff | Status |
