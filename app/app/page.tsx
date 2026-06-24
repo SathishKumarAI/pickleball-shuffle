@@ -19,6 +19,7 @@ import DecksPanel from "@/components/DecksPanel";
 import FavoritesPanel from "@/components/FavoritesPanel";
 import FeedbackPanel from "@/components/FeedbackPanel";
 import RulesPanel from "@/components/RulesPanel";
+import CardBrowserPanel from "@/components/CardBrowserPanel";
 import { MODE_ICONS } from "@/components/icons";
 import { useFocusTrap } from "@/lib/useFocusTrap";
 import { useToast } from "@/components/Toast";
@@ -62,6 +63,7 @@ export default function Home() {
   const [showFavorites, setShowFavorites] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
   const [showRules, setShowRules] = useState(false);
+  const [showBrowser, setShowBrowser] = useState(false);
   const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
   const [confirmTeam, setConfirmTeam] = useState<1 | 2 | null>(null);
   const [confirmReset, setConfirmReset] = useState(false);
@@ -295,7 +297,7 @@ export default function Home() {
             <button onClick={() => setDarkMode(!darkMode)} className="pressable p-2 rounded-full" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-secondary)" }} aria-label="Toggle theme">
               {darkMode ? <Sun size={18} /> : <Moon size={18} />}
             </button>
-            <AppMenu onOpenHistory={() => setShowHistory(true)} onOpenDecks={() => setShowDecks(true)} onOpenFavorites={() => setShowFavorites(true)} onOpenFeedback={() => setShowFeedback(true)} onOpenRules={() => setShowRules(true)} />
+            <AppMenu onOpenHistory={() => setShowHistory(true)} onOpenDecks={() => setShowDecks(true)} onOpenFavorites={() => setShowFavorites(true)} onOpenFeedback={() => setShowFeedback(true)} onOpenRules={() => setShowRules(true)} onOpenBrowser={() => setShowBrowser(true)} />
           </header>
 
           <main className="flex-1 flex flex-col items-center justify-center gap-8 px-6 py-8 safe-bottom">
@@ -436,6 +438,7 @@ export default function Home() {
         <FavoritesPanel open={showFavorites} onClose={() => setShowFavorites(false)} cards={favoriteCards} onRemove={(id) => setFavoriteIds(toggleFavorite(id))} />
         <FeedbackPanel open={showFeedback} onClose={() => setShowFeedback(false)} />
         <RulesPanel open={showRules} onClose={() => setShowRules(false)} />
+        <CardBrowserPanel open={showBrowser} onClose={() => setShowBrowser(false)} allCards={allCards} />
       </>
     );
   }
@@ -459,7 +462,7 @@ export default function Home() {
         paused={isPaused(game)}
         onTogglePause={() => setGame(isPaused(game) ? resumePlay(game, Date.now()) : pauseGame(game, Date.now()))}
         onOpenSettings={() => setShowSettings(true)}
-        menuSlot={<AppMenu onOpenHistory={() => setShowHistory(true)} onOpenDecks={() => setShowDecks(true)} onOpenFavorites={() => setShowFavorites(true)} onOpenFeedback={() => setShowFeedback(true)} onOpenRules={() => setShowRules(true)} />}
+        menuSlot={<AppMenu onOpenHistory={() => setShowHistory(true)} onOpenDecks={() => setShowDecks(true)} onOpenFavorites={() => setShowFavorites(true)} onOpenFeedback={() => setShowFeedback(true)} onOpenRules={() => setShowRules(true)} onOpenBrowser={() => setShowBrowser(true)} />}
       />
 
       <div className="flex-1 flex flex-col items-center gap-4 p-4 max-w-lg mx-auto w-full">
@@ -598,6 +601,7 @@ export default function Home() {
       <FavoritesPanel open={showFavorites} onClose={() => setShowFavorites(false)} cards={favoriteCards} onRemove={(id) => setFavoriteIds(toggleFavorite(id))} />
       <FeedbackPanel open={showFeedback} onClose={() => setShowFeedback(false)} />
       <RulesPanel open={showRules} onClose={() => setShowRules(false)} />
+        <CardBrowserPanel open={showBrowser} onClose={() => setShowBrowser(false)} allCards={allCards} />
     </div>
   );
 }

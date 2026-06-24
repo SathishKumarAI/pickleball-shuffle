@@ -73,7 +73,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F045 | Per-deck rules (e.g. no draw on serve) | P2 | M | todo |
 | F046 | Deck templates by skill level | P1 | S | todo |
 | F047 | Quick-toggle categories in/out | P1 | S | todo |
-| F048 | Full-text card search in builder | P1 | S | todo |
+| F048 | Full-text card search in builder | P1 | S | done |
 | F049 | Bulk add/remove by tag | P2 | S | todo |
 | F050 | Deck stats (rarity distribution chart) | P2 | M | todo |
 | F051 | Mark deck as default | P1 | S | todo |
@@ -723,7 +723,7 @@ Make the 1,729 cards genuinely fun to read, with real description and depth.
 | F546 | Author/source attribution for hand-written cards | P2 | S | todo |
 | F547 | Report-a-card feedback wired to card id | P1 | S | todo |
 | F548 | A/B variants of card phrasing | P2 | M | todo |
-| F549 | Search/browse all cards with full detail | P1 | M | todo |
+| F549 | Search/browse all cards with full detail | P1 | M | done |
 | F550 | Export deck as printable cards (PDF) | P2 | M | todo |
 
 ---
