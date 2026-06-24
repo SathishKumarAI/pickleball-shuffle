@@ -21,25 +21,31 @@
   --glass: rgba(24, 24, 27, 0.72);
 }
 
-/* Light mode - soft off-white, not glaring */
+/* Light mode - soft mint-tinted, with visible colour depth (not flat grey) */
 [data-theme="light"] {
-  --bg: #f4f4f6;
+  --bg: #eef3f1;
   --bg-card: #ffffff;
-  --bg-elevated: #e9e9ee;
-  --border: #d3d3da;
-  --text: #1f1f24;
-  --text-secondary: #6a6a73;
-  --text-muted: #6f6f78;
+  --bg-elevated: #e2ebe7;
+  --border: #cbd8d2;
+  --text: #16201c;
+  --text-secondary: #566b63;
+  --text-muted: #71837b;
   --accent: #059669;
   --accent-dim: #047857;
-  --accent-glow: rgba(5, 150, 105, 0.18);
+  --accent-glow: rgba(5, 150, 105, 0.28);
   --blue: #2563eb;
-  --red: #dc2626;
+  --red: #e11d48;
   --yellow: #d97706;
-  --mesh-1: rgba(5, 150, 105, 0.07);
-  --mesh-2: rgba(37, 99, 235, 0.06);
-  --mesh-3: rgba(168, 85, 247, 0.05);
-  --glass: rgba(255, 255, 255, 0.72);
+  --mesh-1: rgba(16, 185, 129, 0.18);
+  --mesh-2: rgba(56, 130, 246, 0.14);
+  --mesh-3: rgba(168, 85, 247, 0.12);
+  --glass: rgba(255, 255, 255, 0.78);
+}
+
+/* A soft top-down tint so light surfaces have depth instead of flat white. */
+[data-theme="light"] body {
+  background: radial-gradient(135% 85% at 50% -15%, #f1f8f4 0%, var(--bg) 55%);
+  background-attachment: fixed;
 }
 
 html, body {
