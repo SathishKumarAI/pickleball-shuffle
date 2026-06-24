@@ -65,10 +65,10 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F037 | Visual drag-drop deck builder | P1 | L | todo |
 | F038 | Filter cards by tag/intensity/rarity in builder | P1 | M | todo |
 | F039 | Save multiple named custom decks | P1 | M | todo |
-| F040 | Duplicate / clone a deck | P1 | S | todo |
+| F040 | Duplicate / clone a deck | P1 | S | done |
 | F041 | Deck cover art / color picker | P2 | S | todo |
-| F042 | Share deck via URL/code | P1 | M | todo |
-| F043 | Import community deck by code | P1 | M | todo |
+| F042 | Share deck via URL/code | P1 | M | done |
+| F043 | Import community deck by code | P1 | M | done |
 | F044 | Deck-size cap warnings | P2 | S | todo |
 | F045 | Per-deck rules (e.g. no draw on serve) | P2 | M | todo |
 | F046 | Deck templates by skill level | P1 | S | todo |

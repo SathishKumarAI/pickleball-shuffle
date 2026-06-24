@@ -1,5 +1,5 @@
 import { GameSession } from "./game";
-import { Card } from "./cards";
+import { Card, CATEGORIES } from "./cards";
 
 /*
  * Local-first store - everything lives in localStorage. No accounts, no server.
@@ -155,6 +155,47 @@ export function importData(json: string): { decks: number; matches: number } {
   if (Array.isArray(data.matches)) write(MATCHES_KEY, data.matches);
   if (Array.isArray(data.favorites)) write(FAVORITES_KEY, data.favorites);
   return { decks: data.decks?.length ?? 0, matches: data.matches?.length ?? 0 };
+}
+
+/* ─── Deck share codes (backlog F042 / F043) ─── */
+// Encode a deck to a compact URL-safe base64 code, importable on another device.
+export function encodeDeck(d: { name: string; description: string; cards: CustomDeck["cards"] }): string {
+  const payload = { n: d.name, d: d.description, c: d.cards.map((c) => ({ n: c.name, e: c.effect, k: c.category })) };
+  const json = JSON.stringify(payload);
+  const b64 = btoa(unescape(encodeURIComponent(json)));
+  return b64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+export function decodeDeck(code: string): { name: string; description: string; cards: CustomDeck["cards"] } | null {
+  try {
+    const b64 = code.trim().replace(/-/g, "+").replace(/_/g, "/");
+    const json = decodeURIComponent(escape(atob(b64)));
+    const p = JSON.parse(json);
+    if (!p || !Array.isArray(p.c)) return null;
+    const cats = new Set<string>(CATEGORIES);
+    const cards = p.c
+      .filter((x: { n?: string; e?: string }) => x && x.n && x.e)
+      .map((x: { n: string; e: string; k?: string }) => ({
+        name: String(x.n).slice(0, 80),
+        effect: String(x.e).slice(0, 300),
+        category: cats.has(String(x.k)) ? String(x.k) : CATEGORIES[0],
+      }));
+    if (cards.length === 0) return null;
+    return {
+      name: String(p.n || "Imported deck").slice(0, 60),
+      description: String(p.d || "").slice(0, 120),
+      cards,
+    };
+  } catch {
+    return null;
+  }
+}
+
+// Decode + save a shared deck. Returns the saved deck, or null if the code is bad.
+export function importDeckCode(code: string): CustomDeck | null {
+  const d = decodeDeck(code);
+  if (!d) return null;
+  return saveDeck(d);
 }
 
 /* Turn a custom deck's cards into playable Card objects (negative ids avoid clashing). */
