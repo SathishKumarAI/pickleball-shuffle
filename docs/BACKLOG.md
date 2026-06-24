@@ -162,7 +162,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F118 | Heatmap calendar of play days | P2 | M | todo |
 | F119 | Head-to-head records between players | P2 | M | todo |
 | F120 | Charts dashboard | P2 | M | todo |
-| F121 | Achievement / badge system | P2 | L | todo |
+| F121 | Achievement / badge system | P2 | L | done |
 | F122 | Shareable stats card | P2 | M | todo |
 | F123 | Undo across whole match | P1 | M | todo |
 | F124 | Trash / restore deleted matches (soft) | P1 | S | todo |

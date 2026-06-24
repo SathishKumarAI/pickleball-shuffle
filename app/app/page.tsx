@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { Card, DeckMode, DECK_MODES, getFilteredCards, getDeck, shuffleArray, SKILL_LEVELS, SkillLevel, selectionLabel } from "@/lib/cards";
 import { GameSession, GameConfig, createGame, addScore, adjustScore, sideOut, undoLast, resetScore, startNewGame, newMatch, matchWinner, seriesTally, isPaused, pauseGame, resumePlay, elapsedMs, saveGame, loadGame, clearSavedGame, formatTime } from "@/lib/game";
 import { playScoreSound, playUndoSound, playCardFlipSound, playWinSound, playResetSound, triggerHaptic } from "@/lib/sounds";
-import { addMatch, deckToCards, CustomDeck, listFavoriteIds, toggleFavorite } from "@/lib/client-api";
+import { addMatch, deckToCards, CustomDeck, listFavoriteIds, toggleFavorite, bumpStat } from "@/lib/client-api";
 import { Sun, Moon, Monitor, Play, Pause, X, Bug, HelpCircle, Sparkles, Sprout, TrendingUp, Flame } from "lucide-react";
 import TopBar from "@/components/TopBar";
 import CardDisplay from "@/components/CardDisplay";
@@ -21,6 +21,7 @@ import FeedbackPanel from "@/components/FeedbackPanel";
 import RulesPanel from "@/components/RulesPanel";
 import CardBrowserPanel from "@/components/CardBrowserPanel";
 import TVScore from "@/components/TVScore";
+import AchievementsPanel from "@/components/AchievementsPanel";
 import { MODE_ICONS } from "@/components/icons";
 import { useFocusTrap } from "@/lib/useFocusTrap";
 import { useToast } from "@/components/Toast";
@@ -81,6 +82,7 @@ export default function Home() {
   const [showRules, setShowRules] = useState(false);
   const [showBrowser, setShowBrowser] = useState(false);
   const [showTv, setShowTv] = useState(false);
+  const [showAchievements, setShowAchievements] = useState(false);
   const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
   const [confirmTeam, setConfirmTeam] = useState<1 | 2 | null>(null);
   const [confirmReset, setConfirmReset] = useState(false);
@@ -264,6 +266,7 @@ export default function Home() {
     g.customName = label;
     g.customCards = cards;
     setGame(g);
+    bumpStat("daily");
     triggerHaptic("light");
   }, [allCards]);
 
@@ -293,6 +296,8 @@ export default function Home() {
     setDeck(rest.length > 0 ? rest : pool.slice(1));
     setCurrentCard(next);
     setCardHistory((prev) => [next, ...prev].slice(0, 3));
+    bumpStat("draws");
+    if (next.rarity === "legendary") bumpStat("legendary");
     if (game.config.soundEnabled) { playCardFlipSound(); triggerHaptic("light"); }
     setGame((g) => g ? { ...g, drawnCardIds: [...g.drawnCardIds, next.id] } : g);
   };
@@ -358,7 +363,7 @@ export default function Home() {
             <button onClick={cycleTheme} className="pressable p-2 rounded-full" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-secondary)" }} aria-label={`Theme: ${theme}. Tap to change.`}>
               {theme === "auto" ? <Monitor size={18} /> : theme === "dark" ? <Moon size={18} /> : <Sun size={18} />}
             </button>
-            <AppMenu onOpenHistory={() => setShowHistory(true)} onOpenDecks={() => setShowDecks(true)} onOpenFavorites={() => setShowFavorites(true)} onOpenFeedback={() => setShowFeedback(true)} onOpenRules={() => setShowRules(true)} onOpenBrowser={() => setShowBrowser(true)} />
+            <AppMenu onOpenHistory={() => setShowHistory(true)} onOpenDecks={() => setShowDecks(true)} onOpenFavorites={() => setShowFavorites(true)} onOpenFeedback={() => setShowFeedback(true)} onOpenRules={() => setShowRules(true)} onOpenBrowser={() => setShowBrowser(true)} onOpenAchievements={() => setShowAchievements(true)} />
           </header>
 
           <main className="flex-1 flex flex-col items-center justify-center gap-8 px-6 py-8 safe-bottom">
@@ -517,6 +522,7 @@ export default function Home() {
         <FeedbackPanel open={showFeedback} onClose={() => setShowFeedback(false)} />
         <RulesPanel open={showRules} onClose={() => setShowRules(false)} />
         <CardBrowserPanel open={showBrowser} onClose={() => setShowBrowser(false)} allCards={allCards} />
+        <AchievementsPanel open={showAchievements} onClose={() => setShowAchievements(false)} />
       </>
     );
   }
@@ -541,7 +547,7 @@ export default function Home() {
         paused={isPaused(game)}
         onTogglePause={() => setGame(isPaused(game) ? resumePlay(game, Date.now()) : pauseGame(game, Date.now()))}
         onOpenSettings={() => setShowSettings(true)}
-        menuSlot={<AppMenu onOpenHistory={() => setShowHistory(true)} onOpenDecks={() => setShowDecks(true)} onOpenFavorites={() => setShowFavorites(true)} onOpenFeedback={() => setShowFeedback(true)} onOpenRules={() => setShowRules(true)} onOpenBrowser={() => setShowBrowser(true)} />}
+        menuSlot={<AppMenu onOpenHistory={() => setShowHistory(true)} onOpenDecks={() => setShowDecks(true)} onOpenFavorites={() => setShowFavorites(true)} onOpenFeedback={() => setShowFeedback(true)} onOpenRules={() => setShowRules(true)} onOpenBrowser={() => setShowBrowser(true)} onOpenAchievements={() => setShowAchievements(true)} />}
       />
 
       <div className="flex-1 flex flex-col items-center gap-4 p-4 max-w-lg mx-auto w-full">
@@ -686,6 +692,7 @@ export default function Home() {
       <FeedbackPanel open={showFeedback} onClose={() => setShowFeedback(false)} />
       <RulesPanel open={showRules} onClose={() => setShowRules(false)} />
         <CardBrowserPanel open={showBrowser} onClose={() => setShowBrowser(false)} allCards={allCards} />
+        <AchievementsPanel open={showAchievements} onClose={() => setShowAchievements(false)} />
     </div>
   );
 }

@@ -9,6 +9,7 @@ import { Card, CATEGORIES } from "./cards";
 const DECKS_KEY = "pb-custom-decks";
 const MATCHES_KEY = "pb-match-history";
 const FAVORITES_KEY = "pb-favorites";
+const STATS_KEY = "pb-stats";
 
 export interface CustomDeck {
   id: string;
@@ -157,6 +158,16 @@ export function importData(json: string): { decks: number; matches: number } {
   return { decks: data.decks?.length ?? 0, matches: data.matches?.length ?? 0 };
 }
 
+/* ─── Lightweight event stats for achievements (backlog F121) ─── */
+export function getStats(): Record<string, number> {
+  return read<Record<string, number>>(STATS_KEY, {});
+}
+export function bumpStat(key: string, n = 1) {
+  const s = read<Record<string, number>>(STATS_KEY, {});
+  s[key] = (s[key] || 0) + n;
+  write(STATS_KEY, s);
+}
+
 /* ─── Deck share codes (backlog F042 / F043) ─── */
 // Encode a deck to a compact URL-safe base64 code, importable on another device.
 export function encodeDeck(d: { name: string; description: string; cards: CustomDeck["cards"] }): string {
@@ -203,7 +214,7 @@ export function importDeckCode(code: string): CustomDeck | null {
 // there's nothing on a server to delete - clearing these keys is a full erase.
 export function clearAllData() {
   try {
-    [DECKS_KEY, MATCHES_KEY, FAVORITES_KEY, "pickleball-shuffle-game", "pb-beginner-intro-seen"].forEach((k) =>
+    [DECKS_KEY, MATCHES_KEY, FAVORITES_KEY, STATS_KEY, "pickleball-shuffle-game", "pb-beginner-intro-seen"].forEach((k) =>
       localStorage.removeItem(k),
     );
   } catch {}

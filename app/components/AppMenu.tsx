@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { Menu, History, Layers, Star, Download, Upload, MessageSquare, BookOpen, Check, AlertTriangle, Info, Trash2, Library } from "lucide-react";
+import { Menu, History, Layers, Star, Download, Upload, MessageSquare, BookOpen, Check, AlertTriangle, Info, Trash2, Library, Award } from "lucide-react";
 import { exportData, importData, clearAllData } from "@/lib/client-api";
 
 export default function AppMenu({
@@ -12,6 +12,7 @@ export default function AppMenu({
   onOpenFeedback,
   onOpenRules,
   onOpenBrowser,
+  onOpenAchievements,
 }: {
   onOpenHistory: () => void;
   onOpenDecks: () => void;
@@ -19,6 +20,7 @@ export default function AppMenu({
   onOpenFeedback: () => void;
   onOpenRules: () => void;
   onOpenBrowser: () => void;
+  onOpenAchievements: () => void;
 }) {
   const [open, setOpen] = useState(false);
   const [notice, setNotice] = useState<{ msg: string; ok: boolean } | null>(null);
@@ -100,6 +102,7 @@ export default function AppMenu({
           <Item icon={<Library size={16} />} label="Browse cards" onClick={() => { setOpen(false); onOpenBrowser(); }} />
           <Item icon={<History size={16} />} label="Match history" onClick={() => { setOpen(false); onOpenHistory(); }} />
           <Item icon={<Star size={16} />} label="Favorite cards" onClick={() => { setOpen(false); onOpenFavorites(); }} />
+          <Item icon={<Award size={16} />} label="Achievements" onClick={() => { setOpen(false); onOpenAchievements(); }} />
           <Item icon={<Layers size={16} />} label="Custom decks" onClick={() => { setOpen(false); onOpenDecks(); }} />
           <div style={{ borderTop: "1px solid var(--border)" }}>
             <Item icon={<Download size={16} />} label="Export backup" onClick={doExport} />
