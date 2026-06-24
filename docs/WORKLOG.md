@@ -1,5 +1,37 @@
 # Worklog
 
+## 2026-06-24 — feature shortlist build-out + continuous deploys
+
+**Summary:** Built and shipped the full approved feature shortlist on branch
+`feat/wave1-prod-hardening` (now pushed), deploying to production after each wave.
+81 backlog items done total.
+
+**Shipped this session:**
+- Browse/search all 1,729 cards + rarity-distribution chart (F549/F048/F050)
+- Share/import custom decks by code + clone (F042/F043/F040)
+- Shareable match-result PNG via canvas + Web Share (F092)
+- Daily challenge: date-seeded deck-of-the-day, no backend (F018)
+- Switch-sides reminder (F062), replay how-to from Settings (F139)
+- Dark/light/auto theme, persisted + follows system (F201/F159)
+- Pickleball glossary tab in Rules & help (F138)
+- Big-score TV/courtside display mode (F072)
+- Achievements/badges from local stat counters (F121)
+- Resume multiple in-progress games (keyed store + migration) (F085)
+- Earlier in the run: manual score correction, SR announcements, wake-lock,
+  delete-all-data, focus-trap, toasts, dependabot/gitleaks/audit/runbook,
+  axe/RTL tests, game/match-point banner.
+
+**Decisions / notes:**
+- Prod deployed directly from the local branch via `vercel --prod` after each
+  wave (smoke-checked); branch also pushed to origin for a PR + CI.
+- Verified key flows live in the browser (Chrome DevTools MCP), incl. the
+  multi-game resume refactor end-to-end.
+
+**Follow-ups:**
+- [ ] Open the PR for `feat/wave1-prod-hardening` (branch pushed; CI runs on it).
+- [ ] Remaining P0s are blocked/parked: Sentry (DSN), accounts/roster/backend,
+      Playwright E2E, doubles server-1/2 (needs a rules decision).
+
 ## 2026-06-23 — 557-feature backlog + autonomous prod/UX/onboarding build loop
 
 **Summary:** Built a 557-item prioritized feature backlog across all categories, two
