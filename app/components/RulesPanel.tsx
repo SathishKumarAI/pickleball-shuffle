@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { BookOpen, Trophy, Layers, Smartphone, HelpCircle, ChevronDown } from "lucide-react";
+import { BookOpen, Trophy, Layers, Smartphone, HelpCircle, ChevronDown, Languages } from "lucide-react";
 import { Sheet } from "./HistoryPanel";
 
 type Section = { q: string; a: string };
@@ -75,9 +75,24 @@ const FAQ: Section[] = [
   },
 ];
 
+// Beginner-friendly glossary of pickleball terms (backlog F138).
+const GLOSSARY: Section[] = [
+  { q: "Dink", a: "A soft shot hit from near the net that arcs over and drops into the opponent's kitchen, too low to attack." },
+  { q: "Kitchen (Non-Volley Zone)", a: "The 7-foot zone on each side of the net. You can't hit the ball out of the air (volley) while standing in it." },
+  { q: "Volley", a: "Hitting the ball out of the air before it bounces. Legal everywhere except the kitchen." },
+  { q: "Third-shot drop", a: "A soft shot by the serving team on the third hit, landing in the kitchen so they can move up to the net." },
+  { q: "Side-out", a: "When the serving side loses the rally and the serve passes to the other team. Only the serving team scores." },
+  { q: "Erne", a: "An aggressive volley hit just outside the kitchen near the sideline, often after jumping around the corner." },
+  { q: "Poach", a: "When a player crosses into their partner's area to take a shot, usually to surprise the opponents." },
+  { q: "Lob", a: "A high, deep shot sent over the opponents to push them back off the net." },
+  { q: "Let", a: "A serve that clips the net but still lands in the correct service box. In most modern rules, play simply continues." },
+  { q: "Stacking", a: "A positioning tactic where partners line up on the same side to keep their preferred forehands in the middle." },
+];
+
 const TABS = [
   { key: "play", label: "How to play", icon: Trophy, sections: HOW_TO_PLAY },
   { key: "app", label: "Using the app", icon: Smartphone, sections: USING_APP },
+  { key: "terms", label: "Glossary", icon: Languages, sections: GLOSSARY },
   { key: "faq", label: "FAQ", icon: HelpCircle, sections: FAQ },
 ] as const;
 

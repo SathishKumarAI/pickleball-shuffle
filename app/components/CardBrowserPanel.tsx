@@ -42,6 +42,13 @@ export default function CardBrowserPanel({
 
   const shown = filtered.slice(0, CAP);
 
+  // Rarity distribution of the current result set (backlog F050).
+  const dist = useMemo(() => {
+    const counts = Object.fromEntries(RARITIES.map((r) => [r, 0])) as Record<Rarity, number>;
+    for (const c of filtered) if (c.rarity) counts[c.rarity] += 1;
+    return counts;
+  }, [filtered]);
+
   if (!open) return null;
 
   return (
@@ -73,10 +80,31 @@ export default function CardBrowserPanel({
         ))}
       </div>
 
-      <p className="text-xs mb-2" style={{ color: "var(--text-muted)" }}>
+      <p className="text-xs mb-1.5" style={{ color: "var(--text-muted)" }}>
         {filtered.length} card{filtered.length === 1 ? "" : "s"}
         {filtered.length > CAP ? ` (showing first ${CAP} - refine to see more)` : ""}
       </p>
+
+      {/* Rarity distribution (F050) */}
+      {filtered.length > 0 && (
+        <div className="mb-3">
+          <div className="flex h-2 rounded-full overflow-hidden" style={{ background: "var(--bg-elevated)" }}>
+            {RARITIES.map((r) =>
+              dist[r] > 0 ? (
+                <div key={r} title={`${RARITY_STYLE[r].label}: ${dist[r]}`} style={{ width: `${(dist[r] / filtered.length) * 100}%`, background: RARITY_STYLE[r].color }} />
+              ) : null,
+            )}
+          </div>
+          <div className="flex flex-wrap gap-x-3 gap-y-0.5 mt-1.5">
+            {RARITIES.filter((r) => dist[r] > 0).map((r) => (
+              <span key={r} className="text-[10px] flex items-center gap-1" style={{ color: "var(--text-muted)" }}>
+                <span className="w-2 h-2 rounded-full" style={{ background: RARITY_STYLE[r].color }} />
+                {RARITY_STYLE[r].label} {dist[r]}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
 
       {shown.length === 0 ? (
         <p className="text-sm text-center py-8" style={{ color: "var(--text-muted)" }}>No cards match. Try a different search or filter.</p>

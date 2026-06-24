@@ -75,7 +75,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F047 | Quick-toggle categories in/out | P1 | S | todo |
 | F048 | Full-text card search in builder | P1 | S | done |
 | F049 | Bulk add/remove by tag | P2 | S | todo |
-| F050 | Deck stats (rarity distribution chart) | P2 | M | todo |
+| F050 | Deck stats (rarity distribution chart) | P2 | M | done |
 | F051 | Mark deck as default | P1 | S | todo |
 | F052 | Archive deck (soft, keep) | P2 | S | todo |
 | F053 | Deck version history | P2 | M | todo |
@@ -187,7 +187,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F135 | Demo deck preloaded for new users | P1 | S | todo |
 | F136 | Setup progress checklist | P2 | S | todo |
 | F137 | How-to gif/video embeds | P2 | M | todo |
-| F138 | Glossary of pickleball terms | P2 | S | todo |
+| F138 | Glossary of pickleball terms | P2 | S | done |
 | F139 | Re-run tutorial from settings | P1 | S | done |
 | F140 | Onboarding-completion analytics event | P1 | S | todo |
 
