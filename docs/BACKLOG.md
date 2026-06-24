@@ -35,7 +35,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F015 | Handicap / point-spotting mode | P2 | M | todo |
 | F016 | Streak mode (consecutive points under twists) | P2 | S | todo |
 | F017 | Survival mode (lose on failed twist) | P2 | S | todo |
-| F018 | Daily challenge (seeded deck-of-the-day) | P1 | M | todo |
+| F018 | Daily challenge (seeded deck-of-the-day) | P1 | M | done |
 
 ### A2 · Card draw mechanics
 | ID | Feature | Pri | Eff | Status |

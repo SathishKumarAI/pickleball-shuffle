@@ -43,6 +43,18 @@ const SKILL_ORDER: { key: SkillLevel; Icon: typeof Sprout }[] = [
 
 const BEGINNER_INTRO_KEY = "pb-beginner-intro-seen";
 
+// Tiny seeded PRNG so the daily challenge deck is identical for everyone on a
+// given day, with no backend (backlog F018).
+function mulberry32(seed: number) {
+  return function () {
+    seed |= 0;
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
 export default function Home() {
   const [allCards, setAllCards] = useState<Card[]>([]);
   const [deck, setDeck] = useState<Card[]>([]);
@@ -227,6 +239,32 @@ export default function Home() {
     }
   }, [allCards]);
 
+  const startDaily = useCallback(() => {
+    if (!allCards.length) return;
+    const now = new Date();
+    const seed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
+    const rnd = mulberry32(seed);
+    const pool = [...allCards];
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(rnd() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    const cards = pool.slice(0, 30);
+    const label = `Daily - ${now.toLocaleDateString(undefined, { month: "short", day: "numeric" })}`;
+    setSavedGame(null);
+    setCustomCards(cards);
+    setCustomName(label);
+    setMode("chaos");
+    setDeck(shuffleArray(cards));
+    setCurrentCard(null);
+    setCardHistory([]);
+    const g = createGame("chaos");
+    g.customName = label;
+    g.customCards = cards;
+    setGame(g);
+    triggerHaptic("light");
+  }, [allCards]);
+
   const startCustomDeck = useCallback((d: CustomDeck) => {
     setSavedGame(null);
     const cards = deckToCards(d);
@@ -366,6 +404,23 @@ export default function Home() {
                 <X size={16} />
               </button>
             </div>
+          )}
+
+          {/* Daily challenge - same 30-card deck for everyone each day (F018) */}
+          {allCards.length > 0 && (
+            <button
+              onClick={() => { triggerHaptic("light"); startDaily(); }}
+              className="group pressable w-full max-w-sm flex items-center gap-3 p-3.5 rounded-2xl text-left"
+              style={{ background: "linear-gradient(135deg, color-mix(in srgb, var(--accent) 22%, var(--bg-card)), var(--bg-card))", border: "1px solid var(--accent)" }}
+            >
+              <span className="flex items-center justify-center w-11 h-11 rounded-xl shrink-0 text-white" style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-dim))" }}>
+                <Sparkles size={22} />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-base font-semibold" style={{ color: "var(--text)" }}>Daily challenge</span>
+                <span className="block text-xs" style={{ color: "var(--text-muted)" }}>Today&apos;s 30-card deck - same for everyone</span>
+              </span>
+            </button>
           )}
 
           {/* Skill levels first - the gentle on-ramp for newer players */}
