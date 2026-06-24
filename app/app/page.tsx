@@ -530,6 +530,7 @@ export default function Home() {
         onClose={() => setShowSettings(false)}
         onUpdate={handleConfigUpdate}
         onReset={() => { doReset(); setShowSettings(false); }}
+        onReplayIntro={() => { setShowSettings(false); setShowBeginnerIntro(true); }}
       />
 
       {isPaused(game) && !game.winner && (

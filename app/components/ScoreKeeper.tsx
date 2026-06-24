@@ -1,7 +1,7 @@
 "use client";
 
 import { GameSession, pointStatus } from "@/lib/game";
-import { CircleDot, Minus, Flame } from "lucide-react";
+import { CircleDot, Minus, Flame, RefreshCw } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 export default function ScoreKeeper({
@@ -17,9 +17,27 @@ export default function ScoreKeeper({
 }) {
   const locked = game.config.scoreLocked || !!game.winner;
   const point = pointStatus(game);
+  // Side switch at the game midpoint (e.g. first to 6 in an 11-point game) - F062.
+  const half = Math.ceil(game.config.pointsToWin / 2);
+  const switchSides = !game.winner && (
+    (game.score.team1 === half && game.score.team2 < half) ||
+    (game.score.team2 === half && game.score.team1 < half)
+  );
 
   return (
     <div className="flex flex-col items-center gap-3 w-full max-w-sm">
+      {/* Switch-sides reminder (F062) */}
+      {switchSides && (
+        <div
+          className="anim-pop flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full"
+          role="status"
+          aria-live="polite"
+          style={{ background: "var(--bg-elevated)", color: "var(--blue)", border: "1px solid var(--blue)" }}
+        >
+          <RefreshCw size={13} /> Switch sides
+        </div>
+      )}
+
       {/* Game / match point banner (F077) */}
       {point && (
         <div

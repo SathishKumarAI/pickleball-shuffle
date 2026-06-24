@@ -91,7 +91,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F059 | Rally scoring option (vs side-out) | P1 | M | done |
 | F060 | Custom win target (11/15/21) | P1 | S | done |
 | F061 | Win-by-1 option | P1 | S | done |
-| F062 | Switch-sides-at-midpoint reminder | P1 | S | todo |
+| F062 | Switch-sides-at-midpoint reminder | P1 | S | done |
 | F063 | Doubles serving rotation indicator (server 1/2) | P0 | M | todo |
 | F064 | Let-serve toggle | P2 | S | todo |
 | F065 | Manual score correction | P0 | S | done |
@@ -188,7 +188,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F136 | Setup progress checklist | P2 | S | todo |
 | F137 | How-to gif/video embeds | P2 | M | todo |
 | F138 | Glossary of pickleball terms | P2 | S | todo |
-| F139 | Re-run tutorial from settings | P1 | S | todo |
+| F139 | Re-run tutorial from settings | P1 | S | done |
 | F140 | Onboarding-completion analytics event | P1 | S | todo |
 
 ### B2 · Accessibility
