@@ -3,7 +3,7 @@
 import { GameSession } from "@/lib/game";
 import { DeckMode, DECK_MODES, SKILL_LEVELS, SkillLevel, isSkillLevel, selectionLabel } from "@/lib/cards";
 import { MODE_ICONS } from "./icons";
-import { ArrowLeft, Settings, Sun, Moon, Undo2, Lock, LockOpen, Pencil, ChevronDown, RotateCcw, Pause, Play, Sprout, TrendingUp, Flame, Shuffle } from "lucide-react";
+import { ArrowLeft, Settings, Sun, Moon, Monitor, Undo2, Lock, LockOpen, Pencil, ChevronDown, RotateCcw, Pause, Play, Sprout, TrendingUp, Flame, Shuffle } from "lucide-react";
 import { useState } from "react";
 
 const SKILL_ICONS: Record<SkillLevel, typeof Sprout> = {
@@ -17,9 +17,9 @@ export default function TopBar({
   mode,
   modeLabelOverride,
   elapsed,
-  darkMode,
+  theme,
   onBack,
-  onToggleDark,
+  onCycleTheme,
   onModeChange,
   onEditNames,
   onToggleLock,
@@ -34,9 +34,9 @@ export default function TopBar({
   mode: string;
   modeLabelOverride?: string | null;
   elapsed: string;
-  darkMode: boolean;
+  theme: "dark" | "light" | "auto";
   onBack: () => void;
-  onToggleDark: () => void;
+  onCycleTheme: () => void;
   onModeChange: (m: string) => void;
   onEditNames: () => void;
   onToggleLock: () => void;
@@ -70,8 +70,8 @@ export default function TopBar({
           <button onClick={onOpenSettings} className="pressable p-2 rounded-full" style={{ background: "var(--bg-elevated)", color: "var(--text-secondary)" }} aria-label="Settings">
             <Settings size={18} />
           </button>
-          <button onClick={onToggleDark} className="pressable p-2 rounded-full" style={{ background: "var(--bg-elevated)", color: "var(--text-secondary)" }} aria-label="Toggle theme">
-            {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+          <button onClick={onCycleTheme} className="pressable p-2 rounded-full" style={{ background: "var(--bg-elevated)", color: "var(--text-secondary)" }} aria-label={`Theme: ${theme}. Tap to change.`}>
+            {theme === "auto" ? <Monitor size={18} /> : theme === "dark" ? <Moon size={18} /> : <Sun size={18} />}
           </button>
           {menuSlot}
         </div>

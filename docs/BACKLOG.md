@@ -212,7 +212,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F156 | Contrast checker in theme builder | P2 | S | todo |
 | F157 | Form-error announcements | P1 | S | todo |
 | F158 | Landmark roles for layout | P1 | S | todo |
-| F159 | Respect prefers-color-scheme | P1 | S | done? |
+| F159 | Respect prefers-color-scheme | P1 | S | done |
 | F160 | Switch-control / large-button mode | P2 | M | todo |
 | F161 | axe-core automated a11y test in CI | P0 | M | done |
 | F162 | WCAG 2.2 AA audit checklist doc | P1 | S | todo |
@@ -266,7 +266,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F198 | Multiple preset themes | P1 | S | todo |
 | F199 | Catppuccin theme set | P2 | S | todo |
 | F200 | Per-deck theming | P2 | M | todo |
-| F201 | Dark/light/auto with manual override | P1 | S | todo |
+| F201 | Dark/light/auto with manual override | P1 | S | done |
 | F202 | Rarity visual effects (foil/holo) | P2 | M | todo |
 | F203 | Confetti / celebration polish | P2 | S | todo |
 | F204 | Sound-pack options | P2 | M | todo |

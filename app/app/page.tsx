@@ -5,7 +5,7 @@ import { Card, DeckMode, DECK_MODES, getFilteredCards, getDeck, shuffleArray, SK
 import { GameSession, GameConfig, createGame, addScore, adjustScore, sideOut, undoLast, resetScore, startNewGame, newMatch, matchWinner, seriesTally, isPaused, pauseGame, resumePlay, elapsedMs, saveGame, loadGame, clearSavedGame, formatTime } from "@/lib/game";
 import { playScoreSound, playUndoSound, playCardFlipSound, playWinSound, playResetSound, triggerHaptic } from "@/lib/sounds";
 import { addMatch, deckToCards, CustomDeck, listFavoriteIds, toggleFavorite } from "@/lib/client-api";
-import { Sun, Moon, Play, Pause, X, Bug, HelpCircle, Sparkles, Sprout, TrendingUp, Flame } from "lucide-react";
+import { Sun, Moon, Monitor, Play, Pause, X, Bug, HelpCircle, Sparkles, Sprout, TrendingUp, Flame } from "lucide-react";
 import TopBar from "@/components/TopBar";
 import CardDisplay from "@/components/CardDisplay";
 import ScoreKeeper from "@/components/ScoreKeeper";
@@ -55,7 +55,10 @@ export default function Home() {
   const [showBeginnerIntro, setShowBeginnerIntro] = useState(false);
   const [customCards, setCustomCards] = useState<Card[] | null>(null);
   const [customName, setCustomName] = useState<string | null>(null);
-  const [darkMode, setDarkMode] = useState(true);
+  const [theme, setTheme] = useState<"dark" | "light" | "auto">("dark");
+  const [systemDark, setSystemDark] = useState(true);
+  const darkMode = theme === "auto" ? systemDark : theme === "dark";
+  const cycleTheme = () => setTheme((t) => (t === "dark" ? "light" : t === "light" ? "auto" : "dark"));
   const [showSettings, setShowSettings] = useState(false);
   const [showNameEditor, setShowNameEditor] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
@@ -156,6 +159,24 @@ export default function Home() {
     }
     meta.setAttribute("content", darkMode ? "#0e0e11" : "#f4f4f6");
   }, [darkMode]);
+
+  // Theme preference: load once, persist on change, and follow the system when
+  // set to "auto" (backlog F201).
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("pb-theme");
+      if (saved === "dark" || saved === "light" || saved === "auto") setTheme(saved);
+    } catch {}
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    setSystemDark(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setSystemDark(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  useEffect(() => {
+    try { localStorage.setItem("pb-theme", theme); } catch {}
+  }, [theme]);
 
   // Keep the screen awake during an active game so it doesn't dim mid-match
   // on a phone propped courtside (backlog F188). Re-acquires after the tab
@@ -294,8 +315,8 @@ export default function Home() {
         <div className="mesh-bg flex flex-col" style={{ background: "var(--bg)", minHeight: "100dvh" }}>
           {/* Header (no overlap with content) */}
           <header className="safe-top safe-x flex items-center justify-end gap-2 pb-2">
-            <button onClick={() => setDarkMode(!darkMode)} className="pressable p-2 rounded-full" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-secondary)" }} aria-label="Toggle theme">
-              {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+            <button onClick={cycleTheme} className="pressable p-2 rounded-full" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-secondary)" }} aria-label={`Theme: ${theme}. Tap to change.`}>
+              {theme === "auto" ? <Monitor size={18} /> : theme === "dark" ? <Moon size={18} /> : <Sun size={18} />}
             </button>
             <AppMenu onOpenHistory={() => setShowHistory(true)} onOpenDecks={() => setShowDecks(true)} onOpenFavorites={() => setShowFavorites(true)} onOpenFeedback={() => setShowFeedback(true)} onOpenRules={() => setShowRules(true)} onOpenBrowser={() => setShowBrowser(true)} />
           </header>
@@ -451,9 +472,9 @@ export default function Home() {
         mode={mode}
         modeLabelOverride={customName}
         elapsed={elapsed}
-        darkMode={darkMode}
+        theme={theme}
         onBack={() => { setSavedGame(game); setGame(null); }}
-        onToggleDark={() => setDarkMode(!darkMode)}
+        onCycleTheme={cycleTheme}
         onModeChange={handleModeChange}
         onEditNames={() => setShowNameEditor(!showNameEditor)}
         onToggleLock={() => setGame({ ...game, config: { ...game.config, scoreLocked: !game.config.scoreLocked } })}
