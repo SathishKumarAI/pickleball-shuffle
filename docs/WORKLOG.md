@@ -1,5 +1,30 @@
 # Worklog
 
+## 2026-07-01 14:09 — Track-a-match scroll fix + full UI validation
+
+**Summary:** Fixed the "scroll not working" report on the Track-a-match setup and
+validated every setting/control in that flow live in-browser (390px). No prod deploy
+yet — still owner-gated on GitHub/Vercel auth.
+
+**Changes:**
+- `app/page.tsx` (`65689fc`) — home `main` now `justify-start` on the Track tab
+  (`justify-center` kept for the card home).
+
+**Decisions:**
+- Root cause was the `justify-center` centering a form taller than the viewport, so its
+  top/bottom went out of reach on short screens / with the keyboard open — not a scroll
+  lock (confirmed no body-lock or touch/wheel `preventDefault` in the code). Top-aligning
+  the tall tab is the minimal, low-risk fix; the card home stays visually centered.
+- Validation caveat recorded: scripted *synchronous* clicks batch into one React render
+  and misreport control state; validated with awaits between interactions instead.
+
+**Validated (live):** mode toggle; format Singles/Doubles (+ Teams↔Players label); name +
+event inputs; points 11/15/21; match length; cards switch; Start match; official resume;
+and doc-scroll reaches Start. Cards tab still centered; Track tab top-aligned.
+
+**Follow-ups:**
+- [ ] Push + deploy (v1 + coach mode + this fix) — `gh auth login` then push, or `./deploy-vercel.sh`.
+
 ## 2026-07-01 04:30 — Coach / Umpire "Track a match" mode (T11)
 
 **Summary:** Added a coach/umpire match-recording mode on top of the card game.
