@@ -22,6 +22,13 @@ export default function OfficialControls({
 }) {
   const label = serverLabel(game);
   const servingName = game.servingTeam === 1 ? game.playerNames.team1 : game.playerNames.team2;
+  const otherName = game.servingTeam === 1 ? game.playerNames.team2 : game.playerNames.team1;
+  // In doubles, the first server losing the rally hands off to the SAME team's
+  // second server; only the second server's loss is a true side-out. Label the
+  // button for whichever happens next so a coach/umpire records it correctly.
+  const isDoubles = game.config.gameType !== "singles";
+  const toSecondServer = isDoubles && game.serverNumber === 1;
+  const serveBtnText = toSecondServer ? "Server 1 lost — 2nd server serves" : `Side out — ${otherName} serves`;
 
   return (
     <div className="w-full max-w-sm flex flex-col gap-2.5">
@@ -36,11 +43,17 @@ export default function OfficialControls({
 
       <button
         onClick={onSideOut}
-        className="pressable flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold"
+        aria-label={serveBtnText}
+        className="pressable flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold text-center"
         style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text)" }}
       >
-        <RefreshCw size={15} /> Side out
+        <RefreshCw size={15} className="shrink-0" /> {serveBtnText}
       </button>
+      <p className="text-[11px] text-center -mt-1" style={{ color: "var(--text-muted)" }}>
+        {game.config.sideOutScoring
+          ? "Tap a team's score only when the SERVING side wins the rally. If the serving side loses, use the button above."
+          : "Rally scoring: tap whichever team won the rally to add their point."}
+      </p>
 
       <div className="grid grid-cols-2 gap-2">
         {([1, 2] as const).map((team) => (

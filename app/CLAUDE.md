@@ -26,7 +26,9 @@ components/           - CardDisplay (3D flip + "?" explainer), ScoreKeeper, TopB
                         CardHistory, WinCelebration, PlayerNames, SettingsSheet, AppMenu,
                         HistoryPanel, DecksPanel, FeedbackPanel, RulesPanel, icons.tsx,
                         WelcomeTour (first-run onboarding), GlossaryText (tap-to-define),
-                        OfficialMatchSetup + OfficialControls (coach/umpire "Track a match")
+                        OfficialMatchSetup + OfficialControls (coach/umpire "Track a match"),
+                        AchievementsPanel, CardBrowserPanel, FavoritesPanel, TVScore
+                        (courtside display), Toast, NetworkStatus (offline indicator)
 lib/cards.ts          - card types, deck modes, filtering, shuffle, CATEGORY_INFO
 lib/glossary.ts       - shared pickleball glossary (Rules tab + in-card highlighter)
 lib/game.ts           - PURE game engine (addScore/sideOut/undo/checkWin) + active-game
@@ -34,6 +36,8 @@ lib/game.ts           - PURE game engine (addScore/sideOut/undo/checkWin) + acti
                         logCount + two-server doubles rotation (behind config.officialMode)
 lib/client-api.ts     - local store: custom decks, match history, export/import;
                         matchSheet() export + official fields on SavedMatch/addMatch
+lib/useFocusTrap.ts   - focus-trap hook for dialogs / sheets
+lib/shareImage.ts     - render a shareable match / win image
 lib/sounds.ts         - Web Audio SFX + haptics
 public/cards.json     - 1,729 cards
 public/sw.js          - network-first service worker (prod only; dev unregisters it)

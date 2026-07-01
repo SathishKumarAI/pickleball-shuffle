@@ -12,6 +12,9 @@ export interface OfficialMatchOptions {
   bestOf: number;
   eventLabel: string;
   cardsEnabled: boolean;
+  /* true = traditional side-out (only the serving team scores);
+     false = rally scoring (whoever wins the rally scores). */
+  sideOutScoring: boolean;
 }
 
 // Setup screen for the coach / umpire "Track a match" flow. Captures the
@@ -25,6 +28,7 @@ export default function OfficialMatchSetup({ onStart }: { onStart: (opts: Offici
   const [bestOf, setBestOf] = useState(1);
   const [eventLabel, setEventLabel] = useState("");
   const [cardsEnabled, setCardsEnabled] = useState(false);
+  const [sideOutScoring, setSideOutScoring] = useState(true);
 
   const start = () =>
     onStart({
@@ -35,6 +39,7 @@ export default function OfficialMatchSetup({ onStart }: { onStart: (opts: Offici
       bestOf,
       eventLabel: eventLabel.trim(),
       cardsEnabled,
+      sideOutScoring,
     });
 
   const inputStyle = {
@@ -101,6 +106,23 @@ export default function OfficialMatchSetup({ onStart }: { onStart: (opts: Offici
           className="w-full px-3 py-2.5 rounded-xl text-sm outline-none"
           style={inputStyle}
         />
+      </Field>
+
+      {/* Scoring style */}
+      <Field label="Scoring">
+        <div className="grid grid-cols-2 gap-2">
+          {([[true, "Side-out", "only server scores"], [false, "Rally", "every point counts"]] as const).map(([val, label, hint]) => (
+            <button
+              key={label}
+              onClick={() => setSideOutScoring(val)}
+              className="pressable flex flex-col items-center py-2 rounded-xl text-sm font-semibold"
+              style={sideOutScoring === val ? { background: "var(--accent)", color: "#fff" } : inputStyle}
+            >
+              {label}
+              <span className="text-[10px] font-normal opacity-80">{hint}</span>
+            </button>
+          ))}
+        </div>
       </Field>
 
       {/* Points to win */}

@@ -87,7 +87,8 @@ No server, no DB, no auth. Deployed as a static/SSR Next app on Vercel (project 
 | `app/lib/cards.ts` | Card types, deck modes, filtering, shuffle |
 | `app/lib/client-api.ts` | Local store: custom decks, match history, export/import (**the swap point if a real DB is ever added**) |
 | `app/lib/sounds.ts` | Web Audio SFX + haptics |
-| `app/components/` | `CardDisplay` (3D flip), `ScoreKeeper`, `TopBar`, `WinCelebration`, `*Panel.tsx`, `icons.tsx` |
+| `app/components/` | `CardDisplay` (3D flip + "?" explainer), `ScoreKeeper`, `TopBar`, `WinCelebration`, `WelcomeTour` (first-run tour), `GlossaryText` (tap-to-define), `OfficialMatchSetup` + `OfficialControls` ("Track a match"), `TVScore`, `*Panel.tsx`, `icons.tsx` |
+| `app/lib/glossary.ts` | Shared pickleball glossary (Rules tab + in-card highlighter) |
 | `app/public/cards.json` | The 1,729 cards (source of truth: `data/cards.json`) |
 | `app/app/globals.css` | Theme CSS vars + `anim-*` animation utilities |
 | `app/app/icon.svg`, `app/public/icons/` | Brand logo + PWA icons (regen via `rsvg-convert`) |
@@ -103,7 +104,7 @@ No server, no DB, no auth. Deployed as a static/SSR Next app on Vercel (project 
 
 ## Common Tasks
 
-**Add/edit cards** → edit `data/cards.json`, copy to `app/public/cards.json` (both must match).
+**Add/edit cards** → the deck is generated, not hand-edited: edit the word banks / templates in `scripts/generate_cards.py`, then run `python3 scripts/generate_cards.py` (it rewrites `app/public/cards.json`, `data/cards.json`, and `docs/data/cards.json` and keeps ids/names unique).
 **Add a component** → `app/components/Foo.tsx`, import + wire state in `app/app/page.tsx`.
 **Regenerate logo/icons** → edit `app/app/icon.svg`, then `rsvg-convert -w <N> -h <N> app/app/icon.svg -o app/public/icons/icon-<N>.png`.
 **Deploy** → `bash deploy-vercel.sh` (runs `vercel --prod` from **repo root** - never from `app/`, or Vercel looks for `app/app` and fails). Pushing `main` also auto-deploys.
@@ -125,9 +126,9 @@ See [BUG-LOG.md](BUG-LOG.md) for the full history of fixes.
 
 ## Contributing
 - **Branches:** `main` is protected and auto-deploys to prod. Use `feature/*` / `fix/*` branches + PR.
-- **CI** (`.github/workflows/ci.yml`, runs in `app/`): `npm run lint` → `npx tsc --noEmit` → `npm run build`. All three must be green before merge.
+- **CI** (`.github/workflows/ci.yml`, runs in `app/`): `npm run lint` → `npx tsc --noEmit` → `npm test` (64 vitest tests) → `npm audit --audit-level=high` → `npm run build`. All must be green before merge.
 - **Commits:** Conventional Commits (`feat:`, `fix:`, `docs:`).
-- **Before a PR:** `cd app && npm run lint && npx tsc --noEmit && npm run build`.
+- **Before a PR:** `cd app && npm run lint && npx tsc --noEmit && npm test && npm run build`.
 
 ### ⚠️ Dead code - do not extend
 An abandoned auth/Supabase experiment left inert stubs: `app/app/api/`, `app/app/login`, `app/app/signup`, `lib/db.ts`, `lib/auth.ts`, `lib/supabase/`, `components/AuthForm.tsx`, `components/UserMenu.tsx`. They are untracked, return HTTP 410 / render `null`, and are **safe to delete** (security-audited clean). The app is intentionally backend-free. See [TICKETS.md](TICKETS.md) T4.

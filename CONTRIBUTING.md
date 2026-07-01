@@ -31,10 +31,12 @@ Run the same checks CI runs (all from `app/`):
 ```bash
 npm run lint
 npx tsc --noEmit
+npm test
 npm run build
 ```
 
-All three must pass - CI gates on them and `main` auto-deploys to production.
+All four must pass - CI gates on them (lint → type-check → the 64 vitest tests → build)
+and `main` auto-deploys to production.
 
 ## Pull request guidelines
 

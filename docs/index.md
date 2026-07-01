@@ -7,11 +7,11 @@ Draw twist cards. Shake up the game. A free, local-first pickleball card game + 
 Made just for fun and personal use only - not for making sales.
 
 ## Feedback & ideas
-- **Feedback form:** <a href="#" target="_blank" rel="noopener noreferrer">open the form</a> <!-- replace with your Google Form link -->
-- **Bugs / feature requests:** <a href="https://github.com/SathishKumarAI/pickleball-shuffle/issues/new" target="_blank" rel="noopener noreferrer">open a GitHub issue</a>
+- **Feedback / bugs / feature requests:** <a href="https://github.com/SathishKumarAI/pickleball-shuffle/issues/new" target="_blank" rel="noopener noreferrer">open a GitHub issue</a>
 
 ## Docs
 - <a href="ONBOARDING.md" target="_blank" rel="noopener noreferrer">Onboarding</a>
+- <a href="../CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contributing</a>
 - <a href="WORKLOG.md" target="_blank" rel="noopener noreferrer">Worklog</a>
 - <a href="TICKETS.md" target="_blank" rel="noopener noreferrer">Tickets / pending tasks</a>
 - <a href="BUG-LOG.md" target="_blank" rel="noopener noreferrer">Bug log</a>

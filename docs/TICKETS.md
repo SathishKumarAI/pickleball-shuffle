@@ -57,19 +57,19 @@ note says otherwise. Rough effort: S (hours), M (a day), L (multi-day).
 ### UX & polish
 - **F11 - Sound pack / volume control** (S). Mute toggle exists; add volume + alt sound themes.
 - **F12 - Haptic intensity setting** (S).
-- **F13 - Onboarding tour / first-run coach marks** (M). Highlight Draw, score tiles, pause, menu on first launch.
+- ✅ **F13 - Onboarding tour / first-run coach marks** (M). **Shipped** as `components/WelcomeTour.tsx` - a first-run swipeable welcome tour (what it is / how to play / how to navigate), replayable from Rules & help.
 - **F14 - Per-theme accent picker** (S). Let users choose accent hue beyond emerald.
 - **F15 - Larger-text / high-contrast accessibility mode** (S). Builds on the a11y pass already done.
 
 ### Data & platform
 - **F16 - Cross-device sync (opt-in)** (L, breaks local-first). Would need a real backend/account - revisit only if sync is genuinely wanted; see T1 for the lightest-touch precedent.
 - **F17 - Match stats export to CSV** (S). Extend the existing JSON export.
-- **F18 - Shareable match result card (image)** (M). Render the win screen to a PNG to share.
+- ✅ **F18 - Shareable match result card (image)** (M). **Shipped** as `lib/shareImage.ts` - renders a shareable match/win image.
 - **F19 - Install prompt / richer PWA** (S). Custom "Add to home screen" nudge; offline indicator.
 - **F20 - i18n / multi-language** (L). Externalize copy + card text; start with one extra language.
 
 ### Engineering / housekeeping
-- **F21 - Component/unit tests** (M). The pure engine in `lib/game.ts` is ideal for tests (scoring, side-out, win, pause, match logic).
+- ✅ **F21 - Component/unit tests** (M). **Shipped** - vitest suite (64 tests, `npm test`, gated in CI): `lib/game.test.ts`, `cards.test.ts`, `cards-data.test.ts`, `client-api.test.ts`, `a11y.test.tsx`.
 - **F22 - Storybook for the panel/Sheet components** (M).
 - **F23 - Lighthouse/CI perf budget** (S). Add a Lighthouse check to CI.
 - **F24 - Resolve the deferred T-series** (S). Delete dead auth stubs (T4), orphan svg (T6), multi-size favicon (T5) when convenient.

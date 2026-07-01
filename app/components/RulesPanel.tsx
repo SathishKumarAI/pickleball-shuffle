@@ -45,6 +45,10 @@ const HOW_TO_PLAY: Section[] = [
     a: "Family = clean fun for all ages. Party = laughs, dares & drinks. Drill = skill-sharpening restrictions. Tournament = competitive twists. Chaos = all 1,729 cards, anything goes. Pick a mode on the home screen.",
   },
   {
+    q: "Doubles serving (side-out scoring)",
+    a: "In traditional scoring only the SERVING team can score - so you'll only add points to one team at a time. Each doubles team has two servers: if the serving side loses a rally on server 1, their 2nd server serves next (same team); if they lose on server 2, it's a side-out and serve passes to the other team. Tap the serving team's score when they win the rally; use the serve button when they lose. Prefer every-point-counts? Pick 'Rally' scoring when you start a Track-a-match game.",
+  },
+  {
     q: "Winning",
     a: "First team to reach the points target (default 11) by 2 clear points wins the game. Set Match length in Settings (single game, best of 3, or best of 5) - when a team takes the series, a match-complete screen celebrates the winner. Otherwise start the next game to keep going.",
   },

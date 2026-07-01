@@ -92,7 +92,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F060 | Custom win target (11/15/21) | P1 | S | done |
 | F061 | Win-by-1 option | P1 | S | done |
 | F062 | Switch-sides-at-midpoint reminder | P1 | S | done |
-| F063 | Doubles serving rotation indicator (server 1/2) | P0 | M | todo |
+| F063 | Doubles serving rotation indicator (server 1/2) | P0 | M | done |
 | F064 | Let-serve toggle | P2 | S | todo |
 | F065 | Manual score correction | P0 | S | done |
 | F066 | Point-by-point timeline log | P1 | M | todo |
@@ -104,8 +104,8 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 | F072 | Big-score TV / cast display mode | P1 | M | done |
 | F073 | Two-team custom names + colors | P1 | S | todo |
 | F074 | Score gestures (swipe up/down) | P2 | S | todo |
-| F075 | Foot-fault / fault counters | P2 | S | todo |
-| F076 | Timeout tracking | P2 | S | todo |
+| F075 | Foot-fault / fault counters | P2 | S | done |
+| F076 | Timeout tracking | P2 | S | done |
 | F077 | Auto game-point / match-point banner | P1 | S | done |
 | F078 | Tiebreak handling | P2 | M | todo |
 
@@ -175,7 +175,7 @@ Categories: **A** Core Gameplay & Decks · **B** UX, Accessibility & Design · *
 ### B1 · Onboarding
 | ID | Feature | Pri | Eff | Status |
 |---|---|---|---|---|
-| F126 | First-run interactive tutorial | P0 | M | wip |
+| F126 | First-run interactive tutorial | P0 | M | done |
 | F127 | Sample-game walkthrough | P1 | M | todo |
 | F128 | Coachmarks / tooltips on key buttons | P1 | S | todo |
 | F129 | Empty-state guidance everywhere | P0 | M | done |

@@ -292,6 +292,7 @@ export default function Home() {
         bestOf: opts.bestOf,
         eventLabel: opts.eventLabel,
         cardsEnabled: opts.cardsEnabled,
+        sideOutScoring: opts.sideOutScoring,
       }),
       customName: opts.eventLabel || "Official match",
     });

@@ -101,12 +101,11 @@ pickleball-shuffle/
 │   └── public/     #   cards.json, manifest, service worker
 ├── docs/           # WORKLOG, onboarding, tickets, and docs/data/cards.json (full dataset)
 ├── scripts/        # generate_cards.py — rebuilds the 1,729-card deck
-├── backend/        # legacy FastAPI prototype (unused by the live app)
 ├── frontend/       # legacy Vite stub (unused)
 └── *.sh            # dev / prod / deploy helper scripts
 ```
 
-> The live app is entirely in **`app/`**. The `backend/` and `frontend/` directories are early prototypes kept for reference and are not part of the deployed product. See **[`app/README.md`](app/README.md)** for the full architecture deep-dive.
+> The live app is entirely in **`app/`**. The `frontend/` directory is an early prototype kept for reference and is not part of the deployed product. See **[`app/README.md`](app/README.md)** for the full architecture deep-dive.
 
 ## Quick start
 
