@@ -19,6 +19,9 @@ export default function ScoreKeeper({
   const locked = game.config.scoreLocked || !!game.winner;
   const point = pointStatus(game);
   const isDoubles = game.config.gameType !== "singles";
+  // Server 1/2 only rotates (and is meaningful) in official doubles; hide the
+  // server badge in casual doubles where it would never change.
+  const officialDoubles = isDoubles && !!game.config.officialMode;
 
   // Consequence narration: on every state change, describe what happened in
   // plain words ("Point Eagles 4-2" / "Side out - Hawks serve") and, if the
@@ -85,7 +88,7 @@ export default function ScoreKeeper({
       {game.config.sideOutScoring && (
         <button onClick={onSideOut} aria-label="Side out - switch serving team" aria-live="polite" className="pressable flex items-center gap-1.5 text-xs px-3 py-1 rounded-full" style={{ background: "var(--bg-elevated)", color: "var(--yellow)", border: "1px solid var(--border)" }}>
           <CircleDot size={13} /> Serving: {game.servingTeam === 1 ? game.playerNames.team1 : game.playerNames.team2}
-          {isDoubles ? ` · server ${game.serverNumber}` : ""}
+          {officialDoubles ? ` · ${game.serverNumber === 1 ? "1st" : "2nd"} server` : ""}
         </button>
       )}
 
@@ -105,7 +108,7 @@ export default function ScoreKeeper({
           color="var(--blue)"
           serving={game.servingTeam === 1}
           serverNumber={game.serverNumber}
-          doubles={isDoubles}
+          showServer={officialDoubles}
           disabled={locked}
           onClick={() => onScore(1)}
         />
@@ -125,7 +128,7 @@ export default function ScoreKeeper({
           color="var(--red)"
           serving={game.servingTeam === 2}
           serverNumber={game.serverNumber}
-          doubles={isDoubles}
+          showServer={officialDoubles}
           disabled={locked}
           onClick={() => onScore(2)}
         />
@@ -170,8 +173,8 @@ function CorrectButton({ name, disabled, onClick }: { name: string; disabled: bo
   );
 }
 
-function ScoreButton({ score, name, color, serving, serverNumber, doubles, disabled, onClick }: {
-  score: number; name: string; color: string; serving: boolean; serverNumber: 1 | 2; doubles: boolean; disabled: boolean; onClick: () => void;
+function ScoreButton({ score, name, color, serving, serverNumber, showServer, disabled, onClick }: {
+  score: number; name: string; color: string; serving: boolean; serverNumber: 1 | 2; showServer: boolean; disabled: boolean; onClick: () => void;
 }) {
   const [bump, setBump] = useState(false);
   const prev = useRef(score);
@@ -185,30 +188,33 @@ function ScoreButton({ score, name, color, serving, serverNumber, doubles, disab
     }
   }, [score]);
 
-  const serveDesc = serving ? `, serving${doubles ? `, server ${serverNumber}` : ""}` : "";
+  const serveDesc = serving ? `, serving${showServer ? `, ${serverNumber === 1 ? "1st" : "2nd"} server` : ""}` : "";
 
   return (
     <button
       onClick={onClick}
       disabled={disabled}
       aria-label={`${name} won the rally - tap to record. ${name} currently ${score}${serveDesc}`}
-      className="flex flex-col items-center gap-1.5 transition-all active:scale-90 disabled:opacity-40"
+      className="flex flex-col items-center gap-1 transition-all active:scale-90 disabled:opacity-40"
     >
-      {/* Serve badge: ball on the serving team + server 1/2 dots (doubles). The
-          two-server rule made visible instead of explained (Side Out pattern). */}
-      <span className="flex items-center gap-1 h-4" aria-hidden>
-        {serving && <CircleDot size={13} style={{ color: "var(--yellow)" }} />}
-        {serving && doubles && (
-          <span className="flex items-center gap-1">
-            {[1, 2].map((n) => (
-              <span
-                key={n}
-                className="w-1.5 h-1.5 rounded-full"
-                style={{ background: n <= serverNumber ? "var(--yellow)" : "var(--border)" }}
-              />
-            ))}
+      {/* Serve badge: ball + an explicit "1ST/2ND SERVER" chip with two dots so
+          the current server is unmistakable (only in official doubles, where it
+          rotates). */}
+      <span className="flex flex-col items-center gap-0.5 min-h-[1.5rem] justify-end" aria-hidden>
+        {serving && showServer && (
+          <span
+            className="flex items-center gap-1 text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-full"
+            style={{ background: "var(--yellow)", color: "#000" }}
+          >
+            <span className="flex items-center gap-0.5">
+              {[1, 2].map((n) => (
+                <span key={n} className="w-1 h-1 rounded-full" style={{ background: n <= serverNumber ? "#000" : "rgba(0,0,0,0.3)" }} />
+              ))}
+            </span>
+            {serverNumber === 1 ? "1st" : "2nd"} server
           </span>
         )}
+        {serving && !showServer && <CircleDot size={13} style={{ color: "var(--yellow)" }} />}
       </span>
       <div
         className={`font-display relative w-20 h-20 sm:w-24 sm:h-24 rounded-3xl flex items-center justify-center text-4xl sm:text-5xl font-black text-white ${bump ? "anim-bump" : ""} ${serving ? "anim-ring" : ""}`}

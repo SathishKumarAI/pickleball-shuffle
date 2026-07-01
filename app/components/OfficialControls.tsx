@@ -1,7 +1,7 @@
 "use client";
 
-import { GameSession, serverLabel, logCount } from "@/lib/game";
-import { Timer, Flag, Download, RefreshCw } from "lucide-react";
+import { GameSession, logCount } from "@/lib/game";
+import { Timer, Flag, Download, RefreshCw, CircleDot } from "lucide-react";
 
 // In-match officiating controls for coach/umpire "Track a match" mode: who's
 // serving (with server number in doubles), per-team timeout + fault buttons,
@@ -20,7 +20,6 @@ export default function OfficialControls({
   onSideOut: () => void;
   onDownload: () => void;
 }) {
-  const label = serverLabel(game);
   const servingName = game.servingTeam === 1 ? game.playerNames.team1 : game.playerNames.team2;
   const otherName = game.servingTeam === 1 ? game.playerNames.team2 : game.playerNames.team1;
   // In doubles, the first server losing the rally hands off to the SAME team's
@@ -30,15 +29,49 @@ export default function OfficialControls({
   const toSecondServer = isDoubles && game.serverNumber === 1;
   const serveBtnText = toSecondServer ? "Server 1 lost — 2nd server serves" : `Side out — ${otherName} serves`;
 
+  const ordinal = game.serverNumber === 1 ? "1st" : "2nd";
+  const nextOnFault = toSecondServer
+    ? `Fault → 2nd server (still ${servingName})`
+    : isDoubles
+      ? `Fault → side out to ${otherName}`
+      : `Fault → side out to ${otherName}`;
+
   return (
     <div className="w-full max-w-sm flex flex-col gap-2.5">
+      {/* Serving status card - who's up + which server + what a fault does */}
       <div
-        className="flex items-center justify-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full self-center"
+        className="flex flex-col items-center gap-1.5 px-3 py-2.5 rounded-2xl self-stretch"
         role="status"
         aria-live="polite"
-        style={{ background: "var(--bg-elevated)", color: "var(--accent)", border: "1px solid var(--border)" }}
+        style={{ background: "var(--bg-elevated)", color: "var(--text)", border: "1px solid var(--accent)" }}
       >
-        Serving: {servingName}{label ? ` · ${label}` : ""}
+        <span className="flex items-center gap-1.5 text-sm font-bold">
+          <CircleDot size={15} style={{ color: "var(--yellow)" }} /> {servingName} serving
+        </span>
+        {isDoubles && (
+          <>
+            <span className="flex items-center gap-2">
+              {[1, 2].map((n) => (
+                <span
+                  key={n}
+                  className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full"
+                  style={
+                    n === game.serverNumber
+                      ? { background: "var(--yellow)", color: "#000" }
+                      : { background: "var(--bg-card)", color: "var(--text-muted)", border: "1px solid var(--border)" }
+                  }
+                >
+                  <span className="w-1.5 h-1.5 rounded-full" style={{ background: n === game.serverNumber ? "#000" : "var(--text-muted)" }} />
+                  {n === 1 ? "1st" : "2nd"} server
+                </span>
+              ))}
+            </span>
+            <span className="text-[11px]" style={{ color: "var(--text-muted)" }}>
+              {ordinal} server up · {nextOnFault}
+            </span>
+          </>
+        )}
+        {!isDoubles && <span className="text-[11px]" style={{ color: "var(--text-muted)" }}>Singles · fault = side out</span>}
       </div>
 
       <button
