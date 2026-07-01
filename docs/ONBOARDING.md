@@ -19,7 +19,7 @@ A free pickleball party game fused with a scorekeeper. Tap to draw a card, play 
   - **Per-card "?" explainer** - "what this means / how to play it / what kind of card" (plain-language `CATEGORY_INFO`).
   - **Always-shown "What to do"** line + a one-time in-game coaching hint.
   - **Rules & help → "Why & how"** tab (benefits + navigation), Glossary now sourced from the shared file.
-- **Coming next: Coach / Umpire mode** (planned, see spec Phase 2) - run and record a real match, chosen from a top-level screen after the welcome tour.
+- **Coach / Umpire "Track a match" mode** - home toggle `Play with cards` / `Track a match`; run and record a real match (singles/doubles, two-server rotation, timeouts/faults, side-switch), saved to Match history with a downloadable match sheet.
 - **1,729-card deck** with per-card metadata - `rarity` (badge on the card), `intensity`, `tags`, plus both a concise `effect` and a `commentary` string. Full dataset + the "why 1729": [`docs/data/cards.json`](data/cards.json).
 - **Commentator voice toggle** (Settings) - switch every card between concise rules and hyped commentator text.
 - **In-game pause** - freezes the match clock + blocks play, persists across reload.

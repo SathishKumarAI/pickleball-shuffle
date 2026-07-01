@@ -20,6 +20,23 @@ export interface GameConfig {
   bestOf: number;
   /* Card text style: false = concise, true = commentator voice. */
   commentaryMode: boolean;
+  /* Coach / umpire "Track a match" mode: proper server rotation + a match log.
+     Optional so existing saved games (no flag) keep the casual behaviour. */
+  officialMode?: boolean;
+  /* In official mode, whether twist cards can still be drawn (off by default). */
+  cardsEnabled?: boolean;
+  /* Optional event / round label recorded with the match. */
+  eventLabel?: string;
+}
+
+/* One entry in an official match's log: a timeout, a manual fault, or the
+   halfway side-switch, stamped with the score + time it happened. */
+export interface MatchLogEntry {
+  type: "timeout" | "fault" | "switch";
+  team?: 1 | 2;
+  score: { team1: number; team2: number };
+  gameNumber: number;
+  timestamp: number;
 }
 
 import { Card } from "./cards";
@@ -49,6 +66,8 @@ export interface GameSession {
   drawnCardIds: number[];
   favoriteCardIds: number[];
   skippedCardIds: number[];
+  /* Official-mode audit trail (timeouts / faults / side-switches). */
+  matchLog?: MatchLogEntry[];
 }
 
 export const DEFAULT_CONFIG: GameConfig = {
@@ -61,9 +80,16 @@ export const DEFAULT_CONFIG: GameConfig = {
   gameType: "doubles",
   bestOf: 3,
   commentaryMode: false,
+  officialMode: false,
+  cardsEnabled: true,
+  eventLabel: "",
 };
 
-export function createGame(mode: string, names?: { team1: string; team2: string }): GameSession {
+export function createGame(
+  mode: string,
+  names?: { team1: string; team2: string },
+  configOverrides?: Partial<GameConfig>,
+): GameSession {
   return {
     id: `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
     mode,
@@ -79,11 +105,12 @@ export function createGame(mode: string, names?: { team1: string; team2: string 
     pausedAt: null,
     pausedMs: 0,
     playerNames: names || { team1: "Team 1", team2: "Team 2" },
-    config: { ...DEFAULT_CONFIG },
+    config: { ...DEFAULT_CONFIG, ...configOverrides },
     cardIds: [],
     drawnCardIds: [],
     favoriteCardIds: [],
     skippedCardIds: [],
+    matchLog: [],
   };
 }
 
@@ -123,14 +150,48 @@ export function adjustScore(game: GameSession, team: 1 | 2, delta: number): Game
 }
 
 export function sideOut(game: GameSession): GameSession {
+  // Official doubles uses the real two-server rotation: the first server's
+  // fault passes to the second server on the SAME team; the second server's
+  // fault passes the serve to the other team (back to server 1). Casual play
+  // (no officialMode) and singles just pass the serve straight over.
+  const officialDoubles = !!game.config.officialMode && game.config.gameType !== "singles";
+  if (officialDoubles && game.serverNumber === 1) {
+    return { ...game, serverNumber: 2 };
+  }
   const newServingTeam: 1 | 2 = game.servingTeam === 1 ? 2 : 1;
-  const newServerNumber: 1 | 2 = game.serverNumber === 1 ? 2 : 1;
+  return { ...game, servingTeam: newServingTeam, serverNumber: 1 };
+}
 
-  return {
-    ...game,
-    servingTeam: newServingTeam,
-    serverNumber: newServerNumber === 2 ? 1 : newServerNumber,
+// Human label for who's serving, e.g. "Server 2" (doubles only). Empty in
+// singles, where there's just one server per side.
+export function serverLabel(game: GameSession): string {
+  if (game.config.gameType === "singles") return "";
+  return `Server ${game.serverNumber}`;
+}
+
+// Append a timeout/fault/side-switch to the official match log (pure).
+function logEntry(game: GameSession, type: MatchLogEntry["type"], team?: 1 | 2): GameSession {
+  const entry: MatchLogEntry = {
+    type,
+    team,
+    score: { ...game.score },
+    gameNumber: game.gameNumber,
+    timestamp: Date.now(),
   };
+  return { ...game, matchLog: [...(game.matchLog ?? []), entry] };
+}
+
+export function recordTimeout(game: GameSession, team: 1 | 2): GameSession {
+  return logEntry(game, "timeout", team);
+}
+
+export function recordFault(game: GameSession, team: 1 | 2): GameSession {
+  return logEntry(game, "fault", team);
+}
+
+// Count of a given log type, optionally for one team (for the in-game chips).
+export function logCount(game: GameSession, type: MatchLogEntry["type"], team?: 1 | 2): number {
+  return (game.matchLog ?? []).filter((e) => e.type === type && (team ? e.team === team : true)).length;
 }
 
 export function undoLast(game: GameSession): GameSession {

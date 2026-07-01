@@ -89,9 +89,11 @@ Tap-to-define stays inline; the `?` is the primary explainer. They complement.
 
 ---
 
-## Phase 2 (planned) — Coach / Umpire match-recording mode
+## Phase 2 (SHIPPED 2026-07-01) — Coach / Umpire match-recording mode
 
-**Status:** pending (tasks #7–#10). Not built in v1; documented here so v1 onboarding accounts for it.
+**Status:** shipped (tasks #7–#10, ticket T11). Engine + client-api unit-tested; validated live in-browser.
+
+**Refinement made during build:** the "top-level choice screen" became a **segmented toggle on the home screen** (`Play with cards` / `Track a match`) instead of a separate screen — it's switchable with one tap any time, which directly answers "can the mode be changed after selecting?" (yes). Tracked-match **format is locked once the match is underway** (rotation math), changeable at setup / New Match; **cards toggle** and deck mode stay changeable.
 
 **Goal:** Give a coach or umpire a way to run and record a *real* pickleball match — proper scoring, rotation, and an exportable result — while keeping the fun card game as the default experience.
 

@@ -18,6 +18,10 @@ import {
   resumePlay,
   elapsedMs,
   formatTime,
+  serverLabel,
+  recordTimeout,
+  recordFault,
+  logCount,
   DEFAULT_CONFIG,
   type GameConfig,
   type GameSession,
@@ -264,5 +268,64 @@ describe("formatTime", () => {
     expect(formatTime(0)).toBe("0:00");
     expect(formatTime(65_000)).toBe("1:05");
     expect(formatTime(600_000)).toBe("10:00");
+  });
+});
+
+describe("official mode: doubles server rotation", () => {
+  const officialDoubles = () =>
+    createGame("track", { team1: "A", team2: "B" }, { officialMode: true, gameType: "doubles" });
+
+  it("first server fault advances to server 2 on the same team", () => {
+    const g = officialDoubles(); // servingTeam 1, serverNumber 1
+    const after = sideOut(g);
+    expect(after.servingTeam).toBe(1);
+    expect(after.serverNumber).toBe(2);
+  });
+
+  it("second server fault passes serve to the other team, server 1", () => {
+    const g = { ...officialDoubles(), serverNumber: 2 as const };
+    const after = sideOut(g);
+    expect(after.servingTeam).toBe(2);
+    expect(after.serverNumber).toBe(1);
+  });
+
+  it("singles official mode passes serve straight over", () => {
+    const g = createGame("track", undefined, { officialMode: true, gameType: "singles" });
+    const after = sideOut(g);
+    expect(after.servingTeam).toBe(2);
+    expect(after.serverNumber).toBe(1);
+  });
+
+  it("casual mode (no officialMode) always passes the serve, server stays 1", () => {
+    const g = createGame("family"); // doubles by default, but not official
+    const after = sideOut(g);
+    expect(after.servingTeam).toBe(2);
+    expect(after.serverNumber).toBe(1);
+  });
+
+  it("serverLabel reflects doubles vs singles", () => {
+    expect(serverLabel(officialDoubles())).toBe("Server 1");
+    expect(serverLabel(createGame("track", undefined, { gameType: "singles" }))).toBe("");
+  });
+});
+
+describe("official mode: match log", () => {
+  it("records timeouts and faults per team", () => {
+    let g = createGame("track", undefined, { officialMode: true });
+    g = recordTimeout(g, 1);
+    g = recordFault(g, 2);
+    g = recordTimeout(g, 1);
+    expect(logCount(g, "timeout")).toBe(2);
+    expect(logCount(g, "timeout", 1)).toBe(2);
+    expect(logCount(g, "fault", 2)).toBe(1);
+    expect(logCount(g, "fault", 1)).toBe(0);
+    expect(g.matchLog?.[0]).toMatchObject({ type: "timeout", team: 1 });
+  });
+
+  it("log entries capture the score and game number", () => {
+    let g = createGame("track", undefined, { officialMode: true });
+    g = { ...g, score: { team1: 3, team2: 2 }, gameNumber: 2 };
+    g = recordTimeout(g, 2);
+    expect(g.matchLog?.[0]).toMatchObject({ score: { team1: 3, team2: 2 }, gameNumber: 2 });
   });
 });

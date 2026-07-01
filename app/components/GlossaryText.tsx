@@ -8,12 +8,10 @@ function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-// Builds one big alternation regex of all glossary aliases, longest-first so
-// multi-word terms win. Word-boundary anchored, case-insensitive.
-const TERM_REGEX = new RegExp(
-  `\\b(${GLOSSARY_BY_ALIAS.map((e) => escapeRegExp(e.alias)).join("|")})\\b`,
-  "gi",
-);
+// Alternation source of all glossary aliases, longest-first so multi-word
+// terms win. Word-boundary anchored. A fresh RegExp is built per call from this
+// (never a shared stateful one) so matching is pure.
+const TERM_PATTERN = `\\b(${GLOSSARY_BY_ALIAS.map((e) => escapeRegExp(e.alias)).join("|")})\\b`;
 
 function lookup(match: string): GlossaryTerm | undefined {
   const lower = match.toLowerCase();
@@ -44,10 +42,9 @@ export default function GlossaryText({
     const out: Segment[] = [];
     const seen = new Set<string>();
     let last = 0;
-    // Reset stateful regex between renders.
-    TERM_REGEX.lastIndex = 0;
+    const re = new RegExp(TERM_PATTERN, "gi");
     let m: RegExpExecArray | null;
-    while ((m = TERM_REGEX.exec(text)) !== null) {
+    while ((m = re.exec(text)) !== null) {
       const term = lookup(m[0]);
       const key = term?.term ?? m[0].toLowerCase();
       // Only mark the first occurrence of each term.

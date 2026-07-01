@@ -70,7 +70,15 @@ Everything the app does, grouped so you can find it fast.
 | **Per-card "?" explainer** | Every card has a **?** that opens *what this means · how to play it · what kind of card* in beginner-friendly words. |
 | **"What to do" line** | The card always shows a concrete "what to do this point", not just the constraint - plus a one-time in-game hint. |
 | **"Why & how" help tab** | Rules & help opens on a benefits + navigation tab so a newcomer knows *why* to use it and *where* everything is. |
-| **Coming next: Coach / Umpire mode** | Planned - run and record a real match (singles/doubles, server rotation, side-switch, timeouts, exportable match sheet). Chosen from a top-level screen after the tour. |
+
+### 🏓 Coach / Umpire mode - "Track a match"
+| Feature | What it does |
+|---|---|
+| **One-tap mode switch** | Home has a `Play with cards` / `Track a match` toggle - switch the whole flow any time, one tap. |
+| **Match setup** | Singles or doubles, player/team names, an event/round label, points-to-win (11/15/21), match length, and cards on/off (off by default). |
+| **Real server rotation** | Doubles uses the two-server rotation (Server 1 → 2 → side-out); the serving side + server number are shown live. Singles passes serve straight over. |
+| **Officiating controls** | Per-team timeout and fault buttons, a side-out button, and the halfway side-switch reminder. |
+| **Match sheet** | Saves to Match history with the event label + format; download a one-tap text **match sheet** (teams, game-by-game, timeouts, faults, duration) as proof of result. |
 
 ### 🎨 Feel & accessibility
 | Feature | What it does |

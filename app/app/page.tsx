@@ -2,10 +2,12 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Card, DeckMode, DECK_MODES, getFilteredCards, getDeck, shuffleArray, SKILL_LEVELS, SkillLevel, selectionLabel } from "@/lib/cards";
-import { GameSession, GameConfig, createGame, addScore, adjustScore, sideOut, undoLast, resetScore, startNewGame, newMatch, matchWinner, seriesTally, isPaused, pauseGame, resumePlay, elapsedMs, saveGame, listSavedGames, clearSavedGame, formatTime } from "@/lib/game";
+import { GameSession, GameConfig, createGame, addScore, adjustScore, sideOut, undoLast, resetScore, startNewGame, newMatch, matchWinner, seriesTally, isPaused, pauseGame, resumePlay, elapsedMs, saveGame, listSavedGames, clearSavedGame, formatTime, serverLabel, recordTimeout, recordFault, logCount } from "@/lib/game";
 import { playScoreSound, playUndoSound, playCardFlipSound, playWinSound, playResetSound, triggerHaptic } from "@/lib/sounds";
-import { addMatch, deckToCards, CustomDeck, listFavoriteIds, toggleFavorite, bumpStat } from "@/lib/client-api";
-import { Sun, Moon, Monitor, Play, Pause, X, Bug, HelpCircle, Sparkles, Sprout, TrendingUp, Flame } from "lucide-react";
+import { addMatch, deckToCards, CustomDeck, listFavoriteIds, toggleFavorite, bumpStat, matchSheet } from "@/lib/client-api";
+import { Sun, Moon, Monitor, Play, Pause, X, Bug, HelpCircle, Sparkles, Sprout, TrendingUp, Flame, Layers as LayersIcon, ClipboardCheck } from "lucide-react";
+import OfficialMatchSetup, { OfficialMatchOptions } from "@/components/OfficialMatchSetup";
+import OfficialControls from "@/components/OfficialControls";
 import TopBar from "@/components/TopBar";
 import CardDisplay from "@/components/CardDisplay";
 import ScoreKeeper from "@/components/ScoreKeeper";
@@ -72,6 +74,7 @@ export default function Home() {
   const [showBeginnerIntro, setShowBeginnerIntro] = useState(false);
   const [showTour, setShowTour] = useState(false);
   const [showGameHint, setShowGameHint] = useState(false);
+  const [homeTab, setHomeTab] = useState<"cards" | "track">("cards");
   const [customCards, setCustomCards] = useState<Card[] | null>(null);
   const [customName, setCustomName] = useState<string | null>(null);
   const [theme, setTheme] = useState<"dark" | "light" | "auto">("dark");
@@ -271,6 +274,44 @@ export default function Home() {
     }
   }, [allCards]);
 
+  // Coach / umpire "Track a match": start an official game. Cards use the full
+  // pool (Chaos) so they're available if the ref enabled them; behaviour is
+  // driven by config.officialMode, not the deck mode.
+  const startOfficialMatch = useCallback((opts: OfficialMatchOptions) => {
+    setCustomCards(null);
+    setCustomName(opts.eventLabel || "Official match");
+    setDeck(shuffleArray(getDeck(allCards, "chaos")));
+    setCurrentCard(null);
+    setCardHistory([]);
+    setMode("chaos");
+    setGame({
+      ...createGame("chaos", { team1: opts.team1, team2: opts.team2 }, {
+        officialMode: true,
+        gameType: opts.gameType,
+        pointsToWin: opts.pointsToWin,
+        bestOf: opts.bestOf,
+        eventLabel: opts.eventLabel,
+        cardsEnabled: opts.cardsEnabled,
+      }),
+      customName: opts.eventLabel || "Official match",
+    });
+  }, [allCards]);
+
+  // Download the current match's sheet as a .txt file (coach/umpire export).
+  const downloadMatchSheet = useCallback(() => {
+    if (!game) return;
+    try {
+      const blob = new Blob([matchSheet(game)], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      const safe = (game.config.eventLabel || "match").replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+      a.download = `pickleball-${safe}-${new Date().toISOString().slice(0, 10)}.txt`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch {}
+  }, [game]);
+
   const startDaily = useCallback(() => {
     if (!allCards.length) return;
     const now = new Date();
@@ -419,6 +460,22 @@ export default function Home() {
             <p className="mt-2 text-base" style={{ color: "var(--text-secondary)" }}>Draw twist cards. Shake up the game.</p>
           </div>
 
+          {/* Top-level mode toggle: casual card play vs coach/umpire match tracking.
+              Switchable any time - one tap changes the whole flow below. */}
+          <div className="w-full max-w-sm flex items-center gap-1.5 p-1 rounded-full" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}>
+            {([["cards", "Play with cards", LayersIcon], ["track", "Track a match", ClipboardCheck]] as const).map(([key, label, Icon]) => (
+              <button
+                key={key}
+                onClick={() => setHomeTab(key)}
+                className="pressable flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-full text-sm font-semibold transition-colors"
+                style={homeTab === key ? { background: "var(--accent)", color: "#fff" } : { color: "var(--text-secondary)" }}
+                aria-pressed={homeTab === key}
+              >
+                <Icon size={15} /> {label}
+              </button>
+            ))}
+          </div>
+
           {/* Resume in-progress games - multiple supported (F085) */}
           {savedGames.length > 0 && (
             <div className="w-full max-w-sm flex flex-col gap-2">
@@ -450,6 +507,12 @@ export default function Home() {
             </div>
           )}
 
+          {homeTab === "track" && (
+            <OfficialMatchSetup onStart={(o) => { triggerHaptic("light"); startOfficialMatch(o); }} />
+          )}
+
+          {homeTab === "cards" && (
+          <>
           {/* Daily challenge - same 30-card deck for everyone each day (F018) */}
           {allCards.length > 0 && (
             <button
@@ -529,6 +592,8 @@ export default function Home() {
               );
             })}
           </div>
+          </>
+          )}
           </main>
 
           {/* About / community note */}
@@ -598,6 +663,16 @@ export default function Home() {
 
         <ScoreKeeper game={game} onScore={handleScore} onSideOut={() => setGame(sideOut(game))} onAdjust={(team, delta) => { setGame(adjustScore(game, team, delta)); triggerHaptic("light"); }} />
 
+        {game.config.officialMode && (
+          <OfficialControls
+            game={game}
+            onTimeout={(team) => { setGame(recordTimeout(game, team)); triggerHaptic("light"); }}
+            onFault={(team) => { setGame(recordFault(game, team)); triggerHaptic("light"); }}
+            onSideOut={() => setGame(sideOut(game))}
+            onDownload={downloadMatchSheet}
+          />
+        )}
+
         {confirmTeam && (
           <div className="anim-pop glass flex items-center gap-3 p-3 rounded-xl" style={{ border: "1px solid var(--border)" }}>
             <span className="text-sm" style={{ color: "var(--text-secondary)" }}>
@@ -629,7 +704,8 @@ export default function Home() {
           {` Score: ${game.playerNames.team1} ${game.score.team1}, ${game.playerNames.team2} ${game.score.team2}.`}
         </div>
 
-        {showGameHint && (
+        {(() => { const cardsOn = !game.config.officialMode || game.config.cardsEnabled; return (<>
+        {showGameHint && cardsOn && (
           <div className="anim-pop glass flex items-start gap-3 p-3 rounded-2xl max-w-sm w-full" style={{ border: "1px solid var(--accent)" }}>
             <HelpCircle size={18} className="shrink-0 mt-0.5" style={{ color: "var(--accent)" }} />
             <span className="text-xs leading-relaxed flex-1" style={{ color: "var(--text-secondary)" }}>
@@ -641,6 +717,7 @@ export default function Home() {
           </div>
         )}
 
+        {cardsOn && (
         <CardDisplay
           card={currentCard}
           onDraw={drawCard}
@@ -655,8 +732,10 @@ export default function Home() {
             drawCard();
           } : undefined}
         />
+        )}
 
-        <CardHistory history={cardHistory} />
+        {cardsOn && <CardHistory history={cardHistory} />}
+        </>); })()}
       </div>
 
       <SettingsSheet

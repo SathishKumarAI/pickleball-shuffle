@@ -31,6 +31,12 @@ export interface SavedMatch {
   duration_ms: number;
   results: { team1: number; team2: number }[];
   created_at: number;
+  /* Coach / umpire "Track a match" extras (optional; absent for casual play). */
+  official?: boolean;
+  event_label?: string;
+  game_type?: string;
+  timeouts?: { team1: number; team2: number };
+  faults?: { team1: number; team2: number };
 }
 
 function read<T>(key: string, fallback: T): T {
@@ -70,6 +76,11 @@ export function listMatches(): SavedMatch[] {
 }
 export function addMatch(g: GameSession) {
   const matches = read<SavedMatch[]>(MATCHES_KEY, []);
+  const log = g.matchLog ?? [];
+  const countBy = (type: "timeout" | "fault") => ({
+    team1: log.filter((e) => e.type === type && e.team === 1).length,
+    team2: log.filter((e) => e.type === type && e.team === 2).length,
+  });
   const match: SavedMatch = {
     id: uid(),
     mode: g.mode,
@@ -82,8 +93,51 @@ export function addMatch(g: GameSession) {
     duration_ms: Date.now() - g.startTime,
     results: g.gameResults,
     created_at: Date.now(),
+    ...(g.config.officialMode
+      ? {
+          official: true,
+          event_label: g.config.eventLabel || undefined,
+          game_type: g.config.gameType,
+          timeouts: countBy("timeout"),
+          faults: countBy("fault"),
+        }
+      : {}),
   };
   write(MATCHES_KEY, [match, ...matches].slice(0, 200));
+}
+
+// A single-match "match sheet" as plain text - the shareable proof a coach or
+// umpire keeps (backlog: coach/umpire mode). Works off the live GameSession so
+// it can be offered the moment a match ends.
+export function matchSheet(g: GameSession): string {
+  const won = g.gamesWon.team1 + (g.winner === 1 ? 1 : 0);
+  const lost = g.gamesWon.team2 + (g.winner === 2 ? 1 : 0);
+  const winnerName =
+    g.winner === 1 ? g.playerNames.team1 : g.winner === 2 ? g.playerNames.team2 : "(unfinished)";
+  const games = [...g.gameResults];
+  if (g.winner) games.push({ ...g.score });
+  const lines: string[] = [];
+  lines.push("PICKLEBALL MATCH SHEET");
+  if (g.config.eventLabel) lines.push(`Event: ${g.config.eventLabel}`);
+  lines.push(`Format: ${g.config.gameType}${g.config.officialMode ? " (official)" : ""}`);
+  lines.push(`Date: ${new Date().toLocaleString()}`);
+  lines.push("");
+  lines.push(`${g.playerNames.team1}  vs  ${g.playerNames.team2}`);
+  lines.push(`Games: ${won} - ${lost}   Winner: ${winnerName}`);
+  lines.push("");
+  lines.push("Game-by-game:");
+  games.forEach((r, i) => lines.push(`  Game ${i + 1}:  ${r.team1} - ${r.team2}`));
+  const log = g.matchLog ?? [];
+  const to = { team1: log.filter((e) => e.type === "timeout" && e.team === 1).length, team2: log.filter((e) => e.type === "timeout" && e.team === 2).length };
+  const fa = { team1: log.filter((e) => e.type === "fault" && e.team === 1).length, team2: log.filter((e) => e.type === "fault" && e.team === 2).length };
+  if (to.team1 || to.team2 || fa.team1 || fa.team2) {
+    lines.push("");
+    lines.push(`Timeouts:  ${g.playerNames.team1} ${to.team1}, ${g.playerNames.team2} ${to.team2}`);
+    lines.push(`Faults:    ${g.playerNames.team1} ${fa.team1}, ${g.playerNames.team2} ${fa.team2}`);
+  }
+  lines.push("");
+  lines.push(`Duration: ${Math.round((Date.now() - g.startTime) / 60000)} min`);
+  return lines.join("\n");
 }
 export function clearMatches() {
   write(MATCHES_KEY, []);

@@ -1,5 +1,43 @@
 # Worklog
 
+## 2026-07-01 04:30 — Coach / Umpire "Track a match" mode (T11)
+
+**Summary:** Added a coach/umpire match-recording mode on top of the card game.
+A home segmented toggle `Play with cards` / `Track a match` (switchable any time —
+this answers "can the mode change after selecting?": yes, one tap) leads to an
+official-match setup and a proper officiating flow. Engine + client-api unit-tested
+(64 tests green), validated live in-browser.
+
+**Changes:**
+- `components/OfficialMatchSetup.tsx` (new) — setup: singles/doubles, player/team
+  names, event/round label, points-to-win (11/15/21), match length, cards on/off.
+- `components/OfficialControls.tsx` (new) — in-match: serving indicator + server
+  number, per-team timeout/fault buttons, side-out, one-tap match-sheet download.
+- `lib/game.ts` — `officialMode`/`cardsEnabled`/`eventLabel` config, `matchLog`,
+  `serverLabel`/`recordTimeout`/`recordFault`/`logCount`, and real two-server doubles
+  rotation in `sideOut` (gated by `officialMode`, so casual play is unchanged).
+- `lib/client-api.ts` — official fields on `SavedMatch`/`addMatch`; `matchSheet()`
+  plain-text export (teams, game-by-game, timeouts/faults, duration).
+- `app/page.tsx` — home toggle, `startOfficialMatch`, `downloadMatchSheet`,
+  official controls wiring, card UI hidden when cards are off.
+- Tests — `lib/game.test.ts` (+rotation, +log), `lib/client-api.test.ts` (new;
+  addMatch official fields + matchSheet).
+- Docs — README "Coach / Umpire mode" table, ONBOARDING, TICKETS T11 → shipped,
+  spec Phase 2 → shipped (with the toggle refinement), app/CLAUDE.md structure.
+
+**Decisions:**
+- Top-level choice became a **home segmented toggle**, not a separate screen — makes
+  the mode switchable in one tap (the explicit ask) and keeps casual play default.
+- Advanced rotation is **gated behind `config.officialMode`** so existing/casual and
+  singles behaviour is byte-for-byte unchanged (proven by the casual rotation test).
+- Tracked-match **format locks once underway** (rotation math); change at setup/New Match.
+- Browser batching note: driving a full 11-point win via scripted synchronous clicks
+  hits one React state snapshot (net +1), so the win→history→sheet path was locked with
+  unit tests instead; rotation/controls/logging/card-hiding verified live.
+
+**Follow-ups:**
+- [ ] Production deploy (both this + v1) — Vercel CLI/login still owner-run via `./deploy-vercel.sh`.
+
 ## 2026-07-01 01:20 — Understand & Play v1 (onboarding + self-explaining cards)
 
 **Summary:** Shipped a zero-knowledge-user layer so a first-timer with no pickleball
