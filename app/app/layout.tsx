@@ -54,13 +54,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`h-full ${display.variable} ${body.variable}`} data-theme="dark">
+    <html lang="en" className={`${display.variable} ${body.variable}`} data-theme="dark">
       <head>
         <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       </head>
-      <body className="min-h-full">
+      <body className="min-h-dvh">
         <ToastProvider>
           <NetworkStatus />
           {children}
