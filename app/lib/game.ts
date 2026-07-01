@@ -27,6 +27,8 @@ export interface GameConfig {
   cardsEnabled?: boolean;
   /* Optional event / round label recorded with the match. */
   eventLabel?: string;
+  /* Speak the score aloud after each point (Web Speech API). Off by default. */
+  announceScore?: boolean;
 }
 
 /* One entry in an official match's log: a timeout, a manual fault, or the
@@ -83,7 +85,31 @@ export const DEFAULT_CONFIG: GameConfig = {
   officialMode: false,
   cardsEnabled: true,
   eventLabel: "",
+  announceScore: false,
 };
+
+// Plain-language description of what changed between two game states, for the
+// on-screen "consequence" banner and the optional voice announce. Pure so it's
+// unit-testable. Returns "" when nothing meaningful changed.
+export function outcomeMessage(prev: GameSession, next: GameSession): string {
+  const name = (t: 1 | 2) => (t === 1 ? next.playerNames.team1 : next.playerNames.team2);
+  if (next.winner && next.winner !== prev.winner) {
+    return `${name(next.winner)} wins the game!`;
+  }
+  // A point was scored (one team's score went up).
+  if (next.score.team1 > prev.score.team1) return `Point ${name(1)} — ${next.score.team1}-${next.score.team2}`;
+  if (next.score.team2 > prev.score.team2) return `Point ${name(2)} — ${next.score.team1}-${next.score.team2}`;
+  // Serve passed to the other team.
+  if (next.servingTeam !== prev.servingTeam) {
+    const label = next.config.gameType !== "singles" ? ", server 1" : "";
+    return `Side out — ${name(next.servingTeam)} serves${label}`;
+  }
+  // Same team, advanced from 1st to 2nd server (doubles).
+  if (next.serverNumber !== prev.serverNumber) {
+    return `${name(next.servingTeam)} — 2nd server serves`;
+  }
+  return "";
+}
 
 export function createGame(
   mode: string,

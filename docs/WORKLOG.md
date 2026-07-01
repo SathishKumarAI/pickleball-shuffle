@@ -1,5 +1,39 @@
 # Worklog
 
+## 2026-07-01 14:31 — Beginner-first score UI (research-backed redesign)
+
+**Summary:** Researched how top pickleball apps keep score for beginners, saved the findings,
+and implemented the recommendations so non-IT users can score doubles without knowing side-out
+rules. Reframed the score UI from "add a point" to "who won the rally" + plain narration.
+
+**Changes:**
+- `docs/SCORING-UX-RESEARCH.md` (new) — app survey (Dropshot/Referee/Side Out/Score Counter/
+  Calculator), rally-vs-side-out 2026 context, options weighed, decision, sources.
+- `lib/game.ts` — pure `outcomeMessage(prev,next)` narration helper; `config.announceScore`.
+- `lib/sounds.ts` — `speak()` via Web Speech API (guarded, opt-in).
+- `components/ScoreKeeper.tsx` — "Who won the rally?" prompt; tiles relabelled "won the rally";
+  serve badge (ball + server-1/2 dots for doubles); consequence narration banner (+voice when
+  enabled); NET divider (court-side framing) in official mode.
+- `components/SettingsSheet.tsx` — "Announce score aloud" toggle (off by default).
+- `components/OfficialControls.tsx` / `OfficialMatchSetup.tsx` — dynamic serve button + Side-out/
+  Rally choice (from the prior doubles-clarity commit).
+- `lib/game.test.ts` — 5 `outcomeMessage` tests.
+
+**Decisions:**
+- Adopted the pattern every top-reviewed app converged on — **tap who won the rally, app applies
+  the rules** — because it needs zero rules knowledge and our engine already routes taps that way,
+  so it's a framing + feedback change with no behaviour change.
+- Narration is essential: on a side-out the score doesn't move, so a plain banner ("Eagles — 2nd
+  server serves") explains *why* — this is the real fix for "I can only score one team."
+- Voice + rally kept opt-in; side-out stays default (MLP reverted rally→side-out in 2026).
+
+**Validation:** 69 tests pass, clean build, 0 lint errors in changed files. Live browser (doubles,
+official): who-won prompt, relabeled tiles, serve badge reflecting server 1→2, narration for
+point / side-out / 2nd-server, dynamic serve button, voice toggle present (off).
+
+**Follow-ups:**
+- [ ] Push + production deploy (owner GitHub/Vercel auth).
+
 ## 2026-07-01 14:09 — Track-a-match scroll fix + full UI validation
 
 **Summary:** Fixed the "scroll not working" report on the Track-a-match setup and

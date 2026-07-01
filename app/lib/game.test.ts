@@ -22,6 +22,7 @@ import {
   recordTimeout,
   recordFault,
   logCount,
+  outcomeMessage,
   DEFAULT_CONFIG,
   type GameConfig,
   type GameSession,
@@ -327,5 +328,38 @@ describe("official mode: match log", () => {
     g = { ...g, score: { team1: 3, team2: 2 }, gameNumber: 2 };
     g = recordTimeout(g, 2);
     expect(g.matchLog?.[0]).toMatchObject({ score: { team1: 3, team2: 2 }, gameNumber: 2 });
+  });
+});
+
+describe("outcomeMessage (score narration)", () => {
+  const base = () => createGame("track", { team1: "Eagles", team2: "Hawks" }, { officialMode: true, gameType: "doubles" });
+
+  it("describes a point for the serving team", () => {
+    const prev = base();
+    const next = addScore(prev, 1); // Eagles serving, wins -> point
+    expect(outcomeMessage(prev, next)).toBe("Point Eagles — 1-0");
+  });
+
+  it("describes advancing to the 2nd server (same team)", () => {
+    const prev = base(); // Eagles server 1
+    const next = sideOut(prev); // -> server 2 same team
+    expect(outcomeMessage(prev, next)).toBe("Eagles — 2nd server serves");
+  });
+
+  it("describes a side-out to the other team with server 1", () => {
+    const prev = { ...base(), serverNumber: 2 as const };
+    const next = sideOut(prev); // -> other team, server 1
+    expect(outcomeMessage(prev, next)).toBe("Side out — Hawks serves, server 1");
+  });
+
+  it("announces the winner", () => {
+    const prev = { ...base(), score: { team1: 10, team2: 0 } };
+    const next = addScore(prev, 1); // 11-0 win
+    expect(outcomeMessage(prev, next)).toBe("Eagles wins the game!");
+  });
+
+  it("returns empty string when nothing meaningful changed", () => {
+    const g = base();
+    expect(outcomeMessage(g, g)).toBe("");
   });
 });

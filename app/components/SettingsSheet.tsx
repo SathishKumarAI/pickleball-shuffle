@@ -60,6 +60,7 @@ export default function SettingsSheet({
         <Toggle label="Side-out scoring" value={config.sideOutScoring} onChange={(v) => onUpdate("sideOutScoring", v)} />
         <Toggle label="Confirm before scoring" value={config.confirmScore} onChange={(v) => onUpdate("confirmScore", v)} />
         <Toggle label="Sound effects" value={config.soundEnabled} onChange={(v) => onUpdate("soundEnabled", v)} />
+        <Toggle label="Announce score aloud" value={!!config.announceScore} onChange={(v) => onUpdate("announceScore", v)} />
         <Toggle label="Commentator voice (longer card text)" value={config.commentaryMode} onChange={(v) => onUpdate("commentaryMode", v)} />
 
         <div className="mt-6 pt-4 flex flex-col gap-2" style={{ borderTop: "1px solid var(--border)" }}>
