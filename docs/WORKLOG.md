@@ -1,5 +1,48 @@
 # Worklog
 
+## 2026-07-01 01:20 — Understand & Play v1 (onboarding + self-explaining cards)
+
+**Summary:** Shipped a zero-knowledge-user layer so a first-timer with no pickleball
+background can open the app and play immediately — first-run welcome tour, tap-to-define
+jargon, per-card "?" explainer, always-shown "What to do", an in-game hint, and a
+"Why & how" help tab. Brainstormed → spec'd → built → browser-validated → committed
+(`f17cd1e`). Also scoped a Coach/Umpire match-recording mode as planned Phase 2.
+
+**Changes:**
+- `components/WelcomeTour.tsx` (new) — 4-slide first-run carousel (what/why, how-to,
+  navigation, start), localStorage-gated (`pb-welcome-tour-seen`), replayable from Rules.
+- `components/GlossaryText.tsx` (new) — highlights known pickleball terms in card text,
+  tap opens a definition popover.
+- `lib/glossary.ts` (new) — shared glossary (17 terms + aliases); RulesPanel glossary tab
+  now sources from it so tab + in-card defs never drift.
+- `lib/cards.ts` — `CATEGORY_INFO` plain-language description per category.
+- `components/CardDisplay.tsx` — "?" explainer sheet (what it means / how to play / what
+  kind of card), always-shown "What to do" line, GlossaryText on rule + detail.
+- `components/RulesPanel.tsx` — new default "Why & how" tab (benefits + navigation) +
+  "Replay welcome tour" button.
+- `app/page.tsx` — tour + one-time in-game hint wiring (`pb-game-hint-seen`).
+- Docs — README "Learn & understand" group; ONBOARDING new-features + fixed stale
+  "200"→"1,729"; TICKETS shipped entry + planned coach mode T11; app/CLAUDE.md structure;
+  spec `docs/superpowers/specs/2026-06-30-understand-and-play-design.md` (persona journey
+  + Phase 2 coach-mode design).
+
+**Decisions:**
+- Extracted the glossary to a shared module (single source for the Rules tab and the
+  in-card highlighter) instead of duplicating term lists.
+- Made the "?" the primary explainer; tap-to-define stays inline — they complement.
+- Coach/Umpire mode kept as **pending** (per owner) — documented + task-broken (#7–#10),
+  not built in v1. Chosen shape: top-level choice screen after the tour, scorekeeper +
+  optional cards, singles/doubles + server rotation + side-switch + timeouts/faults,
+  saves to Match history + exportable match sheet.
+- Caught during browser validation: WelcomeTour was first placed in the game-screen
+  return, never the home (early) return — moved into `if (!game)` branch; verified the
+  tour, hint, explainer, and tap-to-define all render live at 390px.
+
+**Follow-ups:**
+- [ ] Production deploy — Vercel CLI not installed + no saved auth (interactive `vercel login`).
+      Owner to run `./deploy-vercel.sh` (installs CLI, logs in, `vercel --prod` from repo root).
+- [ ] Build Coach/Umpire mode (tasks #7–#10 / ticket T11).
+
 ## 2026-06-24 — feature shortlist build-out + continuous deploys
 
 **Summary:** Built and shipped the full approved feature shortlist on branch
