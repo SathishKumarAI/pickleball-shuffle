@@ -1,5 +1,29 @@
 # Worklog
 
+## 2026-07-01 — Server clarity on TV + PWA scroll fix
+
+**Summary:** Mirrored the 1st/2nd-server indicator onto the big-score/TV display, and fixed
+a standalone-PWA scroll bug where the tall Track-a-match setup form couldn't scroll.
+
+**Changes:**
+- `components/OfficialControls.tsx` — serving status card with explicit `1ST SERVER`/`2ND SERVER`
+  pills (current highlighted) + "<n> server up · Fault → <next>" hint.
+- `components/ScoreKeeper.tsx` — visible "1st/2nd server" chip on the serving tile; server badge
+  shown only in official doubles (hidden in casual doubles where it never rotates).
+- `components/TVScore.tsx` — serving team shows a "1st/2nd server" chip (official doubles); added
+  `min-h-0 overflow-y-auto` guard so the fixed view can't clip on short/landscape screens.
+- `app/layout.tsx` — **PWA scroll fix**: removed `h-full` from `<html>` (was pinning it to
+  height:100%, clipping overflow in standalone), body → `min-h-dvh`. Document now scrolls naturally.
+
+**Decisions:**
+- Server badge gated to official doubles so casual play never shows a misleading static "server 1".
+- Root cause of "scroll not working": `<html class=h-full>` — invisible in-browser (address bar
+  masks it) but clips in the installed PWA. Verified html height now grows to content (1337px vs
+  927px viewport) and the page scrolls.
+
+**Validation:** 69 tests, clean build; browser-checked server chips on scoreboard + TV, and the
+Track form scroll (Start button reachable).
+
 ## 2026-07-01 14:31 — Beginner-first score UI (research-backed redesign)
 
 **Summary:** Researched how top pickleball apps keep score for beginners, saved the findings,
