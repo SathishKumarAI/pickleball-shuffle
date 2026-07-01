@@ -15,6 +15,9 @@ export default function TVScore({
   onExit: () => void;
 }) {
   const locked = game.config.scoreLocked || !!game.winner;
+  // Server 1/2 only rotates in official doubles - show it there so a courtside
+  // viewer sees which server is up, matching the main scoreboard.
+  const officialDoubles = game.config.gameType !== "singles" && !!game.config.officialMode;
 
   return (
     <div className="fixed inset-0 z-[85] flex flex-col" style={{ background: "var(--bg)" }}>
@@ -32,12 +35,14 @@ export default function TVScore({
         </button>
       </div>
 
-      <div className="flex-1 grid grid-cols-2 gap-2 p-3">
+      <div className="flex-1 min-h-0 overflow-y-auto grid grid-cols-2 gap-2 p-3">
         <TeamSide
           name={game.playerNames.team1}
           score={game.score.team1}
           color="var(--blue)"
           serving={game.servingTeam === 1}
+          serverNumber={game.serverNumber}
+          showServer={officialDoubles}
           disabled={locked}
           onClick={() => onScore(1)}
         />
@@ -46,6 +51,8 @@ export default function TVScore({
           score={game.score.team2}
           color="var(--red)"
           serving={game.servingTeam === 2}
+          serverNumber={game.serverNumber}
+          showServer={officialDoubles}
           disabled={locked}
           onClick={() => onScore(2)}
         />
@@ -58,14 +65,15 @@ export default function TVScore({
   );
 }
 
-function TeamSide({ name, score, color, serving, disabled, onClick }: {
-  name: string; score: number; color: string; serving: boolean; disabled: boolean; onClick: () => void;
+function TeamSide({ name, score, color, serving, serverNumber, showServer, disabled, onClick }: {
+  name: string; score: number; color: string; serving: boolean; serverNumber: 1 | 2; showServer: boolean; disabled: boolean; onClick: () => void;
 }) {
+  const serveDesc = serving ? `, serving${showServer ? `, ${serverNumber === 1 ? "1st" : "2nd"} server` : ""}` : "";
   return (
     <button
       onClick={onClick}
       disabled={disabled}
-      aria-label={`Add point to ${name}, currently ${score}${serving ? ", serving" : ""}`}
+      aria-label={`${name} won the rally - tap to record. ${name} currently ${score}${serveDesc}`}
       className="flex flex-col items-center justify-center gap-3 rounded-3xl active:scale-[0.98] transition-transform disabled:opacity-60"
       style={{
         background: `linear-gradient(160deg, color-mix(in srgb, ${color} 22%, var(--bg-card)), var(--bg-card))`,
@@ -79,7 +87,19 @@ function TeamSide({ name, score, color, serving, disabled, onClick }: {
         {name}
       </span>
       {serving && (
-        <span className="text-xs font-bold uppercase tracking-wider" style={{ color }}>Serving</span>
+        <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider" style={{ color }}>
+          Serving
+          {showServer && (
+            <span className="flex items-center gap-1.5 px-2 py-0.5 rounded-full" style={{ background: color, color: "#fff" }}>
+              <span className="flex items-center gap-0.5">
+                {[1, 2].map((n) => (
+                  <span key={n} className="w-1.5 h-1.5 rounded-full" style={{ background: n <= serverNumber ? "#fff" : "rgba(255,255,255,0.4)" }} />
+                ))}
+              </span>
+              {serverNumber === 1 ? "1st" : "2nd"} server
+            </span>
+          )}
+        </span>
       )}
     </button>
   );
