@@ -433,7 +433,7 @@ export default function Home() {
             <AppMenu onOpenHistory={() => setShowHistory(true)} onOpenDecks={() => setShowDecks(true)} onOpenFavorites={() => setShowFavorites(true)} onOpenFeedback={() => setShowFeedback(true)} onOpenRules={() => setShowRules(true)} onOpenBrowser={() => setShowBrowser(true)} onOpenAchievements={() => setShowAchievements(true)} />
           </header>
 
-          <main className="flex-1 flex flex-col items-center justify-center gap-8 px-6 py-8 safe-bottom">
+          <main className={`flex-1 flex flex-col items-center gap-8 px-6 py-8 safe-bottom ${homeTab === "track" ? "justify-start" : "justify-center"}`}>
           <div className="text-center anim-fade-up">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
