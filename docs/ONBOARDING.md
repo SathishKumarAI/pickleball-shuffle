@@ -1,6 +1,6 @@
 # Onboarding - Pickleball Card Games
 
-> A mobile-first, **local-first** web app: 200 pickleball "twist" cards + a real scorekeeper. No backend, no login, no database - all state in `localStorage`.
+> A mobile-first, **local-first** web app: 1,729 pickleball "twist" cards + a real scorekeeper. No backend, no login, no database - all state in `localStorage`.
 
 **Live:** https://pickleball-card-games.vercel.app · **Repo:** https://github.com/SathishKumarAI/pickleball-shuffle
 **Related docs:** [WORKLOG](WORKLOG.md) · [Bug log](BUG-LOG.md) · [UI layout notes](UI-LAYOUT-NOTES.md) · [Tickets](TICKETS.md)
@@ -13,6 +13,13 @@ A free pickleball party game fused with a scorekeeper. Tap to draw a card, play 
 
 ## What's new (look out for these)
 
+- **Understand & Play (v1)** - onboarding + self-explaining cards for people with zero pickleball knowledge:
+  - **Welcome tour** on first open (what it is / how to play / how to navigate), replayable from Rules & help.
+  - **Tap-to-define jargon** - underlined terms on a card open a plain-language definition (shared `lib/glossary.ts`).
+  - **Per-card "?" explainer** - "what this means / how to play it / what kind of card" (plain-language `CATEGORY_INFO`).
+  - **Always-shown "What to do"** line + a one-time in-game coaching hint.
+  - **Rules & help → "Why & how"** tab (benefits + navigation), Glossary now sourced from the shared file.
+- **Coming next: Coach / Umpire mode** (planned, see spec Phase 2) - run and record a real match, chosen from a top-level screen after the welcome tour.
 - **1,729-card deck** with per-card metadata - `rarity` (badge on the card), `intensity`, `tags`, plus both a concise `effect` and a `commentary` string. Full dataset + the "why 1729": [`docs/data/cards.json`](data/cards.json).
 - **Commentator voice toggle** (Settings) - switch every card between concise rules and hyped commentator text.
 - **In-game pause** - freezes the match clock + blocks play, persists across reload.
@@ -42,7 +49,7 @@ All npm work happens in **`app/`** (the Next.js project root). The helper script
 ### Verify it works
 - [ ] `http://localhost:3000` loads the landing page (new card+pickleball logo)
 - [ ] Pick a deck mode → draw a card → tap a score tile → score changes
-- [ ] `http://localhost:3000/cards.json` returns 200 (200-card payload)
+- [ ] `http://localhost:3000/cards.json` returns 200 (1,729-card payload)
 - [ ] `cd app && npm run build` is clean
 
 ---
@@ -55,7 +62,7 @@ Phone / Browser
       v
 [Next.js 16 App Router]  ← 100% client-rendered game
       |
-      +→ public/cards.json   (the 200 cards, fetched no-store)
+      +→ public/cards.json   (the 1,729 cards, fetched no-store)
       +→ localStorage        (active game, custom decks, history, favorites, feedback backup)
       +→ public/sw.js        (network-first service worker, prod only)
 ```
@@ -81,7 +88,7 @@ No server, no DB, no auth. Deployed as a static/SSR Next app on Vercel (project 
 | `app/lib/client-api.ts` | Local store: custom decks, match history, export/import (**the swap point if a real DB is ever added**) |
 | `app/lib/sounds.ts` | Web Audio SFX + haptics |
 | `app/components/` | `CardDisplay` (3D flip), `ScoreKeeper`, `TopBar`, `WinCelebration`, `*Panel.tsx`, `icons.tsx` |
-| `app/public/cards.json` | The 200 cards (source of truth: `data/cards.json`) |
+| `app/public/cards.json` | The 1,729 cards (source of truth: `data/cards.json`) |
 | `app/app/globals.css` | Theme CSS vars + `anim-*` animation utilities |
 | `app/app/icon.svg`, `app/public/icons/` | Brand logo + PWA icons (regen via `rsvg-convert`) |
 | `setup.sh` / `run-dev.sh` / `run-prod.sh` / `deploy-vercel.sh` | Repo-root helper scripts |

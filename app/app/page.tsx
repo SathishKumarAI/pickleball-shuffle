@@ -22,6 +22,7 @@ import RulesPanel from "@/components/RulesPanel";
 import CardBrowserPanel from "@/components/CardBrowserPanel";
 import TVScore from "@/components/TVScore";
 import AchievementsPanel from "@/components/AchievementsPanel";
+import WelcomeTour from "@/components/WelcomeTour";
 import { MODE_ICONS } from "@/components/icons";
 import { useFocusTrap } from "@/lib/useFocusTrap";
 import { useToast } from "@/components/Toast";
@@ -44,6 +45,8 @@ const SKILL_ORDER: { key: SkillLevel; Icon: typeof Sprout }[] = [
 ];
 
 const BEGINNER_INTRO_KEY = "pb-beginner-intro-seen";
+const WELCOME_TOUR_KEY = "pb-welcome-tour-seen";
+const GAME_HINT_KEY = "pb-game-hint-seen";
 
 // Tiny seeded PRNG so the daily challenge deck is identical for everyone on a
 // given day, with no backend (backlog F018).
@@ -67,6 +70,8 @@ export default function Home() {
   const [elapsed, setElapsed] = useState("0:00");
   const [mode, setMode] = useState<string>("chaos");
   const [showBeginnerIntro, setShowBeginnerIntro] = useState(false);
+  const [showTour, setShowTour] = useState(false);
+  const [showGameHint, setShowGameHint] = useState(false);
   const [customCards, setCustomCards] = useState<Card[] | null>(null);
   const [customName, setCustomName] = useState<string | null>(null);
   const [theme, setTheme] = useState<"dark" | "light" | "auto">("dark");
@@ -191,6 +196,32 @@ export default function Home() {
   useEffect(() => {
     try { localStorage.setItem("pb-theme", theme); } catch {}
   }, [theme]);
+
+  // First-ever visit: show the welcome tour (what it is / how to play / how to
+  // navigate). Gated by localStorage so it only appears once.
+  useEffect(() => {
+    try {
+      if (!localStorage.getItem(WELCOME_TOUR_KEY)) setShowTour(true);
+    } catch {}
+  }, []);
+  const closeTour = useCallback(() => {
+    try { localStorage.setItem(WELCOME_TOUR_KEY, "1"); } catch {}
+    setShowTour(false);
+  }, []);
+  const replayTour = useCallback(() => { setShowRules(false); setShowTour(true); }, []);
+
+  // One-time coaching hint the first time a game screen opens (skip Beginner
+  // mode, which already shows its own intro).
+  useEffect(() => {
+    if (!game || game.mode === "beginner") return;
+    try {
+      if (!localStorage.getItem(GAME_HINT_KEY)) setShowGameHint(true);
+    } catch {}
+  }, [game]);
+  const dismissGameHint = useCallback(() => {
+    try { localStorage.setItem(GAME_HINT_KEY, "1"); } catch {}
+    setShowGameHint(false);
+  }, []);
 
   // Keep the screen awake during an active game so it doesn't dim mid-match
   // on a phone propped courtside (backlog F188). Re-acquires after the tab
@@ -526,9 +557,10 @@ export default function Home() {
         <DecksPanel open={showDecks} onClose={() => setShowDecks(false)} onPlay={startCustomDeck} />
         <FavoritesPanel open={showFavorites} onClose={() => setShowFavorites(false)} cards={favoriteCards} onRemove={(id) => setFavoriteIds(toggleFavorite(id))} />
         <FeedbackPanel open={showFeedback} onClose={() => setShowFeedback(false)} />
-        <RulesPanel open={showRules} onClose={() => setShowRules(false)} />
+        <RulesPanel open={showRules} onClose={() => setShowRules(false)} onReplayTour={replayTour} />
         <CardBrowserPanel open={showBrowser} onClose={() => setShowBrowser(false)} allCards={allCards} />
         <AchievementsPanel open={showAchievements} onClose={() => setShowAchievements(false)} />
+        <WelcomeTour open={showTour} onClose={closeTour} />
       </>
     );
   }
@@ -596,6 +628,18 @@ export default function Home() {
           {currentCard ? `Drew ${currentCard.name}. ${currentCard.effect}` : ""}
           {` Score: ${game.playerNames.team1} ${game.score.team1}, ${game.playerNames.team2} ${game.score.team2}.`}
         </div>
+
+        {showGameHint && (
+          <div className="anim-pop glass flex items-start gap-3 p-3 rounded-2xl max-w-sm w-full" style={{ border: "1px solid var(--accent)" }}>
+            <HelpCircle size={18} className="shrink-0 mt-0.5" style={{ color: "var(--accent)" }} />
+            <span className="text-xs leading-relaxed flex-1" style={{ color: "var(--text-secondary)" }}>
+              Tap the card to draw a twist, then tap a team&apos;s score to give them the point. Unsure what a card means? Tap the <strong style={{ color: "var(--text)" }}>?</strong> on it.
+            </span>
+            <button onClick={dismissGameHint} aria-label="Dismiss hint" className="pressable p-1 -m-1 rounded-full shrink-0" style={{ color: "var(--text-muted)" }}>
+              <X size={16} />
+            </button>
+          </div>
+        )}
 
         <CardDisplay
           card={currentCard}
@@ -696,9 +740,10 @@ export default function Home() {
       <DecksPanel open={showDecks} onClose={() => setShowDecks(false)} onPlay={startCustomDeck} />
       <FavoritesPanel open={showFavorites} onClose={() => setShowFavorites(false)} cards={favoriteCards} onRemove={(id) => setFavoriteIds(toggleFavorite(id))} />
       <FeedbackPanel open={showFeedback} onClose={() => setShowFeedback(false)} />
-      <RulesPanel open={showRules} onClose={() => setShowRules(false)} />
+      <RulesPanel open={showRules} onClose={() => setShowRules(false)} onReplayTour={replayTour} />
         <CardBrowserPanel open={showBrowser} onClose={() => setShowBrowser(false)} allCards={allCards} />
         <AchievementsPanel open={showAchievements} onClose={() => setShowAchievements(false)} />
+        <WelcomeTour open={showTour} onClose={closeTour} />
     </div>
   );
 }

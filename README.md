@@ -62,6 +62,16 @@ Everything the app does, grouped so you can find it fast.
 | **Export / Import backup** | Move decks + history between devices via a JSON file - no account, no upload. |
 | **Offline** | A service worker keeps it working at courts with bad signal. |
 
+### 🧭 Learn & understand (no pickleball knowledge needed)
+| Feature | What it does |
+|---|---|
+| **Welcome tour** | On first open, a short swipeable tour: what the app is, how to play, and how to get around. Replayable from **Rules & help**. |
+| **Tap-to-define jargon** | Terms on a card (dink, kitchen, erne, side-out…) are underlined - tap one for a plain-language definition. One shared glossary powers this and the Rules tab. |
+| **Per-card "?" explainer** | Every card has a **?** that opens *what this means · how to play it · what kind of card* in beginner-friendly words. |
+| **"What to do" line** | The card always shows a concrete "what to do this point", not just the constraint - plus a one-time in-game hint. |
+| **"Why & how" help tab** | Rules & help opens on a benefits + navigation tab so a newcomer knows *why* to use it and *where* everything is. |
+| **Coming next: Coach / Umpire mode** | Planned - run and record a real match (singles/doubles, server rotation, side-switch, timeouts, exportable match sheet). Chosen from a top-level screen after the tour. |
+
 ### 🎨 Feel & accessibility
 | Feature | What it does |
 |---|---|

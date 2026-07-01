@@ -22,10 +22,12 @@ vercel --prod    # deploy - run from REPO ROOT, not app/
 ## Structure
 ```
 app/page.tsx          - the whole game: state, draw, score, resume, panels
-components/           - CardDisplay (3D flip), ScoreKeeper, TopBar, CardHistory,
-                        WinCelebration, PlayerNames, SettingsSheet, AppMenu,
-                        HistoryPanel, DecksPanel, FeedbackPanel, icons.tsx
-lib/cards.ts          - card types, deck modes, filtering, shuffle
+components/           - CardDisplay (3D flip + "?" explainer), ScoreKeeper, TopBar,
+                        CardHistory, WinCelebration, PlayerNames, SettingsSheet, AppMenu,
+                        HistoryPanel, DecksPanel, FeedbackPanel, RulesPanel, icons.tsx,
+                        WelcomeTour (first-run onboarding), GlossaryText (tap-to-define)
+lib/cards.ts          - card types, deck modes, filtering, shuffle, CATEGORY_INFO
+lib/glossary.ts       - shared pickleball glossary (Rules tab + in-card highlighter)
 lib/game.ts           - PURE game engine (addScore/sideOut/undo/checkWin) + active-game localStorage
 lib/client-api.ts     - local store: custom decks, match history, export/import
 lib/sounds.ts         - Web Audio SFX + haptics

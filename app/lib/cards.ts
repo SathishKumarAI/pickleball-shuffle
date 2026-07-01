@@ -98,6 +98,22 @@ export const CATEGORY_EMOJI: Record<string, string> = {
   "Meta & Game-Flow": "🎲",
 };
 
+// Plain-language, jargon-free description of each category — shown in the
+// per-card "?" explainer so a first-time player understands what *kind* of
+// card they drew (a rule? a dare? a reward?) without knowing the app.
+export const CATEGORY_INFO: Record<string, string> = {
+  "Shot Restriction": "A rule card — it limits how you're allowed to hit for this one point. Play the point under the limit; break it and you lose the point.",
+  "Body & Movement": "A movement challenge — it changes how you move or stand for this point (like a spin or a stance). Just try your best and have fun with it.",
+  "Wild Card / Swap": "A shake-up card — it swaps something around, like partners, sides, or who serves. Follow what it says, then play on.",
+  "Penalty": "A setback card — one team gives up a small advantage. It's meant to be playful, not mean.",
+  "Bonus / Reward": "A reward card — one team gets a perk or extra points. Enjoy the boost!",
+  "Social & Party": "A fun/social card — a lighthearted dare or group moment. No skill needed, just play along.",
+  "Strategy / Skill": "A skill card — it nudges you to try a smarter shot or tactic this point. A good chance to learn something.",
+  "Wacky / Chaos": "A chaos card — something silly or unexpected. Roll with it; it's about laughs, not winning.",
+  "Court / Environment": "An environment card — it changes the court or conditions for this point. Adjust and keep playing.",
+  "Meta & Game-Flow": "A game-flow card — it changes the score, the serve, or how the game runs. Read it, apply it, carry on.",
+};
+
 export function shuffleArray<T>(arr: T[]): T[] {
   const shuffled = [...arr];
   for (let i = shuffled.length - 1; i > 0; i--) {

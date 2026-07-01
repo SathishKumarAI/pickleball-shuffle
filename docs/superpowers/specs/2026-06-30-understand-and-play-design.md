@@ -86,3 +86,34 @@ Tap-to-define stays inline; the `?` is the primary explainer. They complement.
 - Per-card hand-authored beginner rewrites for all 1,729 cards (uses existing `detail`).
 - Full spotlight/coach-mark library.
 - i18n of glossary.
+
+---
+
+## Phase 2 (planned) — Coach / Umpire match-recording mode
+
+**Status:** pending (tasks #7–#10). Not built in v1; documented here so v1 onboarding accounts for it.
+
+**Goal:** Give a coach or umpire a way to run and record a *real* pickleball match — proper scoring, rotation, and an exportable result — while keeping the fun card game as the default experience.
+
+**Entry point.** After the WelcomeTour, a **top-level choice screen**:
+`Play with cards` (today's deck-mode flow) vs `Track a match (coach/umpire)`. The card modes (Family/Party/Drill/Tournament/Chaos) live under the first branch.
+
+**What it is.** A **scorekeeper with optional cards** — twist cards are OFF by default in this mode; the ref can enable them. Focus is accurate scoring + a clean record.
+
+**Rules tracked.**
+- **Singles + doubles** formats (doubles adds the two-server rotation).
+- **Server number (1/2) + rotation** — correct server shown, rotates on side-outs.
+- **Side switch** prompt at the halfway score (6 in an 11-point game / at game point per format).
+- **Timeouts + faults** — buttons that append entries to a per-match log.
+
+**Output for the official.**
+- **Saved to Match history** (reuses existing local history): player/team names, event/round label, final + game-by-game scores, duration.
+- **Exportable match sheet** — download a CSV/text sheet as shareable proof of result (via `lib/client-api.ts`).
+- **Player/team + event labels** captured at match start.
+
+**Implementation notes.**
+- Extend the pure engine in `lib/game.ts` with server/rotation/side-switch/fault state — keep it pure + unit-testable. UI reads the returned `GameSession`.
+- New config flags on `GameConfig` (`format: "singles" | "doubles"`, `officialMode`, `cardsEnabled`, `eventLabel`).
+- Persist via existing `lib/client-api.ts` (still local-first, no backend).
+
+**Design principle preserved:** local-first, no login, no database — the coach/umpire mode is another client-side flow, not a server feature.

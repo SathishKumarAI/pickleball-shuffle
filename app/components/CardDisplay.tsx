@@ -1,9 +1,10 @@
 "use client";
 
-import { Card, CATEGORY_COLORS, RARITY_STYLE } from "@/lib/cards";
+import { Card, CATEGORY_COLORS, CATEGORY_INFO, RARITY_STYLE } from "@/lib/cards";
 import { CategoryIcon } from "./icons";
-import { Shuffle, Star, SkipForward, ArrowLeft } from "lucide-react";
+import { Shuffle, Star, SkipForward, ArrowLeft, HelpCircle, X } from "lucide-react";
 import { useState } from "react";
+import GlossaryText from "./GlossaryText";
 
 // Intensity 1 (chill) .. 5 (chaos) shown as a small dot meter (backlog F522).
 const INTENSITY_LABEL = ["", "Chill", "Light", "Spicy", "Intense", "Chaos"];
@@ -56,6 +57,7 @@ export default function CardDisplay({
   const [flipped, setFlipped] = useState(!!card);
   const [shine, setShine] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [explainerOpen, setExplainerOpen] = useState(false);
 
   const handleDraw = () => {
     if (busy) return;
@@ -129,20 +131,30 @@ export default function CardDisplay({
                   </span>
                 )}
               </span>
-              {onFavorite && (
-                <button onClick={(e) => { e.stopPropagation(); onFavorite(); }} aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"} aria-pressed={isFavorite} className="flex items-center justify-center text-white transition-transform hover:scale-125 active:scale-90 p-2.5 -m-2.5">
-                  <Star size={22} fill={isFavorite ? "currentColor" : "none"} />
-                </button>
-              )}
+              <span className="flex items-center gap-1 shrink-0">
+                {card && (
+                  <button onClick={(e) => { e.stopPropagation(); setExplainerOpen(true); }} aria-label="What does this card mean?" className="flex items-center justify-center text-white/90 transition-transform hover:scale-125 active:scale-90 p-2.5 -m-1">
+                    <HelpCircle size={20} />
+                  </button>
+                )}
+                {onFavorite && (
+                  <button onClick={(e) => { e.stopPropagation(); onFavorite(); }} aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"} aria-pressed={isFavorite} className="flex items-center justify-center text-white transition-transform hover:scale-125 active:scale-90 p-2.5 -m-1">
+                    <Star size={22} fill={isFavorite ? "currentColor" : "none"} />
+                  </button>
+                )}
+              </span>
             </div>
 
             <div className="flex-1 min-h-0 overflow-y-auto no-scrollbar w-full flex flex-col items-center justify-center gap-2 text-center px-1 py-2">
               <h2 className={`font-display ${large ? "text-2xl sm:text-3xl" : "text-xl sm:text-2xl"} font-black text-white leading-tight drop-shadow-sm break-words`}>{card?.name}</h2>
               <p className={`${large ? "text-base sm:text-lg font-medium" : commentary ? "text-xs sm:text-sm" : "text-sm sm:text-base"} leading-snug text-white drop-shadow-sm`}>
-                {commentary && card?.commentary ? card.commentary : card?.effect}
+                <GlossaryText>{(commentary && card?.commentary ? card.commentary : card?.effect) ?? ""}</GlossaryText>
               </p>
               {card?.detail && (
-                <p className={`${large ? "text-sm" : "text-[11px] sm:text-xs"} leading-snug text-white/80 max-w-[18rem]`}>{card.detail}</p>
+                <p className={`${large ? "text-sm" : "text-[11px] sm:text-xs"} leading-snug text-white/80 max-w-[18rem]`}>
+                  <span className="font-bold text-white/60 uppercase tracking-wider text-[9px] mr-1">What to do</span>
+                  <GlossaryText>{card.detail}</GlossaryText>
+                </p>
               )}
               {typeof card?.intensity === "number" && (
                 <IntensityDots value={card.intensity} />
@@ -184,6 +196,62 @@ export default function CardDisplay({
           </button>
         )}
       </div>
+
+      {/* Per-card plain-language explainer (F: zero-knowledge users) */}
+      {explainerOpen && card && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`What ${card.name} means`}
+          className="fixed inset-0 z-[80] flex items-end sm:items-center justify-center p-4 bg-black/70 backdrop-blur-md"
+          onClick={() => setExplainerOpen(false)}
+        >
+          <div
+            className="glass rounded-3xl p-6 max-w-sm w-full shadow-2xl anim-pop"
+            style={{ border: "1px solid var(--accent)" }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-3 mb-4">
+              <span className="flex items-center gap-2 min-w-0">
+                <span style={{ color: "var(--accent)" }}><CategoryIcon category={card.category} size={26} strokeWidth={2} /></span>
+                <h2 className="font-display text-xl font-black leading-tight break-words" style={{ color: "var(--text)" }}>{card.name}</h2>
+              </span>
+              <button onClick={() => setExplainerOpen(false)} aria-label="Close" className="pressable shrink-0 p-1.5 rounded-full" style={{ background: "var(--bg-elevated)", color: "var(--text-muted)" }}>
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <section>
+                <h3 className="text-[11px] font-bold uppercase tracking-wider mb-1" style={{ color: "var(--accent)" }}>What this means</h3>
+                <p className="text-sm leading-relaxed" style={{ color: "var(--text)" }}>
+                  <GlossaryText onLight>{card.effect}</GlossaryText>
+                </p>
+              </section>
+
+              {card.detail && (
+                <section>
+                  <h3 className="text-[11px] font-bold uppercase tracking-wider mb-1" style={{ color: "var(--accent)" }}>How to play it</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                    <GlossaryText onLight>{card.detail}</GlossaryText>
+                  </p>
+                </section>
+              )}
+
+              {CATEGORY_INFO[card.category] && (
+                <section>
+                  <h3 className="text-[11px] font-bold uppercase tracking-wider mb-1" style={{ color: "var(--accent)" }}>What kind of card</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>{CATEGORY_INFO[card.category]}</p>
+                </section>
+              )}
+            </div>
+
+            <p className="mt-4 text-[11px] text-center" style={{ color: "var(--text-muted)" }}>
+              Tip: underlined words explain a pickleball term when you tap them.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
