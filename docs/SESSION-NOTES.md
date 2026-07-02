@@ -94,10 +94,10 @@ component/lib inventories; flipped shipped backlog/ticket items to done. New doc
 ### Deploy status (open)
 Everything is committed on `feat/wave1-prod-hardening`. **Production deploy is owner-gated** — this
 environment has no valid GitHub/Vercel credentials (invalid `gh` token, no git HTTPS creds, no SSH
-key, no Vercel CLI/token). To ship: `gh auth login` → `git push -u origin feat/wave1-prod-hardening`
-(Vercel Git integration builds a preview; merging `main` promotes to prod), or `./deploy-vercel.sh`
-for a direct `vercel --prod` from the repo root. After deploying, **re-open / re-install the PWA** so
-it picks up the new build. See [RUNBOOK](RUNBOOK.md).
+key, no Vercel CLI/token). To ship once authed (`gh auth login` + `vercel login`), run **`./ship.sh`**
+from the repo root (tests + build → push branch → `vercel --prod`); `./ship.sh --no-deploy` pushes only
+for a preview build. After deploying, **re-open / re-install the PWA** so it picks up the new build.
+Full steps + auth notes in the [RUNBOOK](RUNBOOK.md).
 
 ---
 

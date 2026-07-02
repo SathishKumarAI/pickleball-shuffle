@@ -5,8 +5,40 @@ Small app, no backend - operations are mostly "deploy" and "roll back". (Backlog
 ## Deploy
 
 - `main` auto-deploys to production on Vercel. Keep `main` green (CI gates lint + type-check + tests + build).
-- Manual: from the **repo root**, `vercel --prod` (project rootDirectory is `app`), or `../deploy-vercel.sh`.
-- Preview: every PR gets a Vercel preview URL automatically (F274).
+- Preview: every PR / pushed branch gets a Vercel preview URL automatically (F274).
+
+### One command: `./ship.sh`
+From the repo root. Runs tests + production build, pushes the current branch, then deploys prod.
+
+```bash
+./ship.sh              # gates → push branch → vercel --prod
+./ship.sh --no-deploy  # gates → push only (let Vercel Git integration build the preview)
+```
+
+### Manual steps (same thing, by hand)
+```bash
+cd ~/coding/pickleball-shuffle
+( cd app && npm test && npm run build )        # gates
+git push -u origin <branch>                    # → Vercel preview build
+vercel --prod                                  # → production, from the REPO ROOT
+# (or ./deploy-vercel.sh, which installs the CLI then runs vercel --prod)
+```
+`vercel --prod` MUST run from the **repo root** — the project's `rootDirectory` is already `app`, so
+running inside `app/` makes Vercel look for `app/app` and fail.
+
+### Auth (once per machine)
+The deploy needs credentials that aren't baked into the repo:
+```bash
+gh auth login      # for `git push` (GitHub). Fixes "could not read Username" / invalid token.
+vercel login       # for `vercel --prod` (Vercel).
+```
+If `./ship.sh` stops at the push or deploy step, it's almost always one of these two not being logged in.
+
+### After deploying — the installed PWA
+The standalone/installed PWA is pinned to the **deployed** URL, not localhost, and a service worker
+may cache the old build. After a prod deploy, on the phone **re-open the PWA** (or remove + re-add to
+home screen) so it fetches the new version. To preview local changes on a phone without deploying,
+open `http://<your-LAN-ip>:3000` in the phone **browser** on the same WiFi (dev unregisters the SW).
 
 ## Roll back production (fastest first)
 
