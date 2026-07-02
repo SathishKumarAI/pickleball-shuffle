@@ -132,7 +132,13 @@ Current production alias: **https://pickleball-card-games.vercel.app**
 
 ## Documentation
 
+Full docs index: **[`docs/index.md`](docs/index.md)**.
+
+- **[`docs/SESSION-NOTES.md`](docs/SESSION-NOTES.md)** - what's been built and why, this session and earlier, with the lessons learned. Best single read to get up to speed.
 - **[`docs/ONBOARDING.md`](docs/ONBOARDING.md)** - start here: 3-minute setup, codebase map, and what's new.
+- **[`docs/DOUBLES-SCORING.md`](docs/DOUBLES-SCORING.md)** - doubles rules model, which button to press, and the design reasoning.
+- **[`docs/SCORING-UX-RESEARCH.md`](docs/SCORING-UX-RESEARCH.md)** - how the top pickleball apps keep score for beginners; our decisions.
+- **[`docs/VALIDATION-REPORT.md`](docs/VALIDATION-REPORT.md)** - what was tested and how (the what/why/how).
 - **[`CONTRIBUTING.md`](CONTRIBUTING.md)** - how to report bugs, send PRs, and add cards.
 - **[`app/README.md`](app/README.md)** - full architecture deep-dive (data flow, scoring engine, localStorage schema, animation, service-worker strategy, mobile hardening).
 - **[`docs/data/cards.json`](docs/data/cards.json)** - the complete 1,729-card dataset with metadata + the "why 1729" design notes.
