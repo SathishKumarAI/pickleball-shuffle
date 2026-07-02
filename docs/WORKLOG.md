@@ -1,5 +1,34 @@
 # Worklog
 
+## 2026-07-02 15:04 — Docs consolidation, ship.sh, deploy-auth blocker
+
+**Summary:** Consolidated all docs into a readable, indexed set; added a one-command deploy
+(`ship.sh`) + RUNBOOK deploy steps; diagnosed why the prod deploy can't run from this environment.
+
+**Changes:**
+- `docs/SESSION-NOTES.md` (new) — single readable capture of everything built this session and
+  earlier, decisions, and gotchas (from git history + WORKLOG).
+- `docs/index.md` — links every doc, grouped (start-here / how-the-game-works / state & process).
+- `README.md` — Documentation section points to the index + session notes + doubles/scoring/
+  validation docs.
+- `chmod -R a+r docs` — docs world-readable on disk.
+- `ship.sh` (new) — tests + build → push branch → `vercel --prod` (from repo root); `--no-deploy`
+  for push-only; friendly auth hints on failure.
+- `docs/RUNBOOK.md` — concrete deploy steps (ship.sh + manual), `gh`/`vercel` auth notes, and the
+  installed-PWA re-open / SW-cache note.
+- Commits: `a6126e9` (docs), `3669774` (ship.sh + RUNBOOK).
+
+**Decisions:**
+- Deploy still can't run here. Diagnosed the cause precisely: the user's `gh` token lives in the
+  **desktop keyring** (hosts.yml has the username but no token), and this sandbox has no keyring/
+  secret-service session (`gh auth token` → "no oauth token found"; only the flatpak D-Bus is
+  present). So `git push`/`vercel` must run in the user's own terminal, or a PAT must be written to
+  `hosts.yml` / `GH_TOKEN`. Recommended: run `./ship.sh` in a real terminal.
+
+**Follow-ups:**
+- [ ] Owner: run `./ship.sh` in a desktop terminal (keyring accessible) to push + deploy prod, then
+      re-open the installed PWA.
+
 ## 2026-07-02 — Serving WON/LOST buttons + glossary popover portal
 
 **Summary:** Removed the confusing "tap the opponent to advance your own server" in official
