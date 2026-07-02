@@ -512,7 +512,7 @@ for c in out:
 
 dataset = {
     "meta": {
-        "title": "Pickleball Card Games - The 1729 Deck",
+        "title": "Paddol - The 1729 Deck",
         "total": TARGET,
         "why_1729": ("1729 is the Hardy-Ramanujan 'taxicab' number: the smallest number "
                      "expressible as a sum of two cubes in two different ways "

@@ -1,4 +1,4 @@
-# Pickleball Card Games
+# Paddol
 
 Draw twist cards. Shake up the game. A free, local-first pickleball card game + scorekeeper.
 
@@ -21,6 +21,7 @@ Made just for fun and personal use only - not for making sales.
 - <a href="SCORING-UX-RESEARCH.md" target="_blank" rel="noopener noreferrer">Scoring-UX research</a> — how top apps keep score for beginners; our decisions
 
 **Project state &amp; process**
+- <a href="NAMING.md" target="_blank" rel="noopener noreferrer">Naming</a> — product name (Paddol), the full naming journey, legal/trademark research
 - <a href="TICKETS.md" target="_blank" rel="noopener noreferrer">Tickets / pending tasks</a>
 - <a href="BACKLOG.md" target="_blank" rel="noopener noreferrer">Backlog / future ideas</a>
 - <a href="WORKLOG.md" target="_blank" rel="noopener noreferrer">Worklog</a> — dated session log

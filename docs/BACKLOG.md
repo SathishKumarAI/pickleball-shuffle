@@ -1,6 +1,6 @@
 # Feature Backlog — 557
 
-Production-readiness + user-friendliness roadmap for the Pickleball Card Games app.
+Production-readiness + user-friendliness roadmap for the Paddol app.
 
 **Direction:** Hybrid — fully local-first by default (no login, offline), with **optional** account login for cross-device sync. Local stays the default hot path; cloud is additive.
 

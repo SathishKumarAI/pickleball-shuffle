@@ -1,5 +1,33 @@
 # Worklog
 
+## 2026-07-02 18:37 — Product rename to "Paddol" + trademark research
+
+**Summary:** Renamed the product from "Pickleball Card Games" to **Paddol** (card deck =
+**Paddol Deck**) across the whole workspace, after four rounds of naming + trademark research
+ruled out the punny pickleball names in favor of a coined, defensible word.
+
+**Changes:**
+- App branding — `manifest.json`, `layout.tsx` (title/OG/Twitter/apple), `about/privacy/terms`
+  pages, `FeedbackPanel.tsx`, `shareImage.ts` (watermark/share), `page.tsx` + icon SVGs (`icon.svg`,
+  `app-icon.svg`, `logo-mark.svg`) → all now say Paddol / Paddol Deck.
+- Deck metadata — `scripts/generate_cards.py` + `docs/data/cards.json` deck title.
+- Docs/meta — `README.md` x2, `app/CLAUDE.md`, `CONTRIBUTING.md`, `docs/{index,ONBOARDING,BACKLOG}.md`,
+  `prompts/{00-scaffold,README}.md`, and `../dotfiles/docs/features/FEATURES.md`.
+- `docs/NAMING.md` — new: full naming journey, legal/trademark research, clearance homework + checklist.
+
+**Decisions:** Rejected **ThirdShot** ("Third Shot Drop" is a registered pickleball brand +
+descriptive term) and **DinkDeck** ("Dink Decks" is already a digital pickleball card product).
+Pivoted to coined words; ran a web/app-store/Crunchbase clearance pass; chose **Paddol** — the only
+survivor that still echoes "paddle" while being arbitrary/defensible. Kept "pickleball" in the tagline
+for SEO, out of the brand mark. Live URL + repo dir left unchanged to avoid breaking links/paths.
+
+**Follow-ups:**
+- [ ] USPTO TESS search for Paddol + sound-alikes (classes 9/28/41) before any launch/filing.
+- [ ] Secure a domain — `paddol.com` is taken; grab `paddol.app`/`.io`/`getpaddol.com` + social handles.
+- [ ] Attorney flat-fee clearance (~$300–600) before monetizing; file the TM once cleared.
+- [ ] Rename live Vercel URL + (optional) repo dir from `pickleball-shuffle` → paddol.
+- [ ] Not committed yet — review + commit the rename.
+
 ## 2026-07-02 15:04 — Docs consolidation, ship.sh, deploy-auth blocker
 
 **Summary:** Consolidated all docs into a readable, indexed set; added a one-command deploy

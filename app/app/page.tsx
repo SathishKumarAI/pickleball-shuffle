@@ -439,7 +439,7 @@ export default function Home() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/icons/app-icon.svg"
-              alt="Pickleball Card Games"
+              alt="Paddol - Pickleball Cards"
               width={80}
               height={80}
               className="inline-block w-20 h-20 rounded-3xl mb-4 anim-float"

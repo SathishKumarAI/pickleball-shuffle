@@ -1,4 +1,4 @@
-#  Pickleball Card Games
+#  Paddol
 
 **Draw twist cards mid-match. Shake up the game.**
 

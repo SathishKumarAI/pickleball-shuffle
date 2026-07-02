@@ -1,4 +1,4 @@
-# Onboarding - Pickleball Card Games
+# Onboarding - Paddol
 
 > A mobile-first, **local-first** web app: 1,729 pickleball "twist" cards + a real scorekeeper. No backend, no login, no database - all state in `localStorage`.
 

@@ -33,12 +33,12 @@ export default function FeedbackPanel({ open, onClose }: { open: boolean; onClos
       localStorage.setItem(FEEDBACK_KEY, JSON.stringify(prev.slice(0, 50)));
     } catch {}
 
-    const subject = `Pickleball Card Games feedback${rating ? ` - ${rating}★` : ""}`;
+    const subject = `Paddol feedback${rating ? ` - ${rating}★` : ""}`;
     const body =
       `Rating: ${rating ? `${rating}/5` : "-"}\n\n` +
       `${message || "(no message)"}\n\n` +
       (contact ? `Reply to: ${contact}\n` : "") +
-      `\n- sent from Pickleball Card Games`;
+      `\n- sent from Paddol`;
     window.location.href = `mailto:${FEEDBACK_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setSent(true);
   };

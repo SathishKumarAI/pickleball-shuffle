@@ -74,7 +74,7 @@ export function makeResultBlob(info: ResultInfo): Promise<Blob | null> {
   // Footer
   ctx.fillStyle = "#34d399";
   ctx.font = "700 40px sans-serif";
-  ctx.fillText("Pickleball Card Games", W / 2, H - 230);
+  ctx.fillText("Paddol", W / 2, H - 230);
   ctx.fillStyle = "#7e7e87";
   ctx.font = "500 34px sans-serif";
   ctx.fillText("pickleball-card-games.vercel.app", W / 2, H - 175);
@@ -90,7 +90,7 @@ export async function shareResult(info: ResultInfo): Promise<"shared" | "downloa
   const nav = navigator as Navigator & { canShare?: (d: { files: File[] }) => boolean };
   if (nav.canShare?.({ files: [file] })) {
     try {
-      await navigator.share({ files: [file], title: "Pickleball Card Games" });
+      await navigator.share({ files: [file], title: "Paddol" });
       return "shared";
     } catch {
       return "failed";

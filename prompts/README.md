@@ -1,4 +1,4 @@
-# Prompt Library - build Pickleball Card Games to production
+# Prompt Library - build Paddol to production
 
 A set of **paste-ready, engineered prompts** for an AI coding agent (Claude Code)
 to rebuild this app from scratch and harden it for production. Each prompt is

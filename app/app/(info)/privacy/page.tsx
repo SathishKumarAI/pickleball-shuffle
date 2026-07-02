@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Privacy",
-  description: "Pickleball Card Games is local-first: your data stays on your device.",
+  description: "Paddol is local-first: your data stays on your device.",
 };
 
 // Backlog F244. Honest policy for a no-account, no-backend, local-first app.

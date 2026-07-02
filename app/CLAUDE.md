@@ -1,4 +1,4 @@
-# Pickleball Card Games
+# Paddol
 
 Next.js card game + pickleball scorekeeper. 1,729 twist cards across 10 categories, 5 deck modes.
 **Local-first: no backend, no login, no database.** All state lives in `localStorage`.
