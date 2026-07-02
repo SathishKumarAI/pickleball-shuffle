@@ -22,6 +22,12 @@ export default function ScoreKeeper({
   // Server 1/2 only rotates (and is meaningful) in official doubles; hide the
   // server badge in casual doubles where it would never change.
   const officialDoubles = isDoubles && !!game.config.officialMode;
+  // In official side-out mode we act on the SERVING side's result (WON/LOST)
+  // instead of tapping the opponent - clearer for coaches/umpires.
+  const officialSideOut = !!game.config.officialMode && game.config.sideOutScoring && !game.winner;
+  const servingName = game.servingTeam === 1 ? game.playerNames.team1 : game.playerNames.team2;
+  const otherName = game.servingTeam === 1 ? game.playerNames.team2 : game.playerNames.team1;
+  const lostSub = isDoubles && game.serverNumber === 1 ? "→ 2nd server serves" : `→ side out to ${otherName}`;
 
   // Consequence narration: on every state change, describe what happened in
   // plain words ("Point Eagles 4-2" / "Side out - Hawks serve") and, if the
@@ -84,18 +90,20 @@ export default function ScoreKeeper({
         </div>
       )}
 
-      {/* Serving indicator */}
-      {game.config.sideOutScoring && (
+      {/* Serving indicator - casual side-out only (official mode shows the rich
+          serving card in OfficialControls instead). Tap = manual side out. */}
+      {game.config.sideOutScoring && !game.config.officialMode && (
         <button onClick={onSideOut} aria-label="Side out - switch serving team" aria-live="polite" className="pressable flex items-center gap-1.5 text-xs px-3 py-1 rounded-full" style={{ background: "var(--bg-elevated)", color: "var(--yellow)", border: "1px solid var(--border)" }}>
           <CircleDot size={13} /> Serving: {game.servingTeam === 1 ? game.playerNames.team1 : game.playerNames.team2}
-          {officialDoubles ? ` · ${game.serverNumber === 1 ? "1st" : "2nd"} server` : ""}
         </button>
       )}
 
-      {/* Beginner-first prompt: ask who won, not "add a point" */}
+      {/* Prompt: WON/LOST flow in official side-out, else tap-who-won */}
       {!game.winner && (
-        <p className="text-xs font-semibold" style={{ color: "var(--text-muted)" }}>
-          Who won the rally? Tap their score.
+        <p className="text-xs font-semibold text-center" style={{ color: "var(--text-muted)" }}>
+          {officialSideOut
+            ? `${servingName} is serving — did they win the rally?`
+            : "Who won the rally? Tap their score."}
         </p>
       )}
 
@@ -109,6 +117,7 @@ export default function ScoreKeeper({
           serving={game.servingTeam === 1}
           serverNumber={game.serverNumber}
           showServer={officialDoubles}
+          interactive={!officialSideOut}
           disabled={locked}
           onClick={() => onScore(1)}
         />
@@ -129,10 +138,34 @@ export default function ScoreKeeper({
           serving={game.servingTeam === 2}
           serverNumber={game.serverNumber}
           showServer={officialDoubles}
+          interactive={!officialSideOut}
           disabled={locked}
           onClick={() => onScore(2)}
         />
       </div>
+
+      {/* Official side-out: act on the SERVING side's result. No tapping the
+          opponent to change the serve. */}
+      {officialSideOut && !locked && (
+        <div className="w-full max-w-sm grid grid-cols-2 gap-2">
+          <button
+            onClick={() => onScore(game.servingTeam)}
+            className="pressable flex flex-col items-center gap-0.5 py-3 rounded-2xl font-bold text-white"
+            style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-dim))" }}
+          >
+            <span className="text-sm">{servingName} won</span>
+            <span className="text-[11px] font-medium opacity-90">+1 point</span>
+          </button>
+          <button
+            onClick={onSideOut}
+            className="pressable flex flex-col items-center gap-0.5 py-3 rounded-2xl font-bold"
+            style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text)" }}
+          >
+            <span className="text-sm">{servingName} lost</span>
+            <span className="text-[11px] font-medium" style={{ color: "var(--text-muted)" }}>{lostSub}</span>
+          </button>
+        </div>
+      )}
 
       {/* Manual score correction - subtle -1 per team (F065) */}
       {onAdjust && !game.config.scoreLocked && (game.score.team1 > 0 || game.score.team2 > 0) && (
@@ -173,8 +206,8 @@ function CorrectButton({ name, disabled, onClick }: { name: string; disabled: bo
   );
 }
 
-function ScoreButton({ score, name, color, serving, serverNumber, showServer, disabled, onClick }: {
-  score: number; name: string; color: string; serving: boolean; serverNumber: 1 | 2; showServer: boolean; disabled: boolean; onClick: () => void;
+function ScoreButton({ score, name, color, serving, serverNumber, showServer, interactive, disabled, onClick }: {
+  score: number; name: string; color: string; serving: boolean; serverNumber: 1 | 2; showServer: boolean; interactive: boolean; disabled: boolean; onClick: () => void;
 }) {
   const [bump, setBump] = useState(false);
   const prev = useRef(score);
@@ -189,14 +222,12 @@ function ScoreButton({ score, name, color, serving, serverNumber, showServer, di
   }, [score]);
 
   const serveDesc = serving ? `, serving${showServer ? `, ${serverNumber === 1 ? "1st" : "2nd"} server` : ""}` : "";
+  const label = interactive
+    ? `${name} won the rally - tap to record. ${name} currently ${score}${serveDesc}`
+    : `${name} ${score}${serveDesc}`;
 
-  return (
-    <button
-      onClick={onClick}
-      disabled={disabled}
-      aria-label={`${name} won the rally - tap to record. ${name} currently ${score}${serveDesc}`}
-      className="flex flex-col items-center gap-1 transition-all active:scale-90 disabled:opacity-40"
-    >
+  const inner = (
+    <>
       {/* Serve badge: ball + an explicit "1ST/2ND SERVER" chip with two dots so
           the current server is unmistakable (only in official doubles, where it
           rotates). */}
@@ -231,6 +262,26 @@ function ScoreButton({ score, name, color, serving, serverNumber, showServer, di
       <span className="text-xs font-semibold truncate max-w-[88px]" style={{ color: "var(--text-secondary)" }}>
         {name}
       </span>
+    </>
+  );
+
+  // Read-only display (official side-out uses the WON/LOST buttons instead of
+  // tapping the tiles).
+  if (!interactive) {
+    return (
+      <div aria-label={label} className="flex flex-col items-center gap-1">
+        {inner}
+      </div>
+    );
+  }
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={label}
+      className="flex flex-col items-center gap-1 transition-all active:scale-90 disabled:opacity-40"
+    >
+      {inner}
     </button>
   );
 }

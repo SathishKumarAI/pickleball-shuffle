@@ -225,7 +225,7 @@ export default function CardDisplay({
               <section>
                 <h3 className="text-[11px] font-bold uppercase tracking-wider mb-1" style={{ color: "var(--accent)" }}>What this means</h3>
                 <p className="text-sm leading-relaxed" style={{ color: "var(--text)" }}>
-                  <GlossaryText onLight>{card.effect}</GlossaryText>
+                  <GlossaryText>{card.effect}</GlossaryText>
                 </p>
               </section>
 
@@ -233,7 +233,7 @@ export default function CardDisplay({
                 <section>
                   <h3 className="text-[11px] font-bold uppercase tracking-wider mb-1" style={{ color: "var(--accent)" }}>How to play it</h3>
                   <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                    <GlossaryText onLight>{card.detail}</GlossaryText>
+                    <GlossaryText>{card.detail}</GlossaryText>
                   </p>
                 </section>
               )}

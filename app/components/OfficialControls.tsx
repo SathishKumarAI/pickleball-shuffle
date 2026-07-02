@@ -1,40 +1,32 @@
 "use client";
 
 import { GameSession, logCount } from "@/lib/game";
-import { Timer, Flag, Download, RefreshCw, CircleDot } from "lucide-react";
+import { Timer, Flag, Download, CircleDot } from "lucide-react";
 
-// In-match officiating controls for coach/umpire "Track a match" mode: who's
-// serving (with server number in doubles), per-team timeout + fault buttons,
-// a side-out button, and a one-tap match-sheet download. Pure UI - all state
-// changes go through the passed handlers (which call the pure game engine).
+// In-match officiating controls for coach/umpire "Track a match" mode: the
+// serving status card (who's up + server 1/2 + what a fault does), per-team
+// timeout + fault buttons, and a one-tap match-sheet download. Recording the
+// rally itself (WON/LOST) lives on the scoreboard. Pure UI - all state changes
+// go through the passed handlers (pure game engine).
 export default function OfficialControls({
   game,
   onTimeout,
   onFault,
-  onSideOut,
   onDownload,
 }: {
   game: GameSession;
   onTimeout: (team: 1 | 2) => void;
   onFault: (team: 1 | 2) => void;
-  onSideOut: () => void;
   onDownload: () => void;
 }) {
   const servingName = game.servingTeam === 1 ? game.playerNames.team1 : game.playerNames.team2;
   const otherName = game.servingTeam === 1 ? game.playerNames.team2 : game.playerNames.team1;
-  // In doubles, the first server losing the rally hands off to the SAME team's
-  // second server; only the second server's loss is a true side-out. Label the
-  // button for whichever happens next so a coach/umpire records it correctly.
   const isDoubles = game.config.gameType !== "singles";
   const toSecondServer = isDoubles && game.serverNumber === 1;
-  const serveBtnText = toSecondServer ? "Server 1 lost — 2nd server serves" : `Side out — ${otherName} serves`;
-
   const ordinal = game.serverNumber === 1 ? "1st" : "2nd";
   const nextOnFault = toSecondServer
     ? `Fault → 2nd server (still ${servingName})`
-    : isDoubles
-      ? `Fault → side out to ${otherName}`
-      : `Fault → side out to ${otherName}`;
+    : `Fault → side out to ${otherName}`;
 
   return (
     <div className="w-full max-w-sm flex flex-col gap-2.5">
@@ -74,19 +66,11 @@ export default function OfficialControls({
         {!isDoubles && <span className="text-[11px]" style={{ color: "var(--text-muted)" }}>Singles · fault = side out</span>}
       </div>
 
-      <button
-        onClick={onSideOut}
-        aria-label={serveBtnText}
-        className="pressable flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold text-center"
-        style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text)" }}
-      >
-        <RefreshCw size={15} className="shrink-0" /> {serveBtnText}
-      </button>
-      <p className="text-[11px] text-center -mt-1" style={{ color: "var(--text-muted)" }}>
-        {game.config.sideOutScoring
-          ? "Tap a team's score only when the SERVING side wins the rally. If the serving side loses, use the button above."
-          : "Rally scoring: tap whichever team won the rally to add their point."}
-      </p>
+      {!game.config.sideOutScoring && (
+        <p className="text-[11px] text-center" style={{ color: "var(--text-muted)" }}>
+          Rally scoring: tap whichever team won the rally to add their point.
+        </p>
+      )}
 
       <div className="grid grid-cols-2 gap-2">
         {([1, 2] as const).map((team) => (

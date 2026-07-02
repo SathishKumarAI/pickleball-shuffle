@@ -1,5 +1,36 @@
 # Worklog
 
+## 2026-07-02 — Serving WON/LOST buttons + glossary popover portal
+
+**Summary:** Removed the confusing "tap the opponent to advance your own server" in official
+doubles, and fixed the tap-to-define popover getting clipped by the card.
+
+**Changes:**
+- `components/ScoreKeeper.tsx` — in official side-out mode, score tiles become **read-only** and
+  you act on the serving side with two buttons: **"{team} won" (+1)** and **"{team} lost"**
+  (→ 2nd server / → side out, relabels itself). Rally mode keeps both tiles tappable. Fixed WON
+  button colour (`--green` didn't exist → `--accent`).
+- `components/OfficialControls.tsx` — dropped the now-redundant serve button + `onSideOut` prop
+  (WON/LOST handles it); kept the serving status card + timeouts/faults/download.
+- `app/page.tsx` — dropped `onSideOut` from the OfficialControls call.
+- `components/GlossaryText.tsx` — definition popover now **portalled to `<body>`** and anchored to
+  the viewport bottom-center, so the card's `overflow-hidden` and 3D flip transform (which traps
+  `position:fixed`) can no longer clip or mis-place it. Removed the now-moot `onLight` prop.
+- `components/RulesPanel.tsx` + `docs/DOUBLES-SCORING.md` — updated the doubles guidance to the
+  WON/LOST flow.
+
+**Decisions:**
+- "Why tap the other team to move to the 2nd server?" was a real UX flaw. Research (Dropshot etc.)
+  uses tap-who-won, but for side-out that means tapping the opponent on a fault, which feels wrong.
+  Fix: act on the **serving side's outcome** (WON/LOST) — clearest for coaches/umpires, never touch
+  the opponent tile.
+- Glossary popover: a portal is the only robust fix — a transformed ancestor makes `position:fixed`
+  behave like `absolute`, so CSS alone couldn't escape the card.
+
+**Validation:** 69 tests, clean build, 0 lint errors. Live browser: WON adds a point, LOST advances
+server 1→2 then side-outs (score unchanged, narration correct), tiles read-only; glossary popover
+now `parentElement === body`, bottom-anchored, fully visible.
+
 ## 2026-07-01 — Server clarity on TV + PWA scroll fix
 
 **Summary:** Mirrored the 1st/2nd-server indicator onto the big-score/TV display, and fixed

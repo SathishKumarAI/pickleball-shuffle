@@ -46,7 +46,7 @@ const HOW_TO_PLAY: Section[] = [
   },
   {
     q: "Doubles serving (side-out scoring)",
-    a: "In traditional scoring only the SERVING team can score - so you'll only add points to one team at a time. Each doubles team has two servers: if the serving side loses a rally on server 1, their 2nd server serves next (same team); if they lose on server 2, it's a side-out and serve passes to the other team. Tap the serving team's score when they win the rally; use the serve button when they lose. Prefer every-point-counts? Pick 'Rally' scoring when you start a Track-a-match game.",
+    a: "In traditional scoring only the SERVING team can score. Each doubles team has two servers: if the serving side loses a rally on server 1, their 2nd server serves next (same team); if they lose on server 2, it's a side-out and serve passes to the other team. In Track-a-match you just press 'Won' or 'Lost' for the serving side - no need to tap the other team; the app moves the server for you. Prefer every-point-counts? Pick 'Rally' scoring when you start a Track-a-match game.",
   },
   {
     q: "Winning",

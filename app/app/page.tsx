@@ -669,7 +669,6 @@ export default function Home() {
             game={game}
             onTimeout={(team) => { setGame(recordTimeout(game, team)); triggerHaptic("light"); }}
             onFault={(team) => { setGame(recordFault(game, team)); triggerHaptic("light"); }}
-            onSideOut={() => setGame(sideOut(game))}
             onDownload={downloadMatchSheet}
           />
         )}

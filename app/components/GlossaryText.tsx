@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, Fragment } from "react";
+import { createPortal } from "react-dom";
 import { GLOSSARY_BY_ALIAS, GlossaryTerm } from "@/lib/glossary";
 
 // Escapes a string for safe use inside a RegExp.
@@ -24,15 +25,14 @@ type Segment = { text: string; term?: GlossaryTerm };
  * Renders a string with known pickleball terms underlined and tappable.
  * Tapping a term opens a small definition popover. Each distinct term is made
  * tappable only on its first occurrence to avoid a wall of underlines.
- * `light` tunes the styling for dark card faces (white text) vs. light sheets.
+ * The definition popover is portalled to <body>, so it looks the same whether
+ * the term sits on a dark card face or a light sheet.
  */
 export default function GlossaryText({
   children,
-  onLight = false,
   className,
 }: {
   children: string;
-  onLight?: boolean;
   className?: string;
 }) {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
@@ -82,32 +82,33 @@ export default function GlossaryText({
             >
               {seg.text}
             </button>
-            {isOpen && (
+            {isOpen && typeof document !== "undefined" && createPortal(
               <>
-                {/* scrim to catch the next tap-away without blocking layout */}
-                <span
+                {/* Scrim + popover are portalled to <body> so neither the card's
+                    overflow-hidden nor its 3D transform (which traps position:
+                    fixed) can clip or mis-anchor the definition. */}
+                <div
                   className="fixed inset-0 z-[95]"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setOpenIdx(null);
-                  }}
+                  onClick={() => setOpenIdx(null)}
                 />
-                <span
+                <div
                   role="tooltip"
                   onClick={(e) => e.stopPropagation()}
-                  className="anim-pop absolute left-1/2 bottom-full z-[96] mb-2 -translate-x-1/2 block w-60 max-w-[75vw] rounded-xl p-3 text-left text-xs leading-relaxed shadow-2xl"
+                  className="anim-pop fixed left-1/2 bottom-6 z-[96] -translate-x-1/2 w-[min(90vw,22rem)] rounded-2xl p-4 text-left text-sm leading-relaxed shadow-2xl"
                   style={{
-                    background: onLight ? "var(--bg-card)" : "#1f2430",
-                    color: onLight ? "var(--text)" : "#f3f4f6",
-                    border: "1px solid var(--border)",
+                    background: "var(--bg-card)",
+                    color: "var(--text)",
+                    border: "1px solid var(--accent)",
+                    paddingBottom: "max(1rem, env(safe-area-inset-bottom))",
                   }}
                 >
-                  <span className="block font-bold mb-0.5" style={{ color: "var(--accent)" }}>
+                  <span className="block font-bold mb-1 text-base" style={{ color: "var(--accent)" }}>
                     {seg.term.term}
                   </span>
                   {seg.term.def}
-                </span>
-              </>
+                </div>
+              </>,
+              document.body,
             )}
           </span>
         );

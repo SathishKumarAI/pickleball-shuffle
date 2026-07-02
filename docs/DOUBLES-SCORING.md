@@ -54,18 +54,18 @@ If you came from the card game and expected the 2nd-server rotation, switch the 
 
 ## 5. Exactly which button to press
 
-**Side-out scoring, doubles, in Track-a-match:**
+**Side-out scoring, doubles, in Track-a-match:** you act on the **serving side's result** with two buttons — you never tap the opponent. The score tiles are read-only in this mode.
 
 | What happened on court | What you press |
 |---|---|
-| Serving team **won** the rally | Tap the **serving team's** score (+1) |
-| Serving team **lost**, they were on **Server 1** | Serve button → *"Server 1 lost — 2nd server serves"* |
-| Serving team **lost**, they were on **Server 2** | Serve button → *"Side out — {other team} serves"* |
+| Serving team **won** the rally | **"{Serving team} won"** → +1 point |
+| Serving team **lost**, on **Server 1** | **"{Serving team} lost → 2nd server serves"** |
+| Serving team **lost**, on **Server 2** | **"{Serving team} lost → side out to {other team}"** |
 | A team called a **timeout** | That team's **Timeout** button |
 | You need to log a **fault** | That team's **Fault** button |
 | Miss-tap / wrong score | The **−1** under the score, or **Undo** in the top bar |
 
-The serve button **relabels itself** based on the current server, so you always press one clearly-labelled control. The subtext under it reminds you of the rule live.
+The **"lost"** button **relabels itself** based on the current server (→ 2nd server, then → side out), so you always press one clearly-labelled control. The serving status card above shows which server is up and what a fault does next. (In **Rally** mode both score tiles stay tappable — tap whoever won.)
 
 **Rally scoring:** simply tap whichever team won the rally. Either team can score any point.
 
