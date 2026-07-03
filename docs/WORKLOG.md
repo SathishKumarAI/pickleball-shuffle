@@ -1,5 +1,26 @@
 # Worklog
 
+## 2026-07-03 — Ship: repo+URL rename, deploy, dead-code cleanup, PR
+
+**Summary:** Deployed PB Card Deck to production, renamed repo + live URL to `pb-card-deck`,
+removed the dead auth stubs leaking onto the site, and opened the wave-1 PR.
+
+**Changes:**
+- Deployed to Vercel prod; **live: https://pb-card-deck.vercel.app** (verified home 200, login 404).
+- GitHub repo `pickleball-shuffle` → `pb-card-deck` (+ fixed repo description/homepage); Vercel
+  project → `pb-card-deck`; swept `SITE_URL`/`GITHUB_URL`/robots/sitemap/docs to the new URL+slug.
+- Disabled Vercel Authentication (was `all_except_custom_domains`) so the new `.vercel.app` domain
+  is public — note: preview deploys are now public too.
+- Removed the untracked auth-experiment stubs (`app/app/{api,login,signup}`, `lib/{db,auth,supabase}`,
+  `AuthForm`/`UserMenu`) → backed up to scratchpad; `/login` `/signup` now 404.
+- Removed the old `pickleball-card-games.vercel.app` alias (now 404).
+- Updated the profile README (SathishKumarAI/README.md) link.
+- Opened PR #4 (feat/wave1-prod-hardening → main, 48 commits).
+
+**Follow-ups:**
+- [ ] Review + merge PR #4.
+- [ ] (optional) re-enable deployment protection if preview deploys shouldn't be public.
+
 ## 2026-07-03 — Final name: "PB Card Deck" (ended the naming churn)
 
 **Summary:** Settled the product name on **PB Card Deck** after cycling through Paddol → Whimzy.
