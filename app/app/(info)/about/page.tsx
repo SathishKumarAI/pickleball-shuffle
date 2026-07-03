@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "About Paddol - 1,729 twist cards and a real scorekeeper.",
+  description: "About PB Card Deck - 1,729 twist cards and a real scorekeeper.",
 };
 
 const GITHUB_URL = "https://github.com/SathishKumarAI/pickleball-shuffle";
@@ -14,7 +14,7 @@ export default function AboutPage() {
     <>
       <h1>About</h1>
       <p className="lede">
-        Paddol pairs a real side-out scorekeeper with Paddol Deck - 1,729 twist cards.
+        PB Card Deck pairs a real side-out scorekeeper with 1,729 twist cards.
         Draw a card, play the next point under that twist, keep score - all on your phone,
         no login, works offline.
       </p>
@@ -28,7 +28,7 @@ export default function AboutPage() {
 
       <h2>The number 1,729</h2>
       <p>
-        Paddol Deck holds exactly 1,729 cards - the Ramanujan taxicab number, the smallest number
+        PB Card Deck holds exactly 1,729 cards - the Ramanujan taxicab number, the smallest number
         expressible as the sum of two cubes in two different ways (1&sup3; + 12&sup3; = 9&sup3; + 10&sup3;).
       </p>
 

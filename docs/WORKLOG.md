@@ -1,5 +1,26 @@
 # Worklog
 
+## 2026-07-03 — Final name: "PB Card Deck" (ended the naming churn)
+
+**Summary:** Settled the product name on **PB Card Deck** after cycling through Paddol → Whimzy.
+Key reframe: the app is personal-use / not-for-sale, so trademark strength doesn't matter and a
+plain descriptive name is the right call. Dropped the two-tier sub-brand (name already says "deck").
+
+**Changes:**
+- Swapped branding workspace-wide Paddol → Whimzy → **PB Card Deck** across the same ~24 files
+  (manifest, layout, about/privacy/terms, FeedbackPanel, shareImage, icons, generate_cards.py,
+  cards.json, READMEs, docs, prompts, dotfiles FEATURES.md).
+- Simplified manifest `name`/title (dropped redundant "- Pickleball Cards" suffix); fixed About lede.
+- `docs/NAMING.md` — full 6-pass journey now recorded, decision flipped to PB Card Deck with the
+  personal-use rationale; coined candidates (Whimzy front-runner) kept for a possible future commercial pivot.
+
+**Decisions:** Descriptive name is fine because there's no business to protect. If it ever goes
+commercial, revisit Whimzy (whimzy.com free, no conflicts) + do the clearance homework in NAMING.md.
+
+**Follow-ups:**
+- [ ] Commit the Whimzy→PB Card Deck swap (on top of the committed Paddol rename).
+- [ ] (only if commercialized) coined name + USPTO/domain clearance.
+
 ## 2026-07-02 18:37 — Product rename to "Paddol" + trademark research
 
 **Summary:** Renamed the product from "Pickleball Card Games" to **Paddol** (card deck =

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Terms",
-  description: "Terms of use for Paddol.",
+  description: "Terms of use for PB Card Deck.",
 };
 
 // Backlog F245. Plain-language terms for a free, no-account web app.
@@ -17,7 +17,7 @@ export default function TermsPage() {
 
       <h2>The app is provided as-is</h2>
       <p>
-        Paddol is offered free of charge, without warranty of any kind. We do
+        PB Card Deck is offered free of charge, without warranty of any kind. We do
         our best to keep it working and fair, but we can&apos;t guarantee it is error-free or
         always available.
       </p>

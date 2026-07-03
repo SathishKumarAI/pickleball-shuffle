@@ -1,4 +1,4 @@
-# 🏓 Paddol
+# 🏓 PB Card Deck
 
 **Draw twist cards mid-match. Shake up the game.**
 

@@ -33,12 +33,12 @@ export default function FeedbackPanel({ open, onClose }: { open: boolean; onClos
       localStorage.setItem(FEEDBACK_KEY, JSON.stringify(prev.slice(0, 50)));
     } catch {}
 
-    const subject = `Paddol feedback${rating ? ` - ${rating}★` : ""}`;
+    const subject = `PB Card Deck feedback${rating ? ` - ${rating}★` : ""}`;
     const body =
       `Rating: ${rating ? `${rating}/5` : "-"}\n\n` +
       `${message || "(no message)"}\n\n` +
       (contact ? `Reply to: ${contact}\n` : "") +
-      `\n- sent from Paddol`;
+      `\n- sent from PB Card Deck`;
     window.location.href = `mailto:${FEEDBACK_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setSent(true);
   };

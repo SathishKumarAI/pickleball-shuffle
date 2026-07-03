@@ -1,4 +1,4 @@
-# Contributing to Paddol
+# Contributing to PB Card Deck
 
 Thanks for considering a contribution! This is a small, friendly, **local-first**
 project (no backend, no login) - bug fixes, card ideas, and features are all welcome.

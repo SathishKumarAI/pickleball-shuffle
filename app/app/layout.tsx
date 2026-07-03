@@ -15,13 +15,13 @@ export const viewport: Viewport = {
 };
 
 const SITE_URL = "https://pickleball-card-games.vercel.app";
-const TITLE = "Paddol";
+const TITLE = "PB Card Deck";
 const DESCRIPTION =
   "Draw twist cards mid-match and shake up your pickleball game. 1,729 cards, 5 deck modes, a real side-out scorekeeper - free, mobile-first, works offline.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: "Paddol - Pickleball Cards", template: "%s - Paddol" },
+  title: { default: "PB Card Deck - Pickleball twist cards + scorekeeper", template: "%s - PB Card Deck" },
   description: DESCRIPTION,
   applicationName: TITLE,
   keywords: ["pickleball", "card game", "scorekeeper", "twist cards", "doubles", "drills", "PWA"],
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Paddol",
+    title: "PB Card Deck",
   },
   icons: {
     icon: [{ url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }],

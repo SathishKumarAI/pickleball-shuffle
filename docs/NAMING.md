@@ -1,20 +1,28 @@
 # Product Naming
 
-**Chosen name: `Paddol`** (app) + **`Paddol Deck`** (the 1,729-card deck) — 2026-07-02
+**Chosen name: `PB Card Deck`** (PB = Pickleball) — 2026-07-03 (final)
 
-Two-tier brand: the product is **Paddol** (a coined word that echoes "paddle" without
-literally describing it); the card deck inside it is **Paddol Deck**. The sport stays in
-the tagline/description for SEO — "Paddol - Pickleball Cards" — never in the brand mark itself.
+A plain, descriptive name. Single-tier: the app *is* "PB Card Deck" — the 1,729-card deck is
+just "the deck," no separate sub-brand.
 
-> ⚠️ **Working branding, NOT a legal clearance.** See [Clearance status](#clearance-status--homework)
-> for what's verified and what's still on you before any commercial/public launch.
+**Why descriptive is fine here:** the app is explicitly **personal-use, not for sale** (see the
+in-app footer: *"made just for fun and personal use only - not for making sales"*). All the
+trademark research below only mattered for a *commercial* launch — with no sales, there's no
+brand to defend and no clearance homework needed. So we dropped the coined names (Paddol, Whimzy)
+and went with the name that just says what it is.
+
+The coined-name work (ThirdShot → Paddol → Whimzy) is kept below as the record of *why* those
+paths were explored and abandoned — useful if this is ever commercialized.
+
+> ℹ️ If this ever goes commercial, revisit a coined name (Whimzy was the front-runner:
+> `whimzy.com` available, no conflicts) and do the [clearance homework](#clearance-status--homework).
 
 ---
 
-## Naming journey — how we got to Paddol
+## Naming journey — how we got to PB Card Deck
 
-The decision took four passes. Each pass killed the previous favorite for a concrete reason,
-which is *why* we landed on a coined word rather than a clever pickleball pun.
+Six passes. The coined-name hunt (passes 1–5) mattered only for a commercial launch; pass 6
+reframed it as a personal-use app and settled on a plain descriptive name.
 
 ### Pass 1 — descriptive pickleball names
 Brainstormed ~50 names in five themes: dink-based (Dinkr, Dinkly…), card/deck/shuffle
@@ -53,31 +61,48 @@ became **Paddol Deck** (dropping the legally-tainted "DinkDeck").
 **One honest caveat on Paddol:** because it sounds like "paddle"/"padel," it isn't *purely*
 arbitrary — there's mild descriptiveness + a whiff of confusion with paddle-sport apps
 (Playtomic, PaddleTrac, Padel Mates). Still dramatically cleaner than ThirdShot/DinkDeck, but
-not zero-risk. That's what the clearance homework below is for.
+not zero-risk.
+
+### Pass 5 — evocative real-word blend → Whimzy
+Paddol's two weak spots (taken `.com` + paddle sound-alike) prompted one more round, this time
+for **coined words that *mean something*** (fun/play/twist) without touching pickleball or paddle.
+Batch checked: Twistr (travel co), Frolik (TM), Fizzo (ByteDance app), Romply (registered TM),
+Bantr (rec-sports app + WB TM), Zesto/Caper (existing cos) — all rejected. Survivors:
+**Whimzy** and **Jubl**.
+
+**Picked `Whimzy`** — coined spelling of *whimsy*, which literally describes the product
+experience (draw a random twist card, shake up the game). No brand/TM conflict found, and
+`whimzy.com` is **available** — rare for a real-word name, and it kills both of Paddol's
+weaknesses at once. Deck = **Whimzy Deck**.
+
+### Pass 6 — back to descriptive: PB Card Deck (final)
+After landing on Whimzy, we reframed the whole exercise: the app is **personal-use, not for
+sale** (its own footer says so). Trademark strength only matters when there's a business to
+protect — with no sales, a coined mark is solving a problem we don't have. So we chose the
+plainest descriptive name, **PB Card Deck** (PB = Pickleball), single-tier, no sub-brand.
+The coined candidates stay documented in case it's ever commercialized.
 
 ---
 
 ## Clearance status — homework
 
-Researched 2026-07-02 via web/RDAP/DNS. **This is not legal advice and not a formal clearance search.**
+Researched 2026-07-03 via web/RDAP/DNS. **This is not legal advice and not a formal clearance search.**
 
-### What we checked
+### What we checked (Whimzy)
 
 | Check | Result |
 |-------|--------|
-| Existing app named "Paddol" (App Store / Play / web) | None found ✅ |
-| Company / obvious USPTO mark "Paddol" | None found in web results ✅ (not a substitute for a TESS search) |
-| Sound-alike / descriptiveness | 🟡 "Paddol" ≈ "paddle"/"padel"; paddle-sport apps exist. Mild confusion/descriptiveness risk. |
-| `paddol.com` | 🔴 **Registered** (resolves in DNS) — not available |
-| `paddol.app` | 🟢 No DNS record — likely available |
-| `paddol.io` / `paddol.gg` | 🟢 Likely available (no registry hit) |
+| Existing app named "Whimzy" (App Store / Play / web) | None found ✅ |
+| Company / obvious USPTO mark "Whimzy" | None found in web results ✅ (not a substitute for a TESS search) |
+| Sound-alike / descriptiveness | 🟢 arbitrary re: the sport; "whimsy" is a common word but the spelling `Whimzy` is distinctive |
+| `whimzy.com` | 🟢 **Available** (no DNS record) |
+| `whimzy.app` | 🔴 Registered |
 
 ### Still on you before launch (the real homework)
 
-- [ ] **USPTO TESS search** ([tmsearch.uspto.gov](https://tmsearch.uspto.gov)) for `Paddol` + sound-alikes
-      (Paddle, Padel, Paddol, Padol) in **classes 9 (software), 28 (games), 41 (entertainment)**.
-- [ ] **Secure a domain** — `paddol.com` is taken, so grab `paddol.app` / `paddol.io` / `getpaddol.com`.
-- [ ] **Grab social handles** — @paddol on IG / X / TikTok / YouTube.
+- [ ] **USPTO TESS search** ([tmsearch.uspto.gov](https://tmsearch.uspto.gov)) for `Whimzy` + `Whimsy`
+      in **classes 9 (software), 28 (games), 41 (entertainment)**.
+- [ ] **Secure the domain** — grab `whimzy.com` (available) + register social handles @whimzy.
 - [ ] **Attorney flat-fee clearance** (~$300–600) before spending money or filing.
 - [ ] **File the trademark** once cleared (class 9 and/or 41). Use ™ now, ® only after registration.
 - [ ] **Rename live URL** — `pickleball-card-games.vercel.app` → new Vercel domain (kept old to not
@@ -88,19 +113,19 @@ Researched 2026-07-02 via web/RDAP/DNS. **This is not legal advice and not a for
 
 ## Where the name lives (source of truth)
 
-App branding (all say `Paddol` / `Paddol Deck`):
+App branding (all say `PB Card Deck`):
 
 | File | Field |
 |------|-------|
 | `app/public/manifest.json` | `name`, `short_name` |
 | `app/app/layout.tsx` | `TITLE`, metadata title + template, `appleWebApp.title`, OG/Twitter |
-| `app/app/(info)/{about,privacy,terms}/page.tsx` | body + metadata copy (About also names **Paddol Deck**) |
+| `app/app/(info)/{about,privacy,terms}/page.tsx` | body + metadata copy |
 | `app/components/FeedbackPanel.tsx` | email subject + signature |
 | `app/lib/shareImage.ts` | share-image watermark + share title |
 | `app/app/icon.svg`, `app/app/page.tsx`, `app/public/icons/{app-icon,logo-mark}.svg` | `aria-label` / logo `alt` |
-| `scripts/generate_cards.py`, `docs/data/cards.json` | deck `title` metadata ("Paddol - The 1729 Deck") |
+| `scripts/generate_cards.py`, `docs/data/cards.json` | deck `title` metadata ("PB Card Deck - The 1729 Deck") |
 
-Docs / meta (workspace-wide rename applied 2026-07-02): `README.md`, `app/README.md`,
+Docs / meta (workspace-wide rename, latest 2026-07-03): `README.md`, `app/README.md`,
 `app/CLAUDE.md`, `CONTRIBUTING.md`, `docs/{index,ONBOARDING,BACKLOG}.md`,
 `prompts/{00-scaffold,README}.md`, and `../dotfiles/docs/features/FEATURES.md`.
 
@@ -115,7 +140,9 @@ Researched 2026-07-02 (web/USPTO search — **not legal advice, not a clearance 
 | **ThirdShot** | High | "Third Shot Drop" (*registered* TM, pickleball paddles/apparel); "Third Shot Sports". Plus "third shot" is **descriptive** → weak/refusable. |
 | **DinkDeck** | Highest | "Dink Decks" (Picklepedia) = digital pickleball flashcards, **same category**. "Deal and Dink" on-court card game. "Dink" heavily claimed (Dink Technologies owns PICKLEHEADS). |
 | ThirdShot + DinkDeck combo | Highest | inherits both conflicts |
-| **Paddol** | Low–moderate | no direct conflict found; only mild "paddle"/"padel" sound-alike risk |
+| **Paddol** | Low–moderate | no direct conflict found; only mild "paddle"/"padel" sound-alike risk (superseded) |
+| **Whimzy** | Low | no direct conflict found; arbitrary re: the sport; `whimzy.com` available (front-runner if commercialized) |
+| **PB Card Deck** *(chosen)* | n/a | descriptive; fine for a personal-use, not-for-sale app (no mark to defend) |
 
 **Climate:** pickleball naming is litigious (National Pickleball League suits Oct 2025; NCAA v. NCPA).
 The base mark **"PICKLE-BALL"** (Reg. 0999043, 1974) is itself under cancellation.
@@ -140,7 +167,16 @@ Web + app-store + Crunchbase only — **not a USPTO clearance search**.
 - **Rejected (existing brand/TM/app, often same class):** Volli (Volli Entertainment — games),
   Popl (registered, NFC cards), Zylo (registered, SaaS), Dabble (App Store word game), Plynk
   (Fidelity), Quibl, Voleo (FINRA broker app), Skwibl, Yonzo (game), Nuvoli, Froodl, Klynk.
-- **No conflict found:** **Paddol** (chosen), Plyngo, Kribble, Zibbl, Wompl, Jindl, Vurl.
+- **No conflict found:** Paddol, Plyngo, Kribble, Zibbl, Wompl, Jindl, Vurl.
+
+### Coined + evocative-blend passes (2026-07-03)
+Two more rounds after Paddol. Same web/app-store/Crunchbase method (not a USPTO search).
+
+- **Clean coined (round A):** Wibbl, Nabbl, Zubbl (all conflict-free, `.app` free) — but
+  semantically empty; rejected Wyldcard (gaming co), Flipsy (resale co), Jambl (music app).
+- **Evocative blend (round B):** rejected Twistr (travel co), Frolik (TM), Fizzo (ByteDance),
+  Romply (registered TM), Bantr (rec-sports app + WB TM), Zesto/Caper (existing cos).
+  **No conflict:** **Whimzy** (chosen — `whimzy.com` available) and Jubl (`jubl.com`/`.app` free).
 
 ### Sources
 - Third Shot Drop — https://www.thirdshotdrop.com/
