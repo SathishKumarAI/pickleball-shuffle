@@ -413,11 +413,11 @@ card text. All verified live in the browser (Chrome DevTools MCP), incl. mobile 
 
 **Summary:** Renamed the Vercel project `pickleball-shuffle` → `pickleball-card-games` so the live URL matches the new name.
 
-- Renamed the project (Vercel API), added `pickleball-card-games.vercel.app`, and removed the old `pickleball-shuffle.vercel.app` domain.
-- New canonical URL: **https://pickleball-card-games.vercel.app** (HTTP 200); old URL now 404s.
+- Renamed the project (Vercel API), added `pb-card-deck.vercel.app`, and removed the old `pickleball-shuffle.vercel.app` domain.
+- New canonical URL: **https://pb-card-deck.vercel.app** (HTTP 200); old URL now 404s.
 - Updated the live link in `README.md`, `app/README.md`, `app/CLAUDE.md`, and synced `app/.vercel/project.json` (projectId unchanged, so CLI/Git deploys are unaffected).
 
-**Unchanged:** the GitHub repo path (`SathishKumarAI/pickleball-shuffle`) and all localStorage keys - renaming those would break links/data for no benefit.
+**Unchanged:** the GitHub repo path (`SathishKumarAI/pb-card-deck`) and all localStorage keys - renaming those would break links/data for no benefit.
 
 ## 2026-06-09 18:35 - CI gate, project consolidation, legacy cleanup
 
@@ -576,7 +576,7 @@ card text. All verified live in the browser (Chrome DevTools MCP), incl. mobile 
 
 **Security audit (untracked auth experiment):** Every file is an inert stub - auth/api routes return HTTP 410, `lib/*` are `export {}`, `AuthForm`/`UserMenu` render `null`, login/signup `redirect("/")`. `.vercel/.env.production.local` is gitignored and uncommitted. **No vulnerabilities; no patch needed** - only the dead-code deletion (T4).
 
-**Verification:** `npm run build` clean (14 routes, `/icon.svg` emitted); local `:3000` serves the new logo + favicon at HTTP 200; production verified - `app-icon.svg`/`icon.svg` return 200 and the landing references the new mark. Deployed `03fa40c` → prod READY (https://pickleball-card-games.vercel.app).
+**Verification:** `npm run build` clean (14 routes, `/icon.svg` emitted); local `:3000` serves the new logo + favicon at HTTP 200; production verified - `app-icon.svg`/`icon.svg` return 200 and the landing references the new mark. Deployed `03fa40c` → prod READY (https://pb-card-deck.vercel.app).
 
 **Follow-ups:** see [`TICKETS.md`](TICKETS.md) - feedback→Form (T1), how-to-use button (T2), in-game pause (T3), dead-stub deletion (T4).
 

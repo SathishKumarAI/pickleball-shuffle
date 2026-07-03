@@ -5,8 +5,8 @@ lessons learned — so anyone (human or agent) can get up to speed fast. Newest 
 code lives in git; this is the narrative and the decisions. See also the dated
 [WORKLOG](WORKLOG.md) and the [VALIDATION-REPORT](VALIDATION-REPORT.md).
 
-**Live app:** https://pickleball-card-games.vercel.app
-**Repo:** https://github.com/SathishKumarAI/pickleball-shuffle
+**Live app:** https://pb-card-deck.vercel.app
+**Repo:** https://github.com/SathishKumarAI/pb-card-deck
 **Stack:** Next.js 16.2.6 · React 19.2.4 · TypeScript · Tailwind v4 · lucide-react (no emoji in UI) ·
 local-first (no backend/login/DB; all state in `localStorage`). 1,729 cards · 10 categories ·
 5 deck modes. 69 vitest tests.

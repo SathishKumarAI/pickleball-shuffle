@@ -2,7 +2,7 @@
 
 > A mobile-first, **local-first** web app: 1,729 pickleball "twist" cards + a real scorekeeper. No backend, no login, no database - all state in `localStorage`.
 
-**Live:** https://pickleball-card-games.vercel.app · **Repo:** https://github.com/SathishKumarAI/pickleball-shuffle
+**Live:** https://pb-card-deck.vercel.app · **Repo:** https://github.com/SathishKumarAI/pb-card-deck
 **Related docs:** [WORKLOG](WORKLOG.md) · [Bug log](BUG-LOG.md) · [UI layout notes](UI-LAYOUT-NOTES.md) · [Tickets](TICKETS.md)
 
 ---
@@ -39,7 +39,7 @@ A free pickleball party game fused with a scorekeeper. Tap to draw a card, play 
 
 ### Setup
 ```bash
-git clone https://github.com/SathishKumarAI/pickleball-shuffle
+git clone https://github.com/SathishKumarAI/pb-card-deck
 cd pickleball-shuffle
 bash setup.sh          # installs deps + runs a production build (cd app && npm install && npm run build)
 bash run-dev.sh        # → http://localhost:3000  (binds 0.0.0.0 for phone testing)

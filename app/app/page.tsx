@@ -29,7 +29,7 @@ import { MODE_ICONS } from "@/components/icons";
 import { useFocusTrap } from "@/lib/useFocusTrap";
 import { useToast } from "@/components/Toast";
 
-const GITHUB_URL = process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/SathishKumarAI/pickleball-shuffle";
+const GITHUB_URL = process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/SathishKumarAI/pb-card-deck";
 
 const LANDING_MODES: { key: DeckMode; label: string; desc: string }[] = [
   { key: "family", label: "Family", desc: "Fun for all ages" },

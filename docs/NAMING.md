@@ -105,9 +105,10 @@ Researched 2026-07-03 via web/RDAP/DNS. **This is not legal advice and not a for
 - [ ] **Secure the domain** — grab `whimzy.com` (available) + register social handles @whimzy.
 - [ ] **Attorney flat-fee clearance** (~$300–600) before spending money or filing.
 - [ ] **File the trademark** once cleared (class 9 and/or 41). Use ™ now, ® only after registration.
-- [ ] **Rename live URL** — `pickleball-card-games.vercel.app` → new Vercel domain (kept old to not
-      break the live link + installed PWAs).
-- [ ] **(optional) rename repo dir** `pickleball-shuffle/` → cosmetic only, breaks local paths.
+- [x] **Repo + URL renamed** (2026-07-03) — GitHub repo `pickleball-shuffle` → `pb-card-deck`
+      (GitHub auto-redirects the old slug); Vercel project → `pb-card-deck.vercel.app`. Old
+      Vercel URL no longer resolves; re-install the PWA from the new URL.
+- [ ] **(optional) rename local repo dir** `~/coding/pickleball-shuffle/` → cosmetic only, breaks local paths.
 
 ---
 

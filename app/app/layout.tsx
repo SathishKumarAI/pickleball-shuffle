@@ -14,7 +14,7 @@ export const viewport: Viewport = {
   themeColor: "#0e0e11",
 };
 
-const SITE_URL = "https://pickleball-card-games.vercel.app";
+const SITE_URL = "https://pb-card-deck.vercel.app";
 const TITLE = "PB Card Deck";
 const DESCRIPTION =
   "Draw twist cards mid-match and shake up your pickleball game. 1,729 cards, 5 deck modes, a real side-out scorekeeper - free, mobile-first, works offline.";

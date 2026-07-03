@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "About PB Card Deck - 1,729 twist cards and a real scorekeeper.",
 };
 
-const GITHUB_URL = "https://github.com/SathishKumarAI/pickleball-shuffle";
+const GITHUB_URL = "https://github.com/SathishKumarAI/pb-card-deck";
 
 // Backlog F246 (+ links to F243/F244/F245).
 export default function AboutPage() {

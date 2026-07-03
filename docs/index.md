@@ -2,12 +2,12 @@
 
 Draw twist cards. Shake up the game. A free, local-first pickleball card game + scorekeeper.
 
-**Play now -> <a href="https://pickleball-card-games.vercel.app" target="_blank" rel="noopener noreferrer">pickleball-card-games.vercel.app</a>**
+**Play now -> <a href="https://pb-card-deck.vercel.app" target="_blank" rel="noopener noreferrer">pb-card-deck.vercel.app</a>**
 
 Made just for fun and personal use only - not for making sales.
 
 ## Feedback & ideas
-- **Feedback / bugs / feature requests:** <a href="https://github.com/SathishKumarAI/pickleball-shuffle/issues/new" target="_blank" rel="noopener noreferrer">open a GitHub issue</a>
+- **Feedback / bugs / feature requests:** <a href="https://github.com/SathishKumarAI/pb-card-deck/issues/new" target="_blank" rel="noopener noreferrer">open a GitHub issue</a>
 
 ## Docs
 

@@ -5,7 +5,7 @@ project (no backend, no login) - bug fixes, card ideas, and features are all wel
 
 ## Ways to help
 
-- **Report a bug** - [open an issue](https://github.com/SathishKumarAI/pickleball-shuffle/issues/new).
+- **Report a bug** - [open an issue](https://github.com/SathishKumarAI/pb-card-deck/issues/new).
   Include what you did, what you expected, and (for layout bugs) the device + browser and a screenshot.
 - **Suggest a feature or a card** - issues are great for this; see [`docs/TICKETS.md`](docs/TICKETS.md)
   for the running backlog (there's a "Future feature ideas" list at the bottom).
@@ -15,7 +15,7 @@ project (no backend, no login) - bug fixes, card ideas, and features are all wel
 ## Dev setup (~3 minutes)
 
 ```bash
-git clone https://github.com/SathishKumarAI/pickleball-shuffle
+git clone https://github.com/SathishKumarAI/pb-card-deck
 cd pickleball-shuffle/app
 npm install
 npm run dev          # http://localhost:3000 (binds 0.0.0.0 for phone testing)

@@ -77,7 +77,7 @@ export function makeResultBlob(info: ResultInfo): Promise<Blob | null> {
   ctx.fillText("PB Card Deck", W / 2, H - 230);
   ctx.fillStyle = "#7e7e87";
   ctx.font = "500 34px sans-serif";
-  ctx.fillText("pickleball-card-games.vercel.app", W / 2, H - 175);
+  ctx.fillText("pb-card-deck.vercel.app", W / 2, H - 175);
 
   return new Promise((resolve) => canvas.toBlob((b) => resolve(b), "image/png"));
 }

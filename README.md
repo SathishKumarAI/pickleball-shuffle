@@ -4,7 +4,7 @@
 
 A free, **mobile-first, local-first** web app: 1,729 pickleball twist cards across 10 categories, fused with a real pickleball scorekeeper. Tap to draw a card, play the next point under that twist, and keep score - all on your phone, no login, no signal required after first load.
 
-### ▶︎ Live app: **https://pickleball-card-games.vercel.app**
+### ▶︎ Live app: **https://pb-card-deck.vercel.app**
 
 ---
 
@@ -128,7 +128,7 @@ npm start
 cd app && vercel --prod      # or: ./deploy-vercel.sh from the repo root
 ```
 
-Current production alias: **https://pickleball-card-games.vercel.app**
+Current production alias: **https://pb-card-deck.vercel.app**
 
 ## Documentation
 
@@ -151,7 +151,7 @@ Full docs index: **[`docs/index.md`](docs/index.md)**.
 
 Contributions are genuinely welcome - whether it's a bug fix, a new card idea, or a feature.
 
-- **Found a bug or have an idea?** [Open an issue](https://github.com/SathishKumarAI/pickleball-shuffle/issues/new) - even a one-liner helps. Screenshots and the device/browser are gold for layout bugs.
+- **Found a bug or have an idea?** [Open an issue](https://github.com/SathishKumarAI/pb-card-deck/issues/new) - even a one-liner helps. Screenshots and the device/browser are gold for layout bugs.
 - **Want to send a change?**
   1. Fork the repo and create a branch (`feature/...` or `fix/...`).
   2. `cd app && npm install`, then `npm run dev` to develop.
@@ -193,8 +193,8 @@ The standards, rules, and tools this project is built on:
 
 ### Enjoying it?
 
-If you played a game and had fun, a ⭐ on [GitHub](https://github.com/SathishKumarAI/pickleball-shuffle) is the easiest way to say thanks - and it genuinely helps other players discover the app. Totally optional, no pressure.
+If you played a game and had fun, a ⭐ on [GitHub](https://github.com/SathishKumarAI/pb-card-deck) is the easiest way to say thanks - and it genuinely helps other players discover the app. Totally optional, no pressure.
 
-Hit a bug or have a card idea? [Open an issue](https://github.com/SathishKumarAI/pickleball-shuffle/issues/new) - feedback makes the next version better.
+Hit a bug or have a card idea? [Open an issue](https://github.com/SathishKumarAI/pb-card-deck/issues/new) - feedback makes the next version better.
 
 Made just for fun. See you on the court. 🏓

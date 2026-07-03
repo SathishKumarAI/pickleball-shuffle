@@ -24,7 +24,7 @@ Status: 🔴 not started · 🟡 in progress / blocked on input · ⏸️ deferr
 - ✅ **Frontend gap fixes (4 batches)** - accessibility (focus-visible, zoom unlock, aria-labels, dialog semantics + Escape/focus-trap on shared Sheet, switch/chip roles, contrast), reduced-motion correctness (card flip, confetti, infinite loops), design-system consistency (SettingsSheet onto shared Sheet, emoji→lucide, manifest color), and custom fonts (Bricolage Grotesque + Hanken Grotesk). See WORKLOG 2026-06-15.
 - ✅ **Best-of-3 match-complete screen** - `WinCelebration` now shows a series-winner state ("wins the match", games tally, New Match) when a team reaches 2 games. Engine: `matchWinner`/`seriesTally`/`newMatch` in `lib/game.ts`.
 - ✅ **"How to use" chip** on landing (T2).
-- ✅ **New pickleball + card logo** - landing hero, favicon, `icon.svg`, PWA icons. Live: https://pickleball-card-games.vercel.app
+- ✅ **New pickleball + card logo** - landing hero, favicon, `icon.svg`, PWA icons. Live: https://pb-card-deck.vercel.app
 - ✅ **Security audit** - all untracked auth files are inert stubs; secret file gitignored; **no vulnerabilities** (see T4 for cleanup).
 
 ## From the frontend audit
