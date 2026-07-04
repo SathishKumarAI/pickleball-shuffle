@@ -1,6 +1,6 @@
 # Worklog
 
-## 2026-07-03 — Ship: repo+URL rename, deploy, dead-code cleanup, PR
+## 2026-07-03 19:42 — Ship: repo+URL rename, deploy, dead-code cleanup, PR
 
 **Summary:** Deployed PB Card Deck to production, renamed repo + live URL to `pb-card-deck`,
 removed the dead auth stubs leaking onto the site, and opened the wave-1 PR.
