@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { X, Trophy, Clock, History, Trash2 } from "lucide-react";
-import { DECK_MODES, DeckMode } from "@/lib/cards";
-import { listMatches, clearMatches, SavedMatch } from "@/lib/client-api";
+import { X, Trophy, Clock, History, Trash2, Download } from "lucide-react";
+import { selectionLabel } from "@/lib/cards";
+import { listMatches, clearMatches, playerRecords, matchesToCsv, SavedMatch } from "@/lib/client-api";
 
 function formatDur(ms: number) {
   const m = Math.floor(ms / 60000);
@@ -15,10 +15,24 @@ function formatDate(ts: number) {
 
 export default function HistoryPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [matches, setMatches] = useState<SavedMatch[]>([]);
+  const [records, setRecords] = useState<{ name: string; wins: number; played: number }[]>([]);
 
   useEffect(() => {
-    if (open) setMatches(listMatches());
+    if (open) {
+      setMatches(listMatches());
+      setRecords(playerRecords());
+    }
   }, [open]);
+
+  const downloadCsv = () => {
+    const blob = new Blob([matchesToCsv()], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "pickleball-match-history.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   if (!open) return null;
 
@@ -29,13 +43,22 @@ export default function HistoryPanel({ open, onClose }: { open: boolean; onClose
       onClose={onClose}
       action={
         matches.length > 0 ? (
-          <button
-            onClick={() => { clearMatches(); setMatches([]); }}
-            className="pressable flex items-center gap-1 text-xs px-2.5 py-1 rounded-full"
-            style={{ background: "var(--bg-elevated)", color: "var(--red)" }}
-          >
-            <Trash2 size={13} /> Clear
-          </button>
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={downloadCsv}
+              className="pressable flex items-center gap-1 text-xs px-2.5 py-1 rounded-full"
+              style={{ background: "var(--bg-elevated)", color: "var(--text-secondary)" }}
+            >
+              <Download size={13} /> CSV
+            </button>
+            <button
+              onClick={() => { clearMatches(); setMatches([]); }}
+              className="pressable flex items-center gap-1 text-xs px-2.5 py-1 rounded-full"
+              style={{ background: "var(--bg-elevated)", color: "var(--red)" }}
+            >
+              <Trash2 size={13} /> Clear
+            </button>
+          </div>
         ) : null
       }
     >
@@ -43,13 +66,28 @@ export default function HistoryPanel({ open, onClose }: { open: boolean; onClose
         <p className="text-sm text-center py-8" style={{ color: "var(--text-muted)" }}>No saved matches yet. Finish a game to see it here.</p>
       ) : (
         <div className="stagger flex flex-col gap-2">
+          {records.length > 0 && (
+            <div className="rounded-xl p-3 mb-1" style={{ background: "var(--bg-card)", border: "1px solid var(--border)" }}>
+              <div className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: "var(--text-muted)" }}>Win - loss record</div>
+              <div className="flex flex-col gap-1">
+                {records.slice(0, 5).map((r) => (
+                  <div key={r.name} className="flex items-center justify-between text-sm">
+                    <span className="truncate max-w-[60%]" style={{ color: "var(--text)" }}>{r.name}</span>
+                    <span style={{ color: "var(--text-secondary)" }}>
+                      <span style={{ color: "var(--accent)" }}>{r.wins}W</span> - {r.played - r.wins}L
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
           {matches.map((g) => {
-            const modeMeta = DECK_MODES[g.mode as DeckMode];
+            const modeLabel = selectionLabel(g.mode);
             return (
               <div key={g.id} className="rounded-xl p-3" style={{ background: "var(--bg-card)", border: "1px solid var(--border)" }}>
                 <div className="flex items-center justify-between mb-1.5">
                   <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ background: "var(--bg-elevated)", color: "var(--text-secondary)" }}>
-                    {modeMeta?.label || g.mode}
+                    {modeLabel}
                   </span>
                   <span className="flex items-center gap-1 text-xs" style={{ color: "var(--text-muted)" }}>
                     <Clock size={12} /> {formatDate(g.created_at)}

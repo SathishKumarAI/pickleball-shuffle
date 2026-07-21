@@ -5,7 +5,7 @@ import { MessageSquare, Star, Send, Check, Bug, ExternalLink } from "lucide-reac
 import { Sheet } from "./HistoryPanel";
 
 const FEEDBACK_EMAIL = process.env.NEXT_PUBLIC_FEEDBACK_EMAIL || "sathishkumar786.ml@gmail.com";
-const GITHUB_URL = process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/SathishKumarAI/pickleball-shuffle";
+const GITHUB_URL = process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/SathishKumarAI/pb-card-deck";
 // Set NEXT_PUBLIC_FEEDBACK_FORM_URL to a Google Form link to make it the primary feedback channel.
 const FORM_URL = process.env.NEXT_PUBLIC_FEEDBACK_FORM_URL || "";
 const FEEDBACK_KEY = "pb-feedback";
@@ -33,12 +33,12 @@ export default function FeedbackPanel({ open, onClose }: { open: boolean; onClos
       localStorage.setItem(FEEDBACK_KEY, JSON.stringify(prev.slice(0, 50)));
     } catch {}
 
-    const subject = `Pickleball Card Games feedback${rating ? ` - ${rating}★` : ""}`;
+    const subject = `PB Card Deck feedback${rating ? ` - ${rating}★` : ""}`;
     const body =
       `Rating: ${rating ? `${rating}/5` : "-"}\n\n` +
       `${message || "(no message)"}\n\n` +
       (contact ? `Reply to: ${contact}\n` : "") +
-      `\n- sent from Pickleball Card Games`;
+      `\n- sent from PB Card Deck`;
     window.location.href = `mailto:${FEEDBACK_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setSent(true);
   };

@@ -1,10 +1,35 @@
 "use client";
 
 import { useState } from "react";
-import { BookOpen, Trophy, Layers, Smartphone, HelpCircle, ChevronDown } from "lucide-react";
+import { BookOpen, Trophy, Layers, Smartphone, HelpCircle, ChevronDown, Languages, Compass } from "lucide-react";
 import { Sheet } from "./HistoryPanel";
+import { GLOSSARY as GLOSSARY_TERMS } from "@/lib/glossary";
 
 type Section = { q: string; a: string };
+
+// Why use this app + how to get around it — the first thing a newcomer needs.
+const WHY_NAV: Section[] = [
+  {
+    q: "Why use this app?",
+    a: "It turns any pickleball game into a party. Between points you draw a 'twist' card - a fun mini-rule for the next rally - while the app keeps score for you. No signup, no cost, works offline on the court, and your data stays on your phone.",
+  },
+  {
+    q: "Do I need to know pickleball?",
+    a: "No. Pick a mode, tap the card, and read what it says. Underlined words on a card explain a term when you tap them, and the ? button on any card gives a plain-language 'what this means / how to play it'.",
+  },
+  {
+    q: "Getting around: the card screen",
+    a: "Tap the big card (or Draw) to draw a twist. The ? on a card explains it in plain words; the star saves a favourite; Skip swaps for a different card; Back returns home. Tap a team's score to give them the point.",
+  },
+  {
+    q: "Getting around: the menu",
+    a: "The menu (top-right) holds My decks (build your own), Match history, Favourite cards, Achievements, Card browser, Rules & help, and Send feedback. Settings (gear) changes points-to-win, sound, theme and Commentator voice.",
+  },
+  {
+    q: "What are deck modes?",
+    a: "A deck mode is just a themed set of cards. Family = clean fun, Party = dares & laughs, Drill = skill practice, Tournament = competitive, Chaos = everything. Pick one on the home screen to match your crowd.",
+  },
+];
 
 const HOW_TO_PLAY: Section[] = [
   {
@@ -18,6 +43,10 @@ const HOW_TO_PLAY: Section[] = [
   {
     q: "Deck modes",
     a: "Family = clean fun for all ages. Party = laughs, dares & drinks. Drill = skill-sharpening restrictions. Tournament = competitive twists. Chaos = all 1,729 cards, anything goes. Pick a mode on the home screen.",
+  },
+  {
+    q: "Doubles serving (side-out scoring)",
+    a: "In traditional scoring only the SERVING team can score. Each doubles team has two servers: if the serving side loses a rally on server 1, their 2nd server serves next (same team); if they lose on server 2, it's a side-out and serve passes to the other team. In Track-a-match you just press 'Won' or 'Lost' for the serving side - no need to tap the other team; the app moves the server for you. Prefer every-point-counts? Pick 'Rally' scoring when you start a Track-a-match game.",
   },
   {
     q: "Winning",
@@ -75,14 +104,20 @@ const FAQ: Section[] = [
   },
 ];
 
+// Beginner-friendly glossary of pickleball terms - sourced from the shared
+// lib/glossary.ts so the Rules tab and the in-card highlighter never drift.
+const GLOSSARY: Section[] = GLOSSARY_TERMS.map((t) => ({ q: t.term, a: t.def }));
+
 const TABS = [
+  { key: "why", label: "Why & how", icon: Compass, sections: WHY_NAV },
   { key: "play", label: "How to play", icon: Trophy, sections: HOW_TO_PLAY },
   { key: "app", label: "Using the app", icon: Smartphone, sections: USING_APP },
+  { key: "terms", label: "Glossary", icon: Languages, sections: GLOSSARY },
   { key: "faq", label: "FAQ", icon: HelpCircle, sections: FAQ },
 ] as const;
 
-export default function RulesPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const [tab, setTab] = useState<(typeof TABS)[number]["key"]>("play");
+export default function RulesPanel({ open, onClose, onReplayTour }: { open: boolean; onClose: () => void; onReplayTour?: () => void }) {
+  const [tab, setTab] = useState<(typeof TABS)[number]["key"]>("why");
   const [expanded, setExpanded] = useState<string | null>(null);
 
   if (!open) return null;
@@ -139,6 +174,16 @@ export default function RulesPanel({ open, onClose }: { open: boolean; onClose: 
           );
         })}
       </div>
+
+      {onReplayTour && (
+        <button
+          onClick={onReplayTour}
+          className="pressable mt-4 w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold"
+          style={{ background: "var(--bg-elevated)", color: "var(--text-secondary)", border: "1px solid var(--border)" }}
+        >
+          <Compass size={15} /> Replay welcome tour
+        </button>
+      )}
 
       <p className="mt-4 flex items-center justify-center gap-1.5 text-xs" style={{ color: "var(--text-muted)" }}>
         <Layers size={12} /> 1,729 twist cards · 10 categories · 5 modes

@@ -1,1 +1,4 @@
 .vercel
+
+# --- nested repos & local tooling (reorg 2026-07-20)
+app/app/

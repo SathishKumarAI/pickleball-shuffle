@@ -1,10 +1,10 @@
-#  Pickleball Card Games
+#  PB Card Deck
 
 **Draw twist cards mid-match. Shake up the game.**
 
 A free, **mobile-first, local-first** web app: 1,729 pickleball twist cards across 10 categories, fused with a real pickleball scorekeeper. Tap to draw a card, play the next point under that twist, and keep score - all on your phone, no login, no signal required after first load.
 
-### ▶︎ Live app: **https://pickleball-card-games.vercel.app**
+### ▶︎ Live app: **https://pb-card-deck.vercel.app**
 
 ---
 
@@ -62,6 +62,24 @@ Everything the app does, grouped so you can find it fast.
 | **Export / Import backup** | Move decks + history between devices via a JSON file - no account, no upload. |
 | **Offline** | A service worker keeps it working at courts with bad signal. |
 
+### 🧭 Learn & understand (no pickleball knowledge needed)
+| Feature | What it does |
+|---|---|
+| **Welcome tour** | On first open, a short swipeable tour: what the app is, how to play, and how to get around. Replayable from **Rules & help**. |
+| **Tap-to-define jargon** | Terms on a card (dink, kitchen, erne, side-out…) are underlined - tap one for a plain-language definition. One shared glossary powers this and the Rules tab. |
+| **Per-card "?" explainer** | Every card has a **?** that opens *what this means · how to play it · what kind of card* in beginner-friendly words. |
+| **"What to do" line** | The card always shows a concrete "what to do this point", not just the constraint - plus a one-time in-game hint. |
+| **"Why & how" help tab** | Rules & help opens on a benefits + navigation tab so a newcomer knows *why* to use it and *where* everything is. |
+
+### 🏓 Coach / Umpire mode - "Track a match"
+| Feature | What it does |
+|---|---|
+| **One-tap mode switch** | Home has a `Play with cards` / `Track a match` toggle - switch the whole flow any time, one tap. |
+| **Match setup** | Singles or doubles, player/team names, an event/round label, points-to-win (11/15/21), match length, and cards on/off (off by default). |
+| **Real server rotation** | Doubles uses the two-server rotation (Server 1 → 2 → side-out); the serving side + server number are shown live. Singles passes serve straight over. |
+| **Officiating controls** | Per-team timeout and fault buttons, a side-out button, and the halfway side-switch reminder. |
+| **Match sheet** | Saves to Match history with the event label + format; download a one-tap text **match sheet** (teams, game-by-game, timeouts, faults, duration) as proof of result. |
+
 ### 🎨 Feel & accessibility
 | Feature | What it does |
 |---|---|
@@ -83,12 +101,11 @@ pickleball-shuffle/
 │   └── public/     #   cards.json, manifest, service worker
 ├── docs/           # WORKLOG, onboarding, tickets, and docs/data/cards.json (full dataset)
 ├── scripts/        # generate_cards.py — rebuilds the 1,729-card deck
-├── backend/        # legacy FastAPI prototype (unused by the live app)
 ├── frontend/       # legacy Vite stub (unused)
 └── *.sh            # dev / prod / deploy helper scripts
 ```
 
-> The live app is entirely in **`app/`**. The `backend/` and `frontend/` directories are early prototypes kept for reference and are not part of the deployed product. See **[`app/README.md`](app/README.md)** for the full architecture deep-dive.
+> The live app is entirely in **`app/`**. The `frontend/` directory is an early prototype kept for reference and is not part of the deployed product. See **[`app/README.md`](app/README.md)** for the full architecture deep-dive.
 
 ## Quick start
 
@@ -111,11 +128,17 @@ npm start
 cd app && vercel --prod      # or: ./deploy-vercel.sh from the repo root
 ```
 
-Current production alias: **https://pickleball-card-games.vercel.app**
+Current production alias: **https://pb-card-deck.vercel.app**
 
 ## Documentation
 
+Full docs index: **[`docs/index.md`](docs/index.md)**.
+
+- **[`docs/SESSION-NOTES.md`](docs/SESSION-NOTES.md)** - what's been built and why, this session and earlier, with the lessons learned. Best single read to get up to speed.
 - **[`docs/ONBOARDING.md`](docs/ONBOARDING.md)** - start here: 3-minute setup, codebase map, and what's new.
+- **[`docs/DOUBLES-SCORING.md`](docs/DOUBLES-SCORING.md)** - doubles rules model, which button to press, and the design reasoning.
+- **[`docs/SCORING-UX-RESEARCH.md`](docs/SCORING-UX-RESEARCH.md)** - how the top pickleball apps keep score for beginners; our decisions.
+- **[`docs/VALIDATION-REPORT.md`](docs/VALIDATION-REPORT.md)** - what was tested and how (the what/why/how).
 - **[`CONTRIBUTING.md`](CONTRIBUTING.md)** - how to report bugs, send PRs, and add cards.
 - **[`app/README.md`](app/README.md)** - full architecture deep-dive (data flow, scoring engine, localStorage schema, animation, service-worker strategy, mobile hardening).
 - **[`docs/data/cards.json`](docs/data/cards.json)** - the complete 1,729-card dataset with metadata + the "why 1729" design notes.
@@ -128,7 +151,7 @@ Current production alias: **https://pickleball-card-games.vercel.app**
 
 Contributions are genuinely welcome - whether it's a bug fix, a new card idea, or a feature.
 
-- **Found a bug or have an idea?** [Open an issue](https://github.com/SathishKumarAI/pickleball-shuffle/issues/new) - even a one-liner helps. Screenshots and the device/browser are gold for layout bugs.
+- **Found a bug or have an idea?** [Open an issue](https://github.com/SathishKumarAI/pb-card-deck/issues/new) - even a one-liner helps. Screenshots and the device/browser are gold for layout bugs.
 - **Want to send a change?**
   1. Fork the repo and create a branch (`feature/...` or `fix/...`).
   2. `cd app && npm install`, then `npm run dev` to develop.
@@ -170,8 +193,8 @@ The standards, rules, and tools this project is built on:
 
 ### Enjoying it?
 
-If you played a game and had fun, a ⭐ on [GitHub](https://github.com/SathishKumarAI/pickleball-shuffle) is the easiest way to say thanks - and it genuinely helps other players discover the app. Totally optional, no pressure.
+If you played a game and had fun, a ⭐ on [GitHub](https://github.com/SathishKumarAI/pb-card-deck) is the easiest way to say thanks - and it genuinely helps other players discover the app. Totally optional, no pressure.
 
-Hit a bug or have a card idea? [Open an issue](https://github.com/SathishKumarAI/pickleball-shuffle/issues/new) - feedback makes the next version better.
+Hit a bug or have a card idea? [Open an issue](https://github.com/SathishKumarAI/pb-card-deck/issues/new) - feedback makes the next version better.
 
 Made just for fun. See you on the court. 🏓

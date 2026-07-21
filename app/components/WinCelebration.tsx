@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Trophy, RotateCcw } from "lucide-react";
+import { Trophy, RotateCcw, Share2 } from "lucide-react";
+import { shareResult } from "@/lib/shareImage";
+import { useToast } from "./Toast";
 
 export default function WinCelebration({
   winnerName,
@@ -21,7 +23,17 @@ export default function WinCelebration({
   onEndMatch: () => void;
 }) {
   const [confetti, setConfetti] = useState<{ x: number; color: string; delay: number; dur: number; size: number; rect: boolean }[]>([]);
+  const [sharing, setSharing] = useState(false);
   const nextBtn = useRef<HTMLButtonElement>(null);
+  const toast = useToast();
+
+  const onShare = async () => {
+    setSharing(true);
+    const r = await shareResult({ winnerName, score, matchOver, seriesWon });
+    setSharing(false);
+    if (r === "downloaded") toast("Result image saved");
+    else if (r === "failed") toast("Couldn't create the image");
+  };
 
   useEffect(() => {
     // Don't render confetti for reduced-motion users - the global CSS override
@@ -97,6 +109,14 @@ export default function WinCelebration({
               <RotateCcw size={18} /> Next Game
             </button>
           )}
+          <button
+            onClick={onShare}
+            disabled={sharing}
+            className="pressable flex items-center justify-center gap-2 px-6 py-3 font-medium rounded-full disabled:opacity-60"
+            style={{ background: "var(--bg-elevated)", color: "var(--text)", border: "1px solid var(--border)" }}
+          >
+            <Share2 size={18} /> {sharing ? "Preparing..." : "Share result"}
+          </button>
           <button
             onClick={onEndMatch}
             className="pressable px-6 py-3 font-medium rounded-full"
